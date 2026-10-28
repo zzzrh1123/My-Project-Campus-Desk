@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Find a suitable activity for an active university study break.">
+
+    <title>Active Breaks | Campus Desk</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">
+        Skip to main content
+    </a>
+
+    <header class="site-header">
+        <a class="site-name" href="index.html">
+            Campus Desk
+        </a>
+
+        <nav aria-label="Primary navigation">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="study.html">
+                        Study Shelf
+                    </a>
+                </li>
+
+                <li>
+                    <a href="loadout.html">
+                        Loadout
+                    </a>
+                </li>
+
+                <li>
+                    <a href="move.html"
+                       aria-current="page">
+                        Active Breaks
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="page-intro">
+            <p class="eyebrow">
+                Recharge between classes
+            </p>
+
+            <h1>Active Breaks</h1>
+
+            <p>
+                Choose your available time, location and energy
+                level to find a suitable activity.
+            </p>
+        </section>
+
+        <div class="move-layout">
+            <section class="activity-controls"
+                     aria-labelledby="activity-form-heading">
+
+                <h2 id="activity-form-heading">
+                    Plan your activity
+                </h2>
+
+                <form id="activity-form">
+                    <div class="form-group">
+                        <label for="available-time">
+                            Available time
+                        </label>
+
+                        <select id="available-time"
+                                name="available-time">
+
+                            <option value="5">
+                                5 minutes
+                            </option>
+
+                            <option value="15">
+                                15 minutes
+                            </option>
+
+                            <option value="30">
+                                30 minutes
+                            </option>
+
+                            <option value="60">
+                                60 minutes
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="available-space">
+                            Available space
+                        </label>
+
+                        <select id="available-space"
+                                name="available-space">
+
+                            <option value="dorm">
+                                Dorm room
+                            </option>
+
+                            <option value="campus">
+                                Campus
+                            </option>
+
+                            <option value="gym">
+                                Gym
+                            </option>
+
+                            <option value="outdoor">
+                                Outdoor space
+                            </option>
+                        </select>
+                    </div>
+
+                    <fieldset>
+                        <legend>
+                            Energy level
+                        </legend>
+
+                        <label>
+                            <input type="radio"
+                                   name="energy"
+                                   value="light"
+                                   checked>
+
+                            Light
+                        </label>
+
+                        <label>
+                            <input type="radio"
+                                   name="energy"
+                                   value="medium">
+
+                            Medium
+                        </label>
+
+                        <label>
+                            <input type="radio"
+                                   name="energy"
+                                   value="high">
+
+                            High
+                        </label>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label for="equipment">
+                            Available equipment
+                        </label>
+
+                        <select id="equipment"
+                                name="equipment">
+
+                            <option value="none">
+                                No equipment
+                            </option>
+
+                            <option value="ball">
+                                A ball
+                            </option>
+
+                            <option value="racket">
+                                A racket
+                            </option>
+
+                            <option value="rope">
+                                A skipping rope
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="button-row">
+                        <button id="recommend-activity"
+                                type="button">
+
+                            Recommend an activity
+                        </button>
+
+                        <button type="reset">
+                            Reset choices
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="activity-result"
+                     aria-labelledby="result-heading">
+
+                <h2 id="result-heading">
+                    Your activity
+                </h2>
+
+                <div id="activity-figure"
+                     class="activity-figure"
+                     aria-hidden="true">
+
+                    Ready for an active break
+                </div>
+
+                <p id="activity-message"
+                   aria-live="polite">
+
+                    Choose your preferences to receive a suggestion.
+                </p>
+            </section>
+        </div>
+
+        <section aria-labelledby="categories-heading">
+            <h2 id="categories-heading">
+                Explore activities
+            </h2>
+
+            <div class="activity-grid">
+                <article class="activity-card">
+                    <h3>Team Sports</h3>
+
+                    <ul>
+                        <li>Football</li>
+                        <li>Basketball</li>
+                    </ul>
+
+                    <p>
+                        Team sports combine movement, communication
+                        and cooperation.
+                    </p>
+                </article>
+
+                <article class="activity-card">
+                    <h3>Racket Sports</h3>
+
+                    <ul>
+                        <li>Badminton</li>
+                        <li>Table tennis</li>
+                        <li>Tennis</li>
+                        <li>Pickleball</li>
+                    </ul>
+
+                    <p>
+                        Racket sports develop coordination,
+                        reactions and concentration.
+                    </p>
+                </article>
+
+                <article class="activity-card">
+                    <h3>Running and Cardio</h3>
+
+                    <ul>
+                        <li>Running</li>
+                        <li>Skipping</li>
+                        <li>Fast walking</li>
+                    </ul>
+
+                    <p>
+                        Cardio activities can be adapted to different
+                        spaces and time limits.
+                    </p>
+                </article>
+
+                <article class="activity-card">
+                    <h3>Quick Study Breaks</h3>
+
+                    <ul>
+                        <li>Stretching</li>
+                        <li>Short walking</li>
+                        <li>Simple mobility exercises</li>
+                    </ul>
+
+                    <p>
+                        A short movement break can help students leave
+                        their desks and change their focus.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>
+            Built by X20250020 · Web Technologies 2026
+        </p>
+
+        <address>
+            <a href="mailto:X20250020@stu.hibiuh.edu.cn">
+                X20250020@stu.hibiuh.edu.cn
+            </a>
+        </address>
+    </footer>
+</body>
+
+</html>

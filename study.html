@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Reliable study resources and class notes for university students.">
+
+    <title>Study Shelf | Campus Desk</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">
+        Skip to main content
+    </a>
+
+    <header class="site-header">
+        <a class="site-name" href="index.html">
+            Campus Desk
+        </a>
+
+        <nav aria-label="Primary navigation">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="study.html" aria-current="page">
+                        Study Shelf
+                    </a>
+                </li>
+
+                <li>
+                    <a href="loadout.html">
+                        Loadout
+                    </a>
+                </li>
+
+                <li>
+                    <a href="move.html">
+                        Active Breaks
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="page-intro">
+            <p class="eyebrow">
+                Read. Write. Review.
+            </p>
+
+            <h1>Study Shelf</h1>
+
+            <p>
+                Find study resources you can rely on and keep your class notes together in one digital bookshelf.
+            </p>
+        </section>
+
+        <div class="study-layout">
+            <section class="shelf"
+                     aria-labelledby="reading-heading">
+
+                <h2 id="reading-heading">
+                    Reading Shelf
+                </h2>
+
+                <div class="book-list">
+                    <article class="book-card">
+                        <h3>Project Gutenberg</h3>
+
+                        <p>
+                            Read classic books that are available for free online.
+                        </p>
+
+                        <a href="https://www.gutenberg.org/"
+                           target="_blank"
+                           rel="noopener">
+                            Visit official site
+                        </a>
+                    </article>
+
+                    <article class="book-card">
+                        <h3>Standard Ebooks</h3>
+
+                        <p>
+                            Find nicely formatted versions of public-domain books.
+                        </p>
+
+                        <a href="https://standardebooks.org/"
+                           target="_blank"
+                           rel="noopener">
+                            Visit official site
+                        </a>
+                    </article>
+
+                    <article class="book-card">
+                        <h3>DOAJ</h3>
+
+                        <p>
+                            Find open-access journals and research articles you can read for free.
+                        </p>
+
+                        <a href="https://doaj.org/"
+                           target="_blank"
+                           rel="noopener">
+                            Visit official site
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="shelf"
+                     aria-labelledby="notes-heading">
+
+                <h2 id="notes-heading">
+                    My Class Notes
+                </h2>
+
+                <div class="notebook-list">
+                    <details>
+                        <summary>Web Technology</summary>
+
+                        <p>
+                            HTML describes the meaning and structure of a page.
+                        </p>
+
+                        <p>
+                            CSS controls presentation and layout. JavaScript adds behaviour.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>Git and GitHub</summary>
+
+                        <p>
+                            Git records the history of a project. GitHub stores a remote copy online.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>Personal Notes</summary>
+
+                        <p>
+                            Use the form below to prepare a new note.
+                        </p>
+                    </details>
+                </div>
+
+                <form class="note-form">
+                    <h3>Write a new note</h3>
+
+                    <div class="form-group">
+                        <label for="course">
+                            Course
+                        </label>
+
+                        <select id="course" name="course">
+                            <option value="web-technology">
+                                Web Technology
+                            </option>
+
+                            <option value="english">
+                                English
+                            </option>
+
+                            <option value="german">
+                                German
+                            </option>
+
+                            <option value="personal">
+                                Personal Notes
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note-title">
+                            Note title
+                        </label>
+
+                        <input id="note-title"
+                               name="note-title"
+                               type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note-body">
+                            Your note
+                        </label>
+
+                        <textarea id="note-body"
+                                  name="note-body"
+                                  rows="10"></textarea>
+                    </div>
+
+                    <button type="reset">
+                        Clear note
+                    </button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+    <p>
+        Built by X20250020 · Web Technologies 2026
+    </p>
+
+    <address>
+        <a href="mailto:X20250020@stu.hibiuh.edu.cn">
+            X20250020@stu.hibiuh.edu.cn
+        </a>
+    </address>
+</footer>
+</body>
+
+</html>
