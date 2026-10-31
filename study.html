@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="study-page">
     <a class="skip-link" href="#main-content">
         Skip to main content
     </a>
@@ -62,160 +62,454 @@
     </header>
 
     <main id="main-content">
-        <section class="page-intro">
+        <section class="page-intro study-intro">
             <p class="eyebrow">
-                Read. Write. Review.
+                Read. Capture. Return.
             </p>
 
             <h1>Study Shelf</h1>
 
-            <p>
-                Find study resources you can rely on and keep your class notes together in one digital bookshelf.
+            <p class="study-summary">
+                A calm place to discover reliable reading, collect class notes and return to ideas worth keeping.
+                <span>Pick a book, choose a notebook and keep one useful idea before you leave.</span>
             </p>
         </section>
 
-        <div class="study-layout">
-            <section class="shelf"
+        <div class="study-room">
+            <section class="library-case reading-case"
                      aria-labelledby="reading-heading">
 
-                <h2 id="reading-heading">
-                    Reading Shelf
-                </h2>
+                <div class="shelf-heading">
+                    <div>
+                        <p class="section-kicker">Open a door</p>
+                        <h2 id="reading-heading">Reading Shelf</h2>
+                    </div>
 
-                <div class="book-list">
-                    <article class="book-card">
-                        <h3>Project Gutenberg</h3>
-
-                        <p>
-                            Read classic books that are available for free online.
-                        </p>
-
-                        <a href="https://www.gutenberg.org/"
-                           target="_blank"
-                           rel="noopener">
-                            Visit official site
-                        </a>
-                    </article>
-
-                    <article class="book-card">
-                        <h3>Standard Ebooks</h3>
-
-                        <p>
-                            Find nicely formatted versions of public-domain books.
-                        </p>
-
-                        <a href="https://standardebooks.org/"
-                           target="_blank"
-                           rel="noopener">
-                            Visit official site
-                        </a>
-                    </article>
-
-                    <article class="book-card">
-                        <h3>DOAJ</h3>
-
-                        <p>
-                            Find open-access journals and research articles you can read for free.
-                        </p>
-
-                        <a href="https://doaj.org/"
-                           target="_blank"
-                           rel="noopener">
-                            Visit official site
-                        </a>
-                    </article>
+                    <p>Free classics and trusted places to begin your research.</p>
                 </div>
+
+                <div class="bookcase" aria-label="Three-tier reading bookcase">
+                    <section class="shelf-tier" aria-labelledby="resources-heading">
+                        <h3 id="resources-heading" class="shelf-label">Study websites</h3>
+
+                        <p class="shelf-search-hint">
+                            Click a book to search books and articles.
+                        </p>
+
+                        <div class="books-on-shelf resource-books">
+                            <a class="book-spine spine-wide book-ochre"
+                               href="https://www.gutenberg.org/"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Visit Project Gutenberg">
+                                <span>Project<br>Gutenberg</span>
+                            </a>
+
+                            <a class="book-spine spine-wide book-charcoal book-tall"
+                               href="https://standardebooks.org/"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Visit Standard Ebooks">
+                                <span>Standard<br>Ebooks</span>
+                            </a>
+
+                            <a class="book-spine spine-medium book-blue"
+                               href="https://scholar.google.com/"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Visit Google Scholar">
+                                <span>Google<br>Scholar</span>
+                            </a>
+
+                            <a class="book-spine spine-narrow book-terracotta book-medium"
+                               href="https://doaj.org/"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Visit the Directory of Open Access Journals">
+                                <span>DOAJ</span>
+                            </a>
+
+                            <a class="book-spine spine-medium book-green"
+                               href="https://openlibrary.org/"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Visit Open Library">
+                                <span>Open<br>Library</span>
+                            </a>
+
+                            <a class="book-spine spine-wide book-burgundy"
+                               href="https://archive.org/"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Visit Internet Archive">
+                                <span>Internet<br>Archive</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <section class="shelf-tier" aria-labelledby="classics-heading">
+                        <h3 id="classics-heading" class="shelf-label">Common reads</h3>
+
+                        <div class="books-on-shelf common-books">
+                            <a class="book-spine book-burgundy book-tall"
+                               href="https://www.gutenberg.org/ebooks/1342"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read Pride and Prejudice by Jane Austen">
+                                <span>Pride &amp;<br>Prejudice</span>
+                                <small>Jane Austen</small>
+                            </a>
+
+                            <a class="book-spine book-green"
+                               href="https://www.gutenberg.org/ebooks/84"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read Frankenstein by Mary Shelley">
+                                <span>Frankenstein</span>
+                                <small>Mary Shelley</small>
+                            </a>
+
+                            <a class="book-spine book-blue book-medium"
+                               href="https://www.gutenberg.org/ebooks/1661"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read The Adventures of Sherlock Holmes">
+                                <span>Sherlock<br>Holmes</span>
+                                <small>A. C. Doyle</small>
+                            </a>
+
+                            <a class="book-spine book-ochre"
+                               href="https://www.gutenberg.org/ebooks/11"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read Alice's Adventures in Wonderland">
+                                <span>Alice in<br>Wonderland</span>
+                                <small>Lewis Carroll</small>
+                            </a>
+
+                            <a class="book-spine book-charcoal book-tall"
+                               href="https://www.gutenberg.org/ebooks/345"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read Dracula by Bram Stoker">
+                                <span>Dracula</span>
+                                <small>Bram Stoker</small>
+                            </a>
+
+                            <a class="book-spine book-terracotta"
+                               href="https://www.gutenberg.org/ebooks/1260"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read Jane Eyre by Charlotte Bronte">
+                                <span>Jane Eyre</span>
+                                <small>C. Brontë</small>
+                            </a>
+
+                            <a class="book-spine book-green book-medium"
+                               href="https://www.gutenberg.org/ebooks/2701"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read Moby Dick by Herman Melville">
+                                <span>Moby Dick</span>
+                                <small>H. Melville</small>
+                            </a>
+
+                            <a class="book-spine book-blue book-tall"
+                               href="https://www.gutenberg.org/ebooks/64317"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="Read The Great Gatsby by F. Scott Fitzgerald">
+                                <span>The Great<br>Gatsby</span>
+                                <small>F. Fitzgerald</small>
+                            </a>
+                        </div>
+                    </section>
+
+                    <section class="shelf-tier book-stack-tier" aria-label="A decorative stack of books">
+                        <div class="book-stack-scene" aria-hidden="true">
+                            <svg class="book-stack-art" viewBox="0 0 320 190" focusable="false">
+                                <defs>
+                                    <linearGradient id="stack-blue" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#405667"/>
+                                        <stop offset="0.18" stop-color="#607b8e"/>
+                                        <stop offset="0.82" stop-color="#536878"/>
+                                        <stop offset="1" stop-color="#354955"/>
+                                    </linearGradient>
+                                    <linearGradient id="stack-burgundy" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#60383d"/>
+                                        <stop offset="0.18" stop-color="#8b555a"/>
+                                        <stop offset="0.82" stop-color="#7b4c50"/>
+                                        <stop offset="1" stop-color="#543034"/>
+                                    </linearGradient>
+                                    <linearGradient id="stack-ochre" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#77572f"/>
+                                        <stop offset="0.2" stop-color="#aa8248"/>
+                                        <stop offset="0.82" stop-color="#9a7542"/>
+                                        <stop offset="1" stop-color="#684a29"/>
+                                    </linearGradient>
+                                    <linearGradient id="stack-green" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#3b5042"/>
+                                        <stop offset="0.2" stop-color="#66806d"/>
+                                        <stop offset="0.82" stop-color="#526b5a"/>
+                                        <stop offset="1" stop-color="#34483b"/>
+                                    </linearGradient>
+                                    <linearGradient id="stack-pages" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#d6c7ac"/>
+                                        <stop offset="0.5" stop-color="#fff7e8"/>
+                                        <stop offset="1" stop-color="#c9b99d"/>
+                                    </linearGradient>
+                                    <filter id="stack-shadow" x="-20%" y="-30%" width="150%" height="180%">
+                                        <feDropShadow dx="7" dy="9" stdDeviation="6" flood-color="#3d2818" flood-opacity="0.28"/>
+                                    </filter>
+                                </defs>
+
+                                <g filter="url(#stack-shadow)">
+                                    <g transform="rotate(2 155 148)">
+                                        <path d="M43 136H272Q280 136 280 143V160Q280 166 272 166H43Z" fill="url(#stack-pages)" stroke="#b9a98d" stroke-width="1.5"/>
+                                        <path d="M34 131H276Q284 131 284 137V141H42V138H34Q29 138 29 134Q29 131 34 131Z" fill="url(#stack-blue)" stroke="#30414d" stroke-width="1.5"/>
+                                        <path d="M42 162H284V166Q284 171 276 171H34Q29 171 29 167V164H42Z" fill="url(#stack-blue)" stroke="#30414d" stroke-width="1.5"/>
+                                        <path d="M34 132H49V170H34Q28 170 28 164V138Q28 132 34 132Z" fill="url(#stack-blue)" stroke="#30414d" stroke-width="2"/>
+                                        <path d="M55 143H265M55 149H272M55 155H268M55 161H262" fill="none" stroke="#c5b79d" stroke-linecap="round" stroke-width="1.2" opacity="0.72"/>
+                                    </g>
+
+                                    <g transform="rotate(-1.5 158 116)">
+                                        <path d="M64 104H283Q291 104 291 111V127Q291 133 283 133H64Z" fill="url(#stack-pages)" stroke="#b9a98d" stroke-width="1.5"/>
+                                        <path d="M55 99H286Q294 99 294 105V109H64V106H55Q49 106 49 102Q49 99 55 99Z" fill="url(#stack-ochre)" stroke="#664725" stroke-width="1.5"/>
+                                        <path d="M64 129H294V133Q294 137 286 137H55Q49 137 49 133V131H64Z" fill="url(#stack-ochre)" stroke="#664725" stroke-width="1.5"/>
+                                        <path d="M55 100H70V136H55Q48 136 48 130V106Q48 100 55 100Z" fill="url(#stack-ochre)" stroke="#664725" stroke-width="2"/>
+                                        <path d="M76 111H276M76 117H283M76 123H279M76 129H273" fill="none" stroke="#c5b79d" stroke-linecap="round" stroke-width="1.2" opacity="0.72"/>
+                                    </g>
+
+                                    <g transform="rotate(1.8 144 83)">
+                                        <path d="M37 71H252Q260 71 260 78V95Q260 101 252 101H37Z" fill="url(#stack-pages)" stroke="#b9a98d" stroke-width="1.5"/>
+                                        <path d="M28 66H255Q263 66 263 72V76H37V73H28Q22 73 22 69Q22 66 28 66Z" fill="url(#stack-burgundy)" stroke="#4f2d31" stroke-width="1.5"/>
+                                        <path d="M37 97H263V101Q263 105 255 105H28Q22 105 22 101V99H37Z" fill="url(#stack-burgundy)" stroke="#4f2d31" stroke-width="1.5"/>
+                                        <path d="M28 67H43V104H28Q21 104 21 98V73Q21 67 28 67Z" fill="url(#stack-burgundy)" stroke="#4f2d31" stroke-width="2"/>
+                                        <path d="M49 78H245M49 84H252M49 90H248M49 96H242" fill="none" stroke="#c5b79d" stroke-linecap="round" stroke-width="1.2" opacity="0.72"/>
+                                    </g>
+
+                                    <g transform="rotate(-2 173 49)">
+                                        <path d="M82 36H277Q285 36 285 43V60Q285 66 277 66H82Z" fill="url(#stack-pages)" stroke="#b9a98d" stroke-width="1.5"/>
+                                        <path d="M73 31H280Q288 31 288 37V41H82V38H73Q67 38 67 34Q67 31 73 31Z" fill="url(#stack-green)" stroke="#314338" stroke-width="1.5"/>
+                                        <path d="M82 62H288V66Q288 70 280 70H73Q67 70 67 66V64H82Z" fill="url(#stack-green)" stroke="#314338" stroke-width="1.5"/>
+                                        <path d="M73 32H88V69H73Q66 69 66 63V38Q66 32 73 32Z" fill="url(#stack-green)" stroke="#314338" stroke-width="2"/>
+                                        <path d="M94 43H270M94 49H277M94 55H273M94 61H267" fill="none" stroke="#c5b79d" stroke-linecap="round" stroke-width="1.2" opacity="0.72"/>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <p class="stack-caption">
+                            Read a book, explore a catalogue, or search for something you want to read.
+                        </p>
+                    </section>
+                </div>
+
             </section>
 
-            <section class="shelf"
+            <section class="library-case notes-case"
                      aria-labelledby="notes-heading">
 
-                <h2 id="notes-heading">
-                    My Class Notes
-                </h2>
+                <div class="shelf-heading">
+                    <div>
+                        <p class="section-kicker">Keep the thought</p>
+                        <h2 id="notes-heading">My Notes</h2>
+                    </div>
 
-                <div class="notebook-list">
-                    <details>
-                        <summary>Web Technology</summary>
-
-                        <p>
-                            HTML describes the meaning and structure of a page.
-                        </p>
-
-                        <p>
-                            CSS controls presentation and layout. JavaScript adds behaviour.
-                        </p>
-                    </details>
-
-                    <details>
-                        <summary>Git and GitHub</summary>
-
-                        <p>
-                            Git records the history of a project. GitHub stores a remote copy online.
-                        </p>
-                    </details>
-
-                    <details>
-                        <summary>Personal Notes</summary>
-
-                        <p>
-                            Use the form below to prepare a new note.
-                        </p>
-                    </details>
+                    <p>Choose a notebook, write a clear note and save it to your shelf.</p>
                 </div>
 
-                <form class="note-form">
-                    <h3>Write a new note</h3>
+                <div id="notebook-bookcase"
+                     class="bookcase notebook-bookcase"
+                     aria-label="Three-tier notebook bookcase">
+                    <section class="shelf-tier notebook-tier" aria-label="Example notebooks">
+                        <div id="notebook-tier-1" class="books-on-shelf notebook-row"></div>
+                    </section>
 
-                    <div class="form-group">
-                        <label for="course">
-                            Course
-                        </label>
+                    <section class="shelf-tier notebook-tier" aria-label="Your added notebooks, shelf two">
+                        <div id="notebook-tier-2" class="books-on-shelf notebook-row"></div>
+                    </section>
 
-                        <select id="course" name="course">
-                            <option value="web-technology">
-                                Web Technology
-                            </option>
-
-                            <option value="english">
-                                English
-                            </option>
-
-                            <option value="german">
-                                German
-                            </option>
-
-                            <option value="personal">
-                                Personal Notes
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="note-title">
-                            Note title
-                        </label>
-
-                        <input id="note-title"
-                               name="note-title"
-                               type="text">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="note-body">
-                            Your note
-                        </label>
-
-                        <textarea id="note-body"
-                                  name="note-body"
-                                  rows="10"></textarea>
-                    </div>
-
-                    <button type="reset">
-                        Clear note
-                    </button>
-                </form>
+                    <section class="shelf-tier notebook-tier" aria-label="Your added notebooks, shelf three">
+                        <div id="notebook-tier-3" class="books-on-shelf notebook-row"></div>
+                    </section>
+                </div>
             </section>
+        </div>
+
+        <dialog id="add-notebook-dialog" class="notebook-dialog">
+            <form id="add-notebook-form" class="dialog-card">
+                <div class="dialog-heading">
+                    <div>
+                        <p class="section-kicker">A new place for ideas</p>
+                        <h2>Create a notebook</h2>
+                    </div>
+
+                    <button id="cancel-notebook"
+                            class="dialog-close"
+                            type="button"
+                            aria-label="Close new notebook dialog">
+                        ×
+                    </button>
+                </div>
+
+                <label for="new-notebook-name">Notebook name</label>
+                <input id="new-notebook-name"
+                       name="new-notebook-name"
+                       type="text"
+                       maxlength="28"
+                       placeholder="For example: Mathematics"
+                       autocomplete="off"
+                       required>
+
+                <fieldset class="cover-colour-fieldset">
+                    <legend>Cover colour</legend>
+
+                    <label class="cover-choice cover-plum">
+                        <input type="radio" name="cover-colour" value="custom-0" checked>
+                        <span>Plum</span>
+                    </label>
+
+                    <label class="cover-choice cover-teal">
+                        <input type="radio" name="cover-colour" value="custom-1">
+                        <span>Teal</span>
+                    </label>
+
+                    <label class="cover-choice cover-clay">
+                        <input type="radio" name="cover-colour" value="custom-2">
+                        <span>Clay</span>
+                    </label>
+
+                    <label class="cover-choice cover-taupe">
+                        <input type="radio" name="cover-colour" value="custom-3">
+                        <span>Taupe</span>
+                    </label>
+                </fieldset>
+
+                <button type="submit">Create notebook</button>
+            </form>
+        </dialog>
+
+        <div id="book-overlay"
+             class="book-overlay"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="open-notebook-title"
+             hidden>
+            <div class="notebook-workspace">
+                <div class="notebook-toolbar">
+                    <div>
+                        <p class="section-kicker">Notebook open</p>
+                        <h2 id="open-notebook-title">Notebook</h2>
+                    </div>
+
+                    <div class="notebook-toolbar-actions">
+                        <button id="delete-notebook"
+                                class="delete-notebook-button"
+                                type="button"
+                                hidden>
+                            Delete notebook
+                        </button>
+
+                        <button id="close-book" class="close-book-button" type="button">
+                            Close book
+                        </button>
+                    </div>
+                </div>
+
+                <aside class="floating-pen-box" aria-label="Notebook writing tools">
+                    <p>Pen colour</p>
+                    <span id="active-page-label">Left page selected</span>
+
+                    <div class="colour-swatches">
+                        <button class="colour-swatch ink-charcoal is-active" type="button" data-ink="#2f3237" aria-label="Use charcoal text" aria-pressed="true"></button>
+                        <button class="colour-swatch ink-blue" type="button" data-ink="#315d82" aria-label="Use blue text" aria-pressed="false"></button>
+                        <button class="colour-swatch ink-green" type="button" data-ink="#426451" aria-label="Use green text" aria-pressed="false"></button>
+                        <button class="colour-swatch ink-burgundy" type="button" data-ink="#7b3f4a" aria-label="Use burgundy text" aria-pressed="false"></button>
+                        <button class="colour-swatch ink-violet" type="button" data-ink="#6a4f86" aria-label="Use violet text" aria-pressed="false"></button>
+                        <button class="colour-swatch ink-orange" type="button" data-ink="#a65d32" aria-label="Use orange text" aria-pressed="false"></button>
+                    </div>
+
+                    <div class="floating-tool-actions">
+                        <button id="copy-active-page" class="paper-button" type="button">Copy page</button>
+                        <button id="download-active-page" class="paper-button" type="button">Download</button>
+                    </div>
+
+                    <span id="book-status" role="status" aria-live="polite">Saved automatically.</span>
+                </aside>
+
+                <div id="open-book" class="open-book">
+                    <form id="left-page-form" class="book-page left-page page-editor" data-side="left">
+                        <div class="paper-heading">
+                            <span id="left-page-number">Page 1</span>
+                            <span id="left-word-count">0 words</span>
+                        </div>
+
+                        <label class="visually-hidden" for="left-page-title">Left page title</label>
+                        <input id="left-page-title" class="paper-title" type="text" maxlength="80" placeholder="Page title" autocomplete="off">
+
+                        <label class="visually-hidden" for="left-page-body">Left page notes</label>
+                        <textarea id="left-page-body" class="paper-body" placeholder="Write on the left page..."></textarea>
+
+                        <div class="page-corner-actions left-corner-actions">
+                            <button id="previous-spread" class="paper-button" type="button">← Previous pages</button>
+                        </div>
+                    </form>
+
+                    <form id="right-page-form" class="book-page right-page page-editor" data-side="right">
+                        <div class="paper-heading">
+                            <span id="right-page-number">Page 2</span>
+                            <span id="right-word-count">0 words</span>
+                        </div>
+
+                        <label class="visually-hidden" for="right-page-title">Right page title</label>
+                        <input id="right-page-title" class="paper-title" type="text" maxlength="80" placeholder="Page title" autocomplete="off">
+
+                        <label class="visually-hidden" for="right-page-body">Right page notes</label>
+                        <textarea id="right-page-body" class="paper-body" placeholder="Write on the right page..."></textarea>
+
+                        <div class="page-corner-actions right-corner-actions">
+                            <button id="next-spread" class="next-page-button" type="button">Next pages →</button>
+                        </div>
+                    </form>
+
+                    <div id="turning-sheet" class="turning-sheet" aria-hidden="true" hidden>
+                        <div class="turning-face turning-front">
+                            <span id="turning-front-number"></span>
+                            <strong id="turning-front-title"></strong>
+                            <p id="turning-front-preview"></p>
+                        </div>
+
+                        <div class="turning-face turning-back">
+                            <span id="turning-back-number"></span>
+                            <strong id="turning-back-title"></strong>
+                            <p id="turning-back-preview"></p>
+                        </div>
+                    </div>
+
+                    <div class="mobile-page-actions" aria-label="Notebook page navigation">
+                        <button id="mobile-previous-page" class="paper-button" type="button">
+                            ← Previous
+                        </button>
+
+                        <button id="mobile-next-page" class="next-page-button" type="button">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+
+                <div id="delete-confirmation" class="delete-confirmation" hidden>
+                    <div class="confirmation-card" role="alertdialog" aria-labelledby="delete-confirm-title">
+                        <h3 id="delete-confirm-title">Delete this notebook?</h3>
+                        <p>Its pages will be removed from this browser. This cannot be undone.</p>
+
+                        <div class="confirmation-actions">
+                            <button id="cancel-delete" class="secondary-button" type="button">Keep it</button>
+                            <button id="confirm-delete" class="danger-button" type="button">Delete notebook</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -230,6 +524,7 @@
         </a>
     </address>
 </footer>
+    <script src="study.js"></script>
 </body>
 
 </html>
