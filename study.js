@@ -478,19 +478,19 @@ function turnSpread(direction) {
     turningSheet.classList.add(isForward ? "flip-forward" : "flip-backward");
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const turnDuration = reducedMotion ? 0 : 1350;
+    const turnDuration = reducedMotion ? 0 : 850;
 
     window.setTimeout(() => {
         spreadStart = targetStart;
         loadSpread();
-    }, Math.round(turnDuration * 0.52));
+    }, reducedMotion ? 0 : 430);
 
     window.setTimeout(() => {
         turningSheet.hidden = true;
         turningSheet.className = "turning-sheet";
         pageTurnLocked = false;
         pageEditors[singlePage ? "left" : (isForward ? "right" : "left")].title.focus();
-    }, turnDuration + 40);
+    }, turnDuration + 10);
 }
 
 notebookBookcase.addEventListener("click", (event) => {
