@@ -155,266 +155,104 @@
                     <div class="stage-hill" aria-hidden="true"></div>
                     <div class="stage-ground" aria-hidden="true"></div>
 
-                    <svg class="athlete-svg" id="athlete-svg" viewBox="0 0 420 300" aria-hidden="true" focusable="false">
-                        <ellipse class="athlete-shadow" cx="210" cy="270" rx="78" ry="10"></ellipse>
+                    <svg class="athlete-svg"
+                         id="athlete-svg"
+                         viewBox="0 0 420 300"
+                         aria-hidden="true"
+                         focusable="false">
 
-                        <!-- WALKING -->
-                        <g transform="translate(420 24) scale(-1 1)">
-                            <g class="sport-pictogram sport-pictogram--walking">
-                                <circle class="p-head" cx="206" cy="54" r="18"></circle>
-                                <path class="p-main" d="M214 68 L214 148"></path>
+                        <ellipse class="athlete-shadow"
+                                 id="athlete-shadow"
+                                 cx="210"
+                                 cy="267"
+                                 rx="68"
+                                 ry="9"></ellipse>
 
-                                <g class="part walk-arm-front">
-                                    <path class="p-limb" d="M214 92 L214 141"></path>
-                                </g>
-                                <g class="part walk-arm-back">
-                                    <path class="p-limb" d="M214 92 L214 141"></path>
-                                </g>
-                                <g class="part walk-leg-front">
-                                    <path class="p-limb" d="M214 148 L217 231"></path>
-                                </g>
-                                <g class="part walk-leg-back">
-                                    <path class="p-limb" d="M214 148 L211 231"></path>
-                                </g>
-                            </g>
+                        <!-- Activity equipment. JavaScript keeps moving equipment
+                             attached to the hands or feet until its release point. -->
+                        <g class="motion-prop prop--yoga-mat">
+                            <rect x="126" y="246" width="184" height="13" rx="6"></rect>
+                            <path d="M145 250 H292"></path>
                         </g>
 
-                        <!-- RUNNING -->
-                        <g class="sport-pictogram sport-pictogram--running">
-                            <circle class="p-head" cx="195" cy="48" r="14"></circle>
-                            <path class="p-main" d="M204 62 L228 138"></path>
-
-                            <g class="part run-arm-front">
-                                <path class="p-limb" d="M210 92 L247 109 L268 92"></path>
-                            </g>
-                            <g class="part run-arm-back">
-                                <path class="p-limb" d="M208 92 L176 78 L157 58"></path>
-                            </g>
-                            <g class="part run-leg-front">
-                                <path class="p-limb" d="M228 138 L191 180 L147 203"></path>
-                            </g>
-                            <g class="part run-leg-back">
-                                <path class="p-limb" d="M228 138 L261 173 L301 165"></path>
-                            </g>
+                        <g class="motion-prop prop--bike">
+                            <circle cx="112" cy="226" r="42"></circle>
+                            <circle cx="306" cy="226" r="42"></circle>
+                            <path d="M112 226 L169 166 L220 226 L112 226
+                                     M169 166 L199 226 L253 157 L306 226 L220 226
+                                     M253 157 L282 145
+                                     M169 166 L154 148 H184"></path>
+                            <circle class="bike-crank" cx="220" cy="226" r="7"></circle>
                         </g>
 
-                        <!-- YOGA -->
-                        <g class="sport-pictogram sport-pictogram--yoga">
-                            <circle class="p-head" cx="210" cy="60" r="14"></circle>
-                            <path class="p-main" d="M210 74 L210 122"></path>
-
-                            <g class="part yoga-arms-rest">
-                                <path class="p-limb" d="M210 96 L183 111 L165 129"></path>
-                                <path class="p-limb" d="M210 96 L237 111 L255 129"></path>
-                            </g>
-
-                            <g class="part yoga-arms-open">
-                                <path class="p-limb" d="M210 94 L184 63 L165 34"></path>
-                                <path class="p-limb" d="M210 94 L236 63 L255 34"></path>
-                            </g>
-
-                            <path class="p-limb" d="M210 122 L176 162 L149 146"></path>
-                            <path class="p-limb" d="M210 122 L244 162 L271 146"></path>
-                            <path class="p-limb" d="M149 146 L210 180 L271 146"></path>
+                        <g class="motion-prop prop--table-tennis">
+                            <path d="M273 178 H397 M286 178 V248 M384 178 V248"></path>
+                            <path class="table-net" d="M333 148 V178"></path>
                         </g>
 
-                        <!-- BODYWEIGHT / PUSH-UP -->
-                        <g class="sport-pictogram sport-pictogram--bodyweight" transform="translate(420 0) scale(-1 1)">
-                            <g class="part pushup-body">
-                                <circle class="p-head" cx="320" cy="122" r="13"></circle>
-                                <path class="p-main" d="M115 149 L307 138"></path>
-                                <g class="part pushup-arm-left">
-                                    <path class="p-limb" d="M250 141 L239 190 L225 224"></path>
-                                </g>
-                                <g class="part pushup-arm-right">
-                                    <path class="p-limb" d="M270 140 L281 189 L296 223"></path>
-                                </g>
-                                <path class="p-limb" d="M115 149 L72 178 L42 179"></path>
-                                <path class="p-limb" d="M122 151 L84 194 L55 196"></path>
-                            </g>
+                        <g class="motion-prop prop--swim">
+                            <path d="M28 218 Q58 202 88 218 T148 218 T208 218 T268 218 T328 218 T388 218"></path>
+                            <path d="M48 241 Q78 225 108 241 T168 241 T228 241 T288 241 T348 241"></path>
                         </g>
 
-                        <!-- JUMP ROPE -->
-                        <g class="sport-pictogram sport-pictogram--jump-rope">
-                            <g class="part rope-loop-group">
-                                <ellipse class="rope-loop" cx="210" cy="145" rx="55" ry="123"></ellipse>
-                            </g>
+                        <path class="motion-prop prop--rope"
+                              id="rig-rope"
+                              d="M164 147 Q210 275 256 147"></path>
 
-                            <circle class="p-head" cx="210" cy="57" r="14"></circle>
-                            <path class="p-main" d="M210 71 L210 150"></path>
-
-                            <g class="part rope-arm-left">
-                                <path class="p-limb" d="M210 95 L177 123 L155 145"></path>
-                            </g>
-                            <g class="part rope-arm-right">
-                                <path class="p-limb" d="M210 95 L243 123 L265 145"></path>
-                            </g>
-                            <path class="p-limb" d="M210 150 L193 202 L193 241"></path>
-                            <path class="p-limb" d="M210 150 L227 202 L227 241"></path>
-                            <circle class="p-dot" cx="155" cy="145" r="5"></circle>
-                            <circle class="p-dot" cx="265" cy="145" r="5"></circle>
+                        <g class="motion-prop prop--racket" id="rig-racket">
+                            <path d="M0 0 L34 -22"></path>
+                            <ellipse cx="48" cy="-32" rx="14" ry="22" transform="rotate(34 48 -32)"></ellipse>
+                            <path class="racket-string" d="M35 -42 L57 -20 M31 -34 L52 -12"></path>
                         </g>
 
-                        <!-- CYCLING -->
-                        <g class="sport-pictogram sport-pictogram--cycling">
-                            <g class="part bike-graphic">
-                                <circle class="p-equip" cx="114" cy="223" r="40"></circle>
-                                <circle class="p-equip" cx="304" cy="223" r="40"></circle>
-                                <path class="p-equip" d="M114 223 L169 161 L221 223 L114 223 L193 223 L249 154 L304 223 L221 223"></path>
-                                <path class="p-equip" d="M169 161 L155 145 L187 145"></path>
-                                <path class="p-equip" d="M249 154 L272 146 L287 138"></path>
-                            </g>
-
-                            <circle class="p-head" cx="208" cy="52" r="14"></circle>
-                            <path class="p-main" d="M214 67 L230 128"></path>
-                            <path class="p-limb" d="M214 92 L250 108 L280 138"></path>
-                            <path class="p-limb" d="M220 92 L258 123 L286 138"></path>
-
-                            <g class="part bike-leg-left">
-                                <path class="p-limb" d="M230 128 L195 173 L198 223"></path>
-                            </g>
-                            <g class="part bike-leg-right">
-                                <path class="p-limb" d="M230 128 L262 176 L221 223"></path>
-                            </g>
+                        <g class="motion-prop prop--paddle" id="rig-paddle">
+                            <path d="M0 0 L24 -12"></path>
+                            <ellipse cx="35" cy="-18" rx="11" ry="16" transform="rotate(58 35 -18)"></ellipse>
                         </g>
 
-                        <!-- BADMINTON -->
-                        <g class="sport-pictogram sport-pictogram--badminton">
-                            <circle class="p-head" cx="208" cy="54" r="14"></circle>
-                            <path class="p-main" d="M208 70 L208 145"></path>
-
-                            <path class="p-limb" d="M208 145 L182 184 L154 207"></path>
-                            <path class="p-limb" d="M208 145 L236 184 L266 207"></path>
-                            <path class="p-limb" d="M208 96 L172 104 L153 126"></path>
-
-                            <g class="part badminton-racket-arm">
-                                <path class="p-limb" d="M208 96 L239 68 L261 40"></path>
-                                <path class="p-equip" d="M258 48 L273 29"></path>
-                                <ellipse class="p-equip" cx="286" cy="20" rx="13" ry="20" transform="rotate(28 286 20)"></ellipse>
-                                <path class="p-equip" d="M274 9 L296 31 M273 19 L293 39"></path>
-                            </g>
-
-                            <g class="part shuttle-group">
-                                <path class="p-equip shuttle-shape" d="M315 43 L322 56 L311 64 Z"></path>
-                            </g>
+                        <g class="motion-prop prop--ball" id="rig-ball">
+                            <circle cx="0" cy="0" r="17"></circle>
+                            <path class="ball-detail" d="M-17 0 H17 M0 -17 V17 M-12 -12 Q0 0 12 12 M12 -12 Q0 0 -12 12"></path>
                         </g>
 
-                        <!-- TABLE TENNIS -->
-                        <g class="sport-pictogram sport-pictogram--table-tennis">
-                            <circle class="p-head" cx="182" cy="56" r="14"></circle>
-                            <path class="p-main" d="M188 70 L205 146"></path>
-                            <path class="p-limb" d="M190 98 L154 123 L134 113"></path>
-
-                            <g class="part pingpong-arm">
-                                <path class="p-limb" d="M196 102 L240 118 L279 108"></path>
-                                <path class="p-equip" d="M277 108 L294 90"></path>
-                                <ellipse class="p-equip" cx="304" cy="81" rx="12" ry="18" transform="rotate(35 304 81)"></ellipse>
-                            </g>
-
-                            <path class="p-limb" d="M205 146 L173 194 L150 239"></path>
-                            <path class="p-limb" d="M205 146 L239 190 L266 235"></path>
-                            <circle class="p-dot" cx="324" cy="102" r="5"></circle>
+                        <g class="motion-prop prop--barbell" id="rig-barbell">
+                            <path class="barbell-bar" d="M-66 0 H66"></path>
+                            <path class="barbell-plate" d="M-56 -18 V18 M-47 -23 V23 M47 -23 V23 M56 -18 V18"></path>
                         </g>
 
-                        <!-- BASKETBALL -->
-                        <g class="sport-pictogram sport-pictogram--basketball">
-                            <circle class="p-head" cx="205" cy="52" r="14"></circle>
-                            <path class="p-main" d="M205 68 L205 137"></path>
+                        <path class="motion-prop prop--shuttle"
+                              id="rig-shuttle"
+                              d="M0 -8 L8 7 L-5 12 Z"></path>
 
-                            <g class="part basketball-arms">
-                                <path class="p-limb" d="M205 92 L187 57 L180 31"></path>
-                                <path class="p-limb" d="M205 92 L223 56 L230 30"></path>
+                        <!-- One fixed-proportion, side-view Pivot-style skeleton is
+                             reused by all activities. Every bone keeps its length. -->
+                        <g class="pivot-athlete" id="pivot-athlete">
+                            <g class="rig-back-limbs">
+                                <line id="rig-back-upper-arm"></line>
+                                <line id="rig-back-lower-arm"></line>
+                                <line id="rig-back-thigh"></line>
+                                <line id="rig-back-shin"></line>
                             </g>
 
-                            <path class="p-limb" d="M205 137 L181 180 L164 208"></path>
-                            <path class="p-limb" d="M205 137 L229 180 L246 208"></path>
+                            <line class="rig-torso" id="rig-torso"></line>
 
-                            <g class="part basketball-ball-group">
-                                <circle class="p-equip basketball-ball" cx="205" cy="17" r="17"></circle>
-                                <path class="p-equip" d="M205 0 C193 7 193 27 205 34 M205 0 C217 7 217 27 205 34 M188 17 C195 10 215 10 222 17 M188 17 C195 24 215 24 222 17"></path>
-                            </g>
-                        </g>
-
-                        <!-- FOOTBALL -->
-                        <g class="sport-pictogram sport-pictogram--football">
-                            <circle class="p-head" cx="183" cy="56" r="14"></circle>
-                            <path class="p-main" d="M188 72 L194 147"></path>
-
-                            <path class="p-limb" d="M188 98 L156 122 L136 108"></path>
-                            <path class="p-limb" d="M194 98 L228 118 L249 103"></path>
-                            <path class="p-limb" d="M194 147 L168 191 L148 238"></path>
-
-                            <g class="part football-kick-leg">
-                                <path class="p-limb" d="M194 147 L240 177 L286 169"></path>
+                            <g class="rig-front-limbs">
+                                <line id="rig-front-upper-arm"></line>
+                                <line id="rig-front-lower-arm"></line>
+                                <line id="rig-front-thigh"></line>
+                                <line id="rig-front-shin"></line>
                             </g>
 
-                            <g class="part football-ball-group">
-                                <circle class="football-ball" cx="132" cy="232" r="17"></circle>
-                                <path class="football-panel" d="M126 221 L136 221 L142 229 L138 239 L127 239 L121 230 Z"></path>
-                                <path class="football-seam" d="M126 221 L121 230 L127 239 M136 221 L142 229 L138 239"></path>
-                            </g>
-                        </g>
+                            <circle class="rig-head" id="rig-head" r="15"></circle>
+                            <path class="rig-face" id="rig-face" d="M0 0"></path>
 
-                        <!-- VOLLEYBALL -->
-                        <g class="sport-pictogram sport-pictogram--volleyball">
-                            <circle class="p-head" cx="209" cy="56" r="14"></circle>
-                            <path class="p-main" d="M209 72 L209 140"></path>
-
-                            <g class="part volleyball-arms">
-                                <path class="p-limb" d="M209 98 L190 119 L209 137"></path>
-                                <path class="p-limb" d="M209 98 L228 119 L209 137"></path>
-                            </g>
-
-                            <path class="p-limb" d="M209 140 L181 190 L162 238"></path>
-                            <path class="p-limb" d="M209 140 L237 190 L256 238"></path>
-
-                            <g class="part volleyball-ball-group">
-                                <circle class="p-equip" cx="258" cy="126" r="17"></circle>
-                                <path class="p-equip" d="M246 115 Q258 126 270 137 M258 109 Q250 126 258 143"></path>
-                            </g>
-                        </g>
-
-                        <!-- SWIMMING -->
-                        <g class="sport-pictogram sport-pictogram--swimming">
-                            <circle class="p-head" cx="100" cy="143" r="13"></circle>
-                            <path class="p-main" d="M130 146 L312 138"></path>
-
-                            <g class="part swim-arm-front">
-                                <path class="p-limb" d="M268 140 L309 110 L353 94"></path>
-                            </g>
-                            <g class="part swim-arm-back">
-                                <path class="p-limb" d="M174 145 L146 108 L112 94"></path>
-                            </g>
-
-                            <g class="part swim-leg-top">
-                                <path class="p-limb" d="M130 146 L87 171 L48 165"></path>
-                            </g>
-                            <g class="part swim-leg-bottom">
-                                <path class="p-limb" d="M130 146 L92 193 L51 198"></path>
-                            </g>
-
-                            <path class="p-water" d="M56 220 Q86 206 116 220 T176 220 T236 220 T296 220 T356 220"></path>
-                            <path class="p-water" d="M76 241 Q106 227 136 241 T196 241 T256 241 T316 241"></path>
-                        </g>
-
-                        <!-- STRENGTH -->
-                        <g class="sport-pictogram sport-pictogram--strength">
-                            <circle class="p-head" cx="210" cy="60" r="14"></circle>
-                            <path class="p-main" d="M210 75 L210 160"></path>
-
-                            <g class="part strength-arm-left">
-                                <path class="p-limb" d="M210 106 L180 72 L165 42"></path>
-                            </g>
-                            <g class="part strength-arm-right">
-                                <path class="p-limb" d="M210 106 L240 72 L255 42"></path>
-                            </g>
-
-                            <path class="p-limb" d="M210 160 L190 205 L186 246"></path>
-                            <path class="p-limb" d="M210 160 L230 205 L234 246"></path>
-
-                            <g class="part barbell-group">
-                                <path class="p-equip" d="M148 40 H272"></path>
-                                <path class="p-equip" d="M158 22 V58 M170 17 V63 M250 17 V63 M262 22 V58"></path>
+                            <g class="rig-joints">
+                                <circle id="rig-shoulder-joint" r="5"></circle>
+                                <circle id="rig-hip-joint" r="5"></circle>
+                                <circle id="rig-front-elbow-joint" r="4"></circle>
+                                <circle id="rig-back-elbow-joint" r="4"></circle>
+                                <circle id="rig-front-knee-joint" r="4.5"></circle>
+                                <circle id="rig-back-knee-joint" r="4.5"></circle>
                             </g>
                         </g>
                     </svg>

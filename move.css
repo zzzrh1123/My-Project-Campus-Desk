@@ -58,127 +58,51 @@
 .movement-stage[data-scene="pool"]::after{right:0;bottom:15%;left:0;height:45%;opacity:1;border:0;border-top:2px solid rgba(255,255,255,0.58);border-bottom:2px solid rgba(255,255,255,0.22);border-radius:0;background:repeating-linear-gradient(180deg,transparent 0 38px,rgba(255,255,255,0.15) 39px 41px,transparent 42px 72px);}
 .movement-stage[data-scene="pool"] .stage-sun,.movement-stage[data-scene="pool"] .stage-cloud,.movement-stage[data-scene="pool"] .stage-hill,.movement-stage[data-scene="pool"] .stage-ground,.movement-stage[data-scene="pool"] .athlete-shadow{display:none;}
 
-.athlete-svg{position:relative;z-index:3;width:min(390px,82%);height:auto;overflow:visible;filter:drop-shadow(0 3px 4px rgba(9,34,31,0.2));}
-.athlete-shadow{fill:rgba(8,34,28,0.25);transform-box:fill-box;transform-origin:center;animation:shadow-pulse 1s ease-in-out infinite;}
-.sport-pictogram{display:none;fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;}
-.movement-stage[data-motion="walking"] .sport-pictogram--walking,.movement-stage[data-motion="running"] .sport-pictogram--running,.movement-stage[data-motion="yoga"] .sport-pictogram--yoga,.movement-stage[data-motion="bodyweight"] .sport-pictogram--bodyweight,.movement-stage[data-motion="jump-rope"] .sport-pictogram--jump-rope,.movement-stage[data-motion="cycling"] .sport-pictogram--cycling,.movement-stage[data-motion="badminton"] .sport-pictogram--badminton,.movement-stage[data-motion="table-tennis"] .sport-pictogram--table-tennis,.movement-stage[data-motion="basketball"] .sport-pictogram--basketball,.movement-stage[data-motion="football"] .sport-pictogram--football,.movement-stage[data-motion="volleyball"] .sport-pictogram--volleyball,.movement-stage[data-motion="swimming"] .sport-pictogram--swimming,.movement-stage[data-motion="strength"] .sport-pictogram--strength{display:inline;}
-.p-head{fill:#fff;stroke:none;transform-box:fill-box;transform-origin:center;transform:scale(1.28);}
-.p-main,.p-limb{fill:none;stroke:#fff;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;}
-.p-main{stroke-width:13;}
-.p-equip{fill:none;stroke:#fff;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;}
-.p-dot{fill:#fff;stroke:none;}
-.p-water{fill:none;stroke:rgba(255,255,255,0.78);stroke-width:4;stroke-linecap:round;}
-.football-ball{fill:#fff;stroke:#fff;stroke-width:3;}
-.football-panel{fill:#1f2937;stroke:#1f2937;stroke-width:1;}
-.football-seam{fill:none;stroke:#1f2937;stroke-width:2;}
-.part{transform-box:view-box;transform-origin:center;animation-fill-mode:both;}
-.walk-arm-front,.walk-arm-back{transform-origin:214px 92px;}
-.walk-leg-front,.walk-leg-back{transform-origin:214px 148px;}
-.run-arm-front,.run-arm-back{transform-origin:210px 92px;}
-.run-leg-front,.run-leg-back{transform-origin:228px 138px;}
-.yoga-arms-rest,.yoga-arms-open{transform-origin:210px 96px;}
-.pushup-body{transform-origin:210px 150px;}
-.pushup-arm-left{transform-origin:239px 190px;}
-.pushup-arm-right{transform-origin:281px 189px;}
-.rope-loop-group{transform-origin:210px 153px;}
-.bike-leg-left,.bike-leg-right{transform-origin:230px 128px;}
-.badminton-racket-arm{transform-origin:208px 96px;}
-.pingpong-arm{transform-origin:196px 102px;}
-.basketball-arms{transform-origin:205px 92px;}
-.basketball-ball-group{transform-origin:205px 17px;}
-.football-kick-leg{transform-origin:194px 147px;}
-.football-ball-group{transform-origin:132px 232px;}
-.volleyball-arms{transform-origin:209px 98px;}
-.volleyball-ball-group{transform-origin:258px 126px;}
-.swim-arm-front{transform-origin:268px 140px;}
-.swim-arm-back{transform-origin:174px 145px;}
-.swim-leg-top{transform-origin:130px 146px;}
-.swim-leg-bottom{transform-origin:130px 146px;}
-.strength-arm-left{transform-origin:210px 106px;}
-.strength-arm-right{transform-origin:210px 106px;}
-.barbell-group{transform-origin:210px 40px;}
+.athlete-svg{position:relative;z-index:3;width:min(390px,88%);height:auto;overflow:visible;filter:drop-shadow(0 3px 4px rgba(9,34,31,0.2));}
+.athlete-shadow{fill:rgba(8,34,28,0.25);}
+.pivot-athlete{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;}
+.pivot-athlete line{stroke:#fff;stroke-width:8;vector-effect:non-scaling-stroke;}
+.pivot-athlete .rig-torso{stroke-width:10;}
+.rig-back-limbs{opacity:1;}
+.rig-back-limbs line{stroke:#fff;stroke-width:8;}
+.rig-head{fill:none;stroke:#fff;stroke-width:6;vector-effect:non-scaling-stroke;}
+.rig-face{display:none;}
+.rig-joints circle{fill:#fff;stroke:none;}
+.motion-prop{display:none;fill:none;stroke:#fff;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
+.movement-stage[data-prop="yoga-mat"] .prop--yoga-mat,
+.movement-stage[data-prop="rope"] .prop--rope,
+.movement-stage[data-prop="bike"] .prop--bike,
+.movement-stage[data-prop="badminton"] .prop--racket,
+.movement-stage[data-prop="badminton"] .prop--shuttle,
+.movement-stage[data-prop="table-tennis"] .prop--table-tennis,
+.movement-stage[data-prop="table-tennis"] .prop--paddle,
+.movement-stage[data-prop="table-tennis"] .prop--ball,
+.movement-stage[data-prop="basketball"] .prop--ball,
+.movement-stage[data-prop="football"] .prop--ball,
+.movement-stage[data-prop="volleyball"] .prop--ball,
+.movement-stage[data-prop="swim"] .prop--swim,
+.movement-stage[data-prop="dumbbell"] .prop--barbell{display:inline;}
+.prop--yoga-mat rect{fill:rgba(244,202,112,.42);stroke:#fff;}
+.prop--yoga-mat path{opacity:.65;}
+.prop--bike circle,.prop--bike path{fill:none;stroke:#fff;}
+.prop--bike .bike-crank{fill:#fff;}
+.prop--table-tennis .table-net{stroke-dasharray:5 5;}
+.prop--swim{stroke:rgba(255,255,255,.82);stroke-dasharray:16 8;}
+.prop--rope{stroke:#f5d590;stroke-width:4;}
+.prop--racket .racket-string{stroke-width:2;opacity:.8;}
+.prop--paddle ellipse{fill:#d9664f;stroke:#fff;}
+.prop--ball circle{fill:#fff;stroke:#fff;}
+.prop--ball .ball-detail{stroke:#34495e;stroke-width:2;}
+.movement-stage[data-prop="basketball"] .prop--ball circle{fill:#df8b3f;}
+.movement-stage[data-prop="basketball"] .prop--ball .ball-detail{stroke:#674124;}
+.movement-stage[data-prop="football"] .prop--ball circle{fill:#f7f7f5;}
+.movement-stage[data-prop="football"] .prop--ball .ball-detail{stroke:#263238;}
+.movement-stage[data-prop="volleyball"] .prop--ball circle{fill:#f7e7ad;}
+.movement-stage[data-prop="volleyball"] .prop--ball .ball-detail{stroke:#4b75a4;}
+.prop--barbell{stroke-width:5;}
+.prop--barbell .barbell-plate{stroke-width:8;}
+.prop--shuttle{fill:#f7efe0;stroke:#fff;}
 .stage-caption{position:absolute;right:1rem;bottom:0.75rem;left:1rem;z-index:4;color:#fff;font-size:0.75rem;font-weight:750;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,0.3);}
-
-@keyframes shadow-pulse{0%,100%{transform:scaleX(1);opacity:.7;}50%{transform:scaleX(.78);opacity:.4;}}
-@keyframes walk-swing{0%,100%{transform:rotate(-36deg);}25%,75%{transform:rotate(0);}50%{transform:rotate(36deg);}}
-@keyframes walk-leg-swing{0%,100%{transform:rotate(-6deg);}25%,75%{transform:rotate(0);}50%{transform:rotate(6deg);}}
-@keyframes run-swing{0%,100%{transform:rotate(-36deg);}50%{transform:rotate(36deg);}}
-@keyframes walk-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
-@keyframes run-bob{0%,100%{transform:translateY(1px) rotate(-4deg);}50%{transform:translateY(-8px) rotate(-4deg);}}
-@keyframes breathe{0%,100%{transform:translateY(0);}50%{transform:translateY(-2px);}}
-@keyframes yoga-rest{0%,18%,82%,100%{opacity:1;}42%,62%{opacity:0;}}
-@keyframes yoga-reach{0%,18%,82%,100%{opacity:0;}42%,62%{opacity:1;}}
-@keyframes pushup{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
-@keyframes elbow-bend-left{0%,100%{transform:rotate(0);}50%{transform:rotate(-18deg);}}
-@keyframes elbow-bend-right{0%,100%{transform:rotate(0);}50%{transform:rotate(18deg);}}
-@keyframes rope-jump{0%,42%,100%{transform:translateY(0);}55%,75%{transform:translateY(-9px);}}
-@keyframes rope-arc{0%,100%{ry:115px;}50%{ry:123px;}}
-@keyframes rope-travel{to{stroke-dashoffset:-42;}}
-@keyframes pedal-forward{0%,100%{transform:rotate(-28deg);}50%{transform:rotate(28deg);}}
-@keyframes badminton-hop{0%,100%{transform:translateY(0);}45%,70%{transform:translateY(-9px);}}
-@keyframes racket-swing{0%,100%{transform:rotate(-8deg);}45%{transform:rotate(15deg);}62%{transform:rotate(28deg);}80%{transform:rotate(4deg);}}
-@keyframes shuttle-flight{0%,30%,100%{transform:translate(0,0);}55%,76%{transform:translate(-12px,-17px);}}
-@keyframes pingpong-swing{0%,100%{transform:rotate(-7deg);}48%{transform:rotate(8deg);}62%{transform:rotate(20deg);}78%{transform:rotate(-2deg);}}
-@keyframes pingpong-ball{0%,30%,100%{transform:translate(0,0);}55%{transform:translate(-35px,-8px);}78%{transform:translate(-12px,4px);}}
-@keyframes jump-shot{0%,100%{transform:translateY(2px);}38%,62%{transform:translateY(-13px);}}
-@keyframes basketball-release{0%,34%,100%{transform:translateY(0);}56%,75%{transform:translateY(-52px);}}
-@keyframes kick{0%,34%,100%{transform:rotate(0);}54%{transform:rotate(42deg);}72%{transform:rotate(10deg);}}
-@keyframes support-sway{0%,100%{transform:rotate(0);}50%{transform:rotate(-5deg);}}
-@keyframes football-roll{0%,38%,100%{transform:translate(0,0) rotate(0);}55%{transform:translate(-20px,-7px) rotate(-55deg);}78%{transform:translate(-43px,0) rotate(-135deg);}}
-@keyframes volleyball-set{0%,100%{transform:translateY(0);}52%{transform:translateY(-8px);}}
-@keyframes volleyball-rise{0%,28%,100%{transform:translate(0,0);}55%,76%{transform:translate(-13px,-48px);}}
-@keyframes swim-stroke{0%,100%{transform:rotate(-24deg);}50%{transform:rotate(24deg);}}
-@keyframes swim-kick{0%,100%{transform:rotate(-14deg);}50%{transform:rotate(14deg);}}
-@keyframes lift-bar{0%,100%{transform:translateY(0);}50%{transform:translateY(26px);}}
-@keyframes lift-left{0%,100%{d:path("M 210 106 L 180 72 L 165 42");}50%{d:path("M 210 106 L 180 83 L 165 68");}}
-@keyframes lift-right{0%,100%{d:path("M 210 106 L 240 72 L 255 42");}50%{d:path("M 210 106 L 240 83 L 255 68");}}
-
-.movement-stage[data-motion="walking"] .sport-pictogram--walking{animation:walk-bob .92s ease-in-out infinite;}
-.movement-stage[data-motion="walking"] .sport-pictogram--walking .p-head{fill:none;stroke:#fff;stroke-width:5;}
-.movement-stage[data-motion="walking"] .sport-pictogram--walking .p-main,
-.movement-stage[data-motion="walking"] .sport-pictogram--walking .p-limb{stroke-width:6;}
-.movement-stage[data-motion="walking"] .walk-arm-front{animation:walk-swing .92s linear infinite;}
-.movement-stage[data-motion="walking"] .walk-arm-back{animation:walk-swing .92s linear -.46s infinite;}
-.movement-stage[data-motion="walking"] .walk-leg-front{animation:walk-leg-swing .92s linear -.46s infinite;}
-.movement-stage[data-motion="walking"] .walk-leg-back{animation:walk-leg-swing .92s linear infinite;}
-.movement-stage[data-motion="running"] .sport-pictogram--running{animation:run-bob .46s ease-in-out infinite;}
-.movement-stage[data-motion="running"] .run-arm-front{animation:run-swing .46s ease-in-out infinite;}
-.movement-stage[data-motion="running"] .run-arm-back{animation:run-swing .46s ease-in-out infinite reverse;}
-.movement-stage[data-motion="running"] .run-leg-front{animation:run-swing .46s ease-in-out infinite reverse;}
-.movement-stage[data-motion="running"] .run-leg-back{animation:run-swing .46s ease-in-out infinite;}
-.movement-stage[data-motion="yoga"] .sport-pictogram--yoga{animation:breathe 3s ease-in-out infinite;}
-.movement-stage[data-motion="yoga"] .yoga-arms-rest{animation:yoga-rest 4.4s ease-in-out infinite;}
-.movement-stage[data-motion="yoga"] .yoga-arms-open{animation:yoga-reach 4.4s ease-in-out infinite;}
-.movement-stage[data-motion="bodyweight"] .pushup-body{animation:pushup 1.7s ease-in-out infinite;}
-.movement-stage[data-motion="bodyweight"] .pushup-arm-left{animation:elbow-bend-left 1.7s ease-in-out infinite;}
-.movement-stage[data-motion="bodyweight"] .pushup-arm-right{animation:elbow-bend-right 1.7s ease-in-out infinite;}
-.movement-stage[data-motion="jump-rope"] .sport-pictogram--jump-rope{animation:rope-jump .56s ease-in-out infinite;}
-.movement-stage[data-motion="jump-rope"] .rope-loop{animation:rope-arc .56s ease-in-out infinite;}
-.movement-stage[data-motion="cycling"] .bike-leg-left{animation:pedal-forward .82s ease-in-out infinite;}
-.movement-stage[data-motion="cycling"] .bike-leg-right{animation:pedal-forward .82s ease-in-out infinite reverse;}
-.movement-stage[data-motion="cycling"] .bike-graphic{stroke-dasharray:none;animation:none;}
-.movement-stage[data-motion="badminton"] .sport-pictogram--badminton{animation:badminton-hop .95s ease-in-out infinite;}
-.movement-stage[data-motion="badminton"] .badminton-racket-arm{animation:racket-swing .95s ease-in-out infinite;}
-.movement-stage[data-motion="badminton"] .shuttle-group{animation:shuttle-flight .95s ease-in-out infinite;}
-.movement-stage[data-motion="table-tennis"] .pingpong-arm{animation:pingpong-swing .78s ease-in-out infinite;}
-.movement-stage[data-motion="table-tennis"] .p-dot{animation:pingpong-ball .78s ease-in-out infinite;}
-.movement-stage[data-motion="basketball"] .sport-pictogram--basketball{animation:jump-shot 1.25s ease-in-out infinite;}
-.movement-stage[data-motion="basketball"] .basketball-arms{animation:volleyball-set 1.25s ease-in-out infinite;}
-.movement-stage[data-motion="basketball"] .basketball-ball-group{animation:basketball-release 1.25s ease-in-out infinite;}
-.movement-stage[data-motion="football"] .football-kick-leg{animation:kick 1.35s ease-in-out infinite;}
-.movement-stage[data-motion="football"] .football-ball-group{animation:football-roll 1.35s ease-in-out infinite;}
-.movement-stage[data-motion="football"] .sport-pictogram--football> .p-limb:nth-of-type(4){animation:support-sway 1.35s ease-in-out infinite;}
-.movement-stage[data-motion="volleyball"] .volleyball-arms{animation:volleyball-set .9s ease-in-out infinite;}
-.movement-stage[data-motion="volleyball"] .volleyball-ball-group{animation:volleyball-rise .9s ease-in-out infinite;}
-.movement-stage[data-motion="swimming"] .swim-arm-front{animation:swim-stroke .72s ease-in-out infinite;}
-.movement-stage[data-motion="swimming"] .swim-arm-back{animation:swim-stroke .72s ease-in-out infinite reverse;}
-.movement-stage[data-motion="swimming"] .swim-leg-top{animation:swim-kick .42s ease-in-out infinite;}
-.movement-stage[data-motion="swimming"] .swim-leg-bottom{animation:swim-kick .42s ease-in-out infinite reverse;}
-.movement-stage[data-motion="swimming"] .p-water{stroke-dasharray:18 8;animation:rope-travel 1.3s linear infinite;}
-.movement-stage[data-motion="strength"] .barbell-group{animation:lift-bar 1.5s ease-in-out infinite;}
-.movement-stage[data-motion="strength"] .strength-arm-left .p-limb{animation:lift-left 1.5s ease-in-out infinite;}
-.movement-stage[data-motion="strength"] .strength-arm-right .p-limb{animation:lift-right 1.5s ease-in-out infinite;}
-.movement-stage.animation-paused .sport-pictogram,.movement-stage.animation-paused .sport-pictogram *,.movement-stage.animation-paused .athlete-shadow{animation:none!important;}
 
 .recommendation-card{margin-top:1rem;padding:1.2rem;border:1px solid #d9dedb;border-radius:0.55rem;background:#fbfcfa;}
 .recommendation-card[hidden],.alternatives-panel[hidden],.no-results[hidden],.preview-note[hidden]{display:none;}
