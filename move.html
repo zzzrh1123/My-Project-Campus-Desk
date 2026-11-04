@@ -78,7 +78,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset class="break-question">
+                    <fieldset class="break-question break-question--compact-choices">
                         <legend><span class="question-number">04</span>What intensity do you prefer?</legend>
                         <div class="choice-grid choice-grid--two">
                             <label class="choice-card"><input type="radio" name="intensity" value="any" checked><span>No preference</span></label>
@@ -107,7 +107,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset class="break-question">
+                    <fieldset class="break-question break-question--compact-choices">
                         <legend><span class="question-number">07</span>How would you like to exercise?</legend>
                         <div class="choice-grid choice-grid--two">
                             <label class="choice-card"><input type="radio" name="social" value="any" checked><span>No preference</span></label>
@@ -150,8 +150,8 @@
                      aria-label="Animated illustration of a person walking">
 
                     <div class="stage-sun" aria-hidden="true"></div>
-                    <div class="stage-cloud stage-cloud--one" aria-hidden="true"></div>
-                    <div class="stage-cloud stage-cloud--two" aria-hidden="true"></div>
+                    <div class="stage-cloud stage-cloud--one" aria-hidden="true">☁️</div>
+                    <div class="stage-cloud stage-cloud--two" aria-hidden="true">☁️</div>
                     <div class="stage-hill" aria-hidden="true"></div>
                     <div class="stage-ground" aria-hidden="true"></div>
 
@@ -171,13 +171,25 @@
                         <!-- Activity equipment. JavaScript keeps moving equipment
                              attached to the hands or feet until its release point. -->
                         <g class="motion-prop prop--yoga-mat">
-                            <rect x="126" y="246" width="184" height="13" rx="6"></rect>
-                            <path d="M145 250 H292"></path>
+                            <rect x="112" y="202" width="196" height="18" rx="3"></rect>
+                            <path d="M128 207 H292"></path>
+                        </g>
+
+                        <g class="motion-prop prop--bike-wind">
+                            <path class="bike-wind-line" d="M20 132 H72"></path>
+                            <path class="bike-wind-line" d="M7 155 H56"></path>
+                            <path class="bike-wind-line" d="M26 177 H81"></path>
                         </g>
 
                         <g class="motion-prop prop--bike">
                             <circle cx="112" cy="226" r="42"></circle>
                             <circle cx="306" cy="226" r="42"></circle>
+                            <g class="bike-wheel" id="bike-rear-wheel">
+                                <path d="M112 194 V258 M80 226 H144 M89 203 L135 249 M135 203 L89 249"></path>
+                            </g>
+                            <g class="bike-wheel" id="bike-front-wheel">
+                                <path d="M306 194 V258 M274 226 H338 M283 203 L329 249 M329 203 L283 249"></path>
+                            </g>
                             <path d="M112 226 L169 166 L220 226 L112 226
                                      M169 166 L199 226 L253 157 L306 226 L220 226
                                      M253 157 L282 145
@@ -185,9 +197,33 @@
                             <circle class="bike-crank" cx="220" cy="226" r="7"></circle>
                         </g>
 
+                        <g class="motion-prop prop--basket-hoop">
+                            <path class="hoop-stand" d="M400 99 V251 M400 145 L389 99"></path>
+                            <path class="hoop-base" d="M383 251 H414 L420 260 H376 Z"></path>
+                            <path class="hoop-backboard" d="M389 49 V99 H405 V49 Z"></path>
+                            <path class="hoop-support" d="M389 91 H381"></path>
+                            <ellipse class="hoop-rim" cx="359" cy="94" rx="23" ry="5"></ellipse>
+                            <path class="hoop-net" d="M339 95 L345 128 Q359 135 373 128 L379 95 M345 106 H373 M348 117 H370 M351 128 H367 M350 98 L354 129 M359 99 V132 M368 98 L364 129"></path>
+                        </g>
+
+                        <g class="motion-prop prop--football-goal">
+                            <path class="football-goal-depth-fill" d="M302 153 H384 L409 168 H322 Z M384 153 L409 168 V250 H384 Z"></path>
+                            <path class="football-goal-back-net" d="M322 168 H409 V250 H322 Z M340 168 V250 M358 168 V250 M376 168 V250 M394 168 V250 M322 185 H409 M322 202 H409 M322 219 H409 M322 236 H409"></path>
+                            <path class="football-goal-depth-net" d="M302 153 L322 168 M323 153 L344 168 M344 153 L366 168 M365 153 L388 168 M384 177 L409 190 M384 199 L409 207 M384 221 L409 224"></path>
+                            <path class="football-goal-back-frame" d="M322 250 V168 H409 V250 H322"></path>
+                            <path class="football-goal-depth-frame" d="M302 153 L322 168 M384 153 L409 168 M384 250 H409 M302 250 H322"></path>
+                            <path class="football-goal-frame" d="M302 250 V153 H384 V250 M302 250 H384"></path>
+                        </g>
+
                         <g class="motion-prop prop--table-tennis">
-                            <path d="M273 178 H397 M286 178 V248 M384 178 V248"></path>
-                            <path class="table-net" d="M333 148 V178"></path>
+                            <path class="table-surface" d="M136 174 H284 V183 H136 Z"></path>
+                            <path class="table-frame" d="M136 174 H284 M150 183 V232 M270 183 V232"></path>
+                            <path class="table-net" d="M210 157 V174 M196 160 H224 M196 164 H224 M196 168 H224 M196 172 H224"></path>
+                        </g>
+
+                        <g class="motion-prop prop--badminton-net">
+                            <path class="badminton-net-frame" d="M210 110 V239 M164 128 H256 M164 128 V226 M256 128 V226 M164 226 H256"></path>
+                            <path class="badminton-net-mesh" d="M182 130 V224 M200 130 V224 M210 130 V224 M220 130 V224 M238 130 V224 M166 146 H254 M166 164 H254 M166 182 H254 M166 200 H254 M166 218 H254"></path>
                         </g>
 
                         <g class="motion-prop prop--swim">
@@ -200,19 +236,58 @@
                               d="M164 147 Q210 275 256 147"></path>
 
                         <g class="motion-prop prop--racket" id="rig-racket">
-                            <path d="M0 0 L34 -22"></path>
-                            <ellipse cx="48" cy="-32" rx="14" ry="22" transform="rotate(34 48 -32)"></ellipse>
-                            <path class="racket-string" d="M35 -42 L57 -20 M31 -34 L52 -12"></path>
+                            <path class="racket-shaft" d="M0 0 H33"></path>
+                            <path class="racket-grip" d="M1 0 H9"></path>
+                            <defs>
+                                <clipPath id="racket-net-clip">
+                                    <ellipse cx="56" cy="0" rx="13" ry="22" transform="rotate(90 56 0)"></ellipse>
+                                </clipPath>
+                            </defs>
+                            <path class="racket-string" clip-path="url(#racket-net-clip)"
+                                  d="M33 -15 V15 M39 -15 V15 M45 -15 V15 M51 -15 V15 M57 -15 V15 M63 -15 V15 M69 -15 V15 M75 -15 V15 M30 -12 H82 M30 -6 H82 M30 0 H82 M30 6 H82 M30 12 H82"></path>
+                            <ellipse class="racket-frame" cx="56" cy="0" rx="14" ry="23" transform="rotate(90 56 0)"></ellipse>
+                        </g>
+
+                        <g class="motion-prop prop--racket" id="rig-opponent-racket">
+                            <path class="racket-shaft" d="M0 0 H33"></path>
+                            <path class="racket-grip" d="M1 0 H9"></path>
+                            <defs>
+                                <clipPath id="racket-net-clip-opponent">
+                                    <ellipse cx="56" cy="0" rx="13" ry="22" transform="rotate(90 56 0)"></ellipse>
+                                </clipPath>
+                            </defs>
+                            <path class="racket-string" clip-path="url(#racket-net-clip-opponent)"
+                                  d="M33 -15 V15 M39 -15 V15 M45 -15 V15 M51 -15 V15 M57 -15 V15 M63 -15 V15 M69 -15 V15 M75 -15 V15 M30 -12 H82 M30 -6 H82 M30 0 H82 M30 6 H82 M30 12 H82"></path>
+                            <ellipse class="racket-frame" cx="56" cy="0" rx="14" ry="23" transform="rotate(90 56 0)"></ellipse>
                         </g>
 
                         <g class="motion-prop prop--paddle" id="rig-paddle">
-                            <path d="M0 0 L24 -12"></path>
-                            <ellipse cx="35" cy="-18" rx="11" ry="16" transform="rotate(58 35 -18)"></ellipse>
+                            <path class="paddle-handle" d="M0 0 L14 -8"></path>
+                            <ellipse class="paddle-face" cx="22" cy="-13" rx="10" ry="14" transform="rotate(58 22 -13)"></ellipse>
+                        </g>
+
+                        <g class="motion-prop prop--paddle" id="rig-opponent-paddle">
+                            <path class="paddle-handle" d="M0 0 L14 -8"></path>
+                            <ellipse class="paddle-face" cx="22" cy="-13" rx="10" ry="14" transform="rotate(58 22 -13)"></ellipse>
                         </g>
 
                         <g class="motion-prop prop--ball" id="rig-ball">
                             <circle cx="0" cy="0" r="17"></circle>
+                            <circle class="ball-highlight" cx="-5" cy="-6" r="3.5"></circle>
+                            <path class="football-panels" d="M0 -6.5 L5.6 -2.2 L3.5 4.7 L-3.5 4.7 L-5.6 -2.2 Z M0 -14.8 L4 -12 L2.6 -8 L-2.6 -8 L-4 -12 Z M10.4 -9.8 L14.8 -7.6 L14 -3.1 L10.1 -.4 L7 -4.2 Z M12.8 4 L14.2 8.7 L10.7 12.4 L6.2 11.1 L6.1 6.5 Z M-12.8 4 L-14.2 8.7 L-10.7 12.4 L-6.2 11.1 L-6.1 6.5 Z M-10.4 -9.8 L-14.8 -7.6 L-14 -3.1 L-10.1 -.4 L-7 -4.2 Z"></path>
+                            <path class="football-seams" d="M0 -6.5 V-8 M5.6 -2.2 L10.1 -.4 M3.5 4.7 L6.1 6.5 M-3.5 4.7 L-6.1 6.5 M-5.6 -2.2 L-10.1 -.4 M4 -12 L7 -9.1 M-4 -12 L-7 -9.1 M14 -3.1 L12.8 4 M10.7 12.4 L5.2 14.4 M-10.7 12.4 L-5.2 14.4 M-14 -3.1 L-12.8 4"></path>
                             <path class="ball-detail" d="M-17 0 H17 M0 -17 V17 M-12 -12 Q0 0 12 12 M12 -12 Q0 0 -12 12"></path>
+                            <path class="basketball-seams" d="M-16 0 H16 M0 -16 V16 M-12 -12 C-5 -7 -5 7 -12 12 M12 -12 C5 -7 5 7 12 12"></path>
+                            <defs>
+                                <clipPath id="volleyball-ball-clip">
+                                    <circle cx="0" cy="0" r="16.5"></circle>
+                                </clipPath>
+                            </defs>
+                            <g class="volleyball-panels" clip-path="url(#volleyball-ball-clip)">
+                                <path class="volleyball-panel" d="M-18 -2 C-13 -12 -3 -17 7 -14 C2 -9 -1 -4 0 2 C-7 1 -13 0 -18 -2 Z"></path>
+                                <path class="volleyball-panel" d="M7 -14 C15 -10 18 -1 15 7 C10 5 5 2 0 -2 C1 -7 4 -11 7 -14 Z"></path>
+                                <path class="volleyball-panel" d="M15 7 C10 15 0 18 -9 14 C-6 9 -3 4 1 1 C6 3 11 5 15 7 Z"></path>
+                            </g>
                         </g>
 
                         <g class="motion-prop prop--barbell" id="rig-barbell">
@@ -220,9 +295,11 @@
                             <path class="barbell-plate" d="M-56 -18 V18 M-47 -23 V23 M47 -23 V23 M56 -18 V18"></path>
                         </g>
 
-                        <path class="motion-prop prop--shuttle"
-                              id="rig-shuttle"
-                              d="M0 -8 L8 7 L-5 12 Z"></path>
+                        <g class="motion-prop prop--shuttle" id="rig-shuttle">
+                            <path class="shuttle-skirt" d="M-8 -13 Q0 -17 8 -13 L3 2 Q0 5 -3 2 Z"></path>
+                            <path class="shuttle-ribs" d="M-6 -12 L-2 3 M-2 -14 L-1 4 M2 -14 L1 4 M6 -12 L2 3 M-8 -13 Q0 -8 8 -13"></path>
+                            <path class="shuttle-cork" d="M-3 2 Q0 0 3 2 L4 7 Q0 9 -4 7 Z"></path>
+                        </g>
 
                         <!-- One fixed-proportion, side-view Pivot-style skeleton is
                              reused by all activities. Every bone keeps its length. -->
@@ -253,6 +330,33 @@
                                 <circle id="rig-back-elbow-joint" r="4"></circle>
                                 <circle id="rig-front-knee-joint" r="4.5"></circle>
                                 <circle id="rig-back-knee-joint" r="4.5"></circle>
+                            </g>
+                        </g>
+
+                        <g class="pivot-athlete opponent-athlete" id="pivot-athlete-opponent" transform="translate(420 0) scale(-1 1)">
+                            <ellipse class="athlete-shadow" cx="210" cy="267" rx="68" ry="9"></ellipse>
+                            <g class="rig-back-limbs">
+                                <line class="rig-back-upper-arm"></line>
+                                <line class="rig-back-lower-arm"></line>
+                                <line class="rig-back-thigh"></line>
+                                <line class="rig-back-shin"></line>
+                            </g>
+                            <line class="rig-torso"></line>
+                            <g class="rig-front-limbs">
+                                <line class="rig-front-upper-arm"></line>
+                                <line class="rig-front-lower-arm"></line>
+                                <line class="rig-front-thigh"></line>
+                                <line class="rig-front-shin"></line>
+                            </g>
+                            <circle class="rig-head" r="15"></circle>
+                            <path class="rig-face" d="M0 0"></path>
+                            <g class="rig-joints">
+                                <circle class="rig-shoulder-joint" r="5"></circle>
+                                <circle class="rig-hip-joint" r="5"></circle>
+                                <circle class="rig-front-elbow-joint" r="4"></circle>
+                                <circle class="rig-back-elbow-joint" r="4"></circle>
+                                <circle class="rig-front-knee-joint" r="4.5"></circle>
+                                <circle class="rig-back-knee-joint" r="4.5"></circle>
                             </g>
                         </g>
                     </svg>

@@ -13,9 +13,10 @@
     <title>Contact | Campus Desk</title>
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="contact.css">
 </head>
 
-<body>
+<body class="contact-page">
     <a class="skip-link" href="#main-content">
         Skip to main content
     </a>
@@ -75,37 +76,66 @@
             </p>
         </section>
 
-        <div class="contact-layout">
-            <section class="contact-details"
-                     aria-labelledby="contact-details-heading">
+        <div class="contact-layout" id="contact-layout">
+            <section class="envelope-panel" aria-labelledby="envelope-heading">
+                <h2 id="envelope-heading" class="visually-hidden">Open the envelope</h2>
 
-                <h2 id="contact-details-heading">
-                    Get in touch
-                </h2>
+                <div class="envelope-ribbons" aria-hidden="true">
+                    <span class="envelope-ribbon envelope-ribbon--note">A note for Campus Desk</span>
+                    <span class="envelope-ribbon envelope-ribbon--open">Open the envelope</span>
+                    <span class="envelope-ribbon envelope-ribbon--questions">Questions?</span>
+                    <span class="envelope-ribbon envelope-ribbon--ideas">Fresh ideas</span>
+                    <span class="envelope-ribbon envelope-ribbon--feedback">Feedback welcome</span>
+                </div>
 
-                <p>
-                    Campus Desk is a student project created for Web Technologies 2026. Feedback is always welcome.
-                </p>
+                <div class="envelope-decor" aria-hidden="true">
+                    <span class="mini-envelope mini-envelope--one"></span>
+                    <span class="mini-envelope mini-envelope--two"></span>
+                    <span class="mini-envelope mini-envelope--three"></span>
+                </div>
 
-                <h3>Email</h3>
+                <button class="envelope-button"
+                        id="envelope-toggle"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="contact-form-card">
+                    <span class="envelope" aria-hidden="true">
+                        <span class="envelope-back"></span>
+                        <span class="envelope-letter">
+                            <span class="letter-mark">Contact me</span>
+                            <span class="letter-title">Share your ideas.</span>
+                            <span class="letter-line"></span>
+                            <span class="letter-line letter-line-short"></span>
+                        </span>
+                        <span class="envelope-front-left"></span>
+                        <span class="envelope-front-right"></span>
+                        <span class="envelope-front-bottom"></span>
+                        <span class="envelope-flap"></span>
+                    </span>
+                    <span class="envelope-action">
+                        <span class="envelope-action-icon" aria-hidden="true">↗</span>
+                        <span class="envelope-action-text">Click to open the envelope</span>
+                    </span>
+                </button>
 
-                <address>
-                    <a href="mailto:X20250020@stu.hibiuh.edu.cn">
-                        X20250020@stu.hibiuh.edu.cn
-                    </a>
-                </address>
-
-                <p class="contact-note">
-                    The form opens your default email application. Your message is not stored by this website.
+                <p class="envelope-hint">
+                    Questions, ideas and feedback are always welcome.
+                    <span class="hint-divider" aria-hidden="true">·</span>
+                    <span class="email-label">Email directly</span>
+                    <a href="mailto:X20250020@stu.hibiuh.edu.cn">X20250020@stu.hibiuh.edu.cn</a>
                 </p>
             </section>
 
             <section class="contact-form-card"
-                     aria-labelledby="contact-form-heading">
+                     id="contact-form-card"
+                     aria-labelledby="contact-form-heading"
+                     hidden>
 
                 <h2 id="contact-form-heading">
                     Send a message
                 </h2>
+
+                <p class="form-intro">Write your note below. When you send it, your email application will open with the message ready.</p>
 
                 <form id="contact-form">
                     <div class="form-group">
@@ -150,7 +180,7 @@
 
                         <textarea id="contact-message"
                                   name="message"
-                                  rows="8"
+                                  rows="4"
                                   required></textarea>
                     </div>
 
@@ -158,6 +188,10 @@
                         Send email
                     </button>
                 </form>
+
+                <p class="contact-note">
+                    Your message is not stored by this website.
+                </p>
             </section>
         </div>
     </main>

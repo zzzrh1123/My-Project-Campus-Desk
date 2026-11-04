@@ -395,11 +395,37 @@ const rigElements = {
     frontKneeJoint: document.querySelector("#rig-front-knee-joint"),
     backKneeJoint: document.querySelector("#rig-back-knee-joint"),
     rope: document.querySelector("#rig-rope"),
+    bikeRearWheel: document.querySelector("#bike-rear-wheel"),
+    bikeFrontWheel: document.querySelector("#bike-front-wheel"),
     racket: document.querySelector("#rig-racket"),
     paddle: document.querySelector("#rig-paddle"),
     ball: document.querySelector("#rig-ball"),
     barbell: document.querySelector("#rig-barbell"),
-    shuttle: document.querySelector("#rig-shuttle")
+    shuttle: document.querySelector("#rig-shuttle"),
+    opponentRacket: document.querySelector("#rig-opponent-racket"),
+    opponentPaddle: document.querySelector("#rig-opponent-paddle")
+};
+
+const opponentFigure = document.querySelector("#pivot-athlete-opponent");
+const opponentRigElements = {
+    shadow: opponentFigure.querySelector(".athlete-shadow"),
+    torso: opponentFigure.querySelector(".rig-torso"),
+    head: opponentFigure.querySelector(".rig-head"),
+    face: opponentFigure.querySelector(".rig-face"),
+    frontUpperArm: opponentFigure.querySelector(".rig-front-upper-arm"),
+    frontLowerArm: opponentFigure.querySelector(".rig-front-lower-arm"),
+    backUpperArm: opponentFigure.querySelector(".rig-back-upper-arm"),
+    backLowerArm: opponentFigure.querySelector(".rig-back-lower-arm"),
+    frontThigh: opponentFigure.querySelector(".rig-front-thigh"),
+    frontShin: opponentFigure.querySelector(".rig-front-shin"),
+    backThigh: opponentFigure.querySelector(".rig-back-thigh"),
+    backShin: opponentFigure.querySelector(".rig-back-shin"),
+    shoulderJoint: opponentFigure.querySelector(".rig-shoulder-joint"),
+    hipJoint: opponentFigure.querySelector(".rig-hip-joint"),
+    frontElbowJoint: opponentFigure.querySelector(".rig-front-elbow-joint"),
+    backElbowJoint: opponentFigure.querySelector(".rig-back-elbow-joint"),
+    frontKneeJoint: opponentFigure.querySelector(".rig-front-knee-joint"),
+    backKneeJoint: opponentFigure.querySelector(".rig-back-knee-joint")
 };
 
 const rigLengths = {
@@ -496,7 +522,7 @@ function defaultPose() {
     };
 }
 
-function renderSkeleton(pose) {
+function renderSkeleton(pose, elements = rigElements) {
     const hip = pose.hip;
     const shoulder = pointFrom(
         hip,
@@ -551,34 +577,35 @@ function renderSkeleton(pose) {
         pose.backShin
     );
 
-    setLine(rigElements.torso, hip, shoulder);
-    setLine(rigElements.frontUpperArm, shoulder, frontElbow);
-    setLine(rigElements.frontLowerArm, frontElbow, frontHand);
-    setLine(rigElements.backUpperArm, shoulder, backElbow);
-    setLine(rigElements.backLowerArm, backElbow, backHand);
-    setLine(rigElements.frontThigh, hip, frontKnee);
-    setLine(rigElements.frontShin, frontKnee, frontFoot);
-    setLine(rigElements.backThigh, hip, backKnee);
-    setLine(rigElements.backShin, backKnee, backFoot);
+    setLine(elements.torso, hip, shoulder);
+    setLine(elements.frontUpperArm, shoulder, frontElbow);
+    setLine(elements.frontLowerArm, frontElbow, frontHand);
+    setLine(elements.backUpperArm, shoulder, backElbow);
+    setLine(elements.backLowerArm, backElbow, backHand);
+    setLine(elements.frontThigh, hip, frontKnee);
+    setLine(elements.frontShin, frontKnee, frontFoot);
+    setLine(elements.backThigh, hip, backKnee);
+    setLine(elements.backShin, backKnee, backFoot);
 
-    setCircle(rigElements.head, head);
-    setCircle(rigElements.shoulderJoint, shoulder);
-    setCircle(rigElements.hipJoint, hip);
-    setCircle(rigElements.frontElbowJoint, frontElbow);
-    setCircle(rigElements.backElbowJoint, backElbow);
-    setCircle(rigElements.frontKneeJoint, frontKnee);
-    setCircle(rigElements.backKneeJoint, backKnee);
+    setCircle(elements.head, head);
+    setCircle(elements.shoulderJoint, shoulder);
+    setCircle(elements.hipJoint, hip);
+    setCircle(elements.frontElbowJoint, frontElbow);
+    setCircle(elements.backElbowJoint, backElbow);
+    setCircle(elements.frontKneeJoint, frontKnee);
+    setCircle(elements.backKneeJoint, backKnee);
 
-    rigElements.face.setAttribute(
+    elements.face.setAttribute(
         "d",
         `M ${head.x + 10} ${head.y - 3} ` +
         `L ${head.x + 16} ${head.y} ` +
         `L ${head.x + 10} ${head.y + 3}`
     );
 
-    rigElements.shadow.setAttribute("cx", hip.x.toFixed(2));
-    rigElements.shadow.setAttribute("rx", (68 * pose.shadowScale).toFixed(2));
-    rigElements.shadow.style.opacity = String(
+    elements.shadow.setAttribute("cx", hip.x.toFixed(2));
+    elements.shadow.setAttribute("cy", (pose.shadowY ?? 267).toFixed(2));
+    elements.shadow.setAttribute("rx", (68 * pose.shadowScale).toFixed(2));
+    elements.shadow.style.opacity = String(
         0.28 + pose.shadowScale * 0.35
     );
 
@@ -627,6 +654,14 @@ function setLimbByTarget(side, start, target, firstLength, secondLength, bendDir
     return joint;
 }
 
+function setMirroredTransform(element, x, y, rotation = 0) {
+    element.setAttribute(
+        "transform",
+        `translate(${x.toFixed(2)} ${y.toFixed(2)}) ` +
+        `rotate(${rotation.toFixed(2)}) scale(-1 1)`
+    );
+}
+
 function setTransform(element, x, y, rotation = 0, scale = 1) {
     element.setAttribute(
         "transform",
@@ -659,14 +694,16 @@ function renderRunning(time) {
     const phase = time * Math.PI * 2 / 0.72;
     const stride = Math.sin(phase);
     const oppositeStride = -stride;
+    const frontArmSwing = (stride + 1) / 2;
+    const backArmSwing = (oppositeStride + 1) / 2;
     const pose = defaultPose();
 
     pose.bodyLean = 9;
     pose.hip.y = 166 - Math.abs(Math.cos(phase)) * 8;
-    pose.frontUpperArm = -48 * stride;
-    pose.backUpperArm = 48 * stride;
-    pose.frontLowerArm = -20 * stride;
-    pose.backLowerArm = 20 * stride;
+    pose.frontUpperArm = mix(-55, 18, frontArmSwing);
+    pose.frontLowerArm = mix(-55, 90, frontArmSwing);
+    pose.backUpperArm = mix(-55, 18, backArmSwing);
+    pose.backLowerArm = mix(-55, 90, backArmSwing);
     pose.frontThigh = 44 * stride;
     pose.backThigh = 44 * oppositeStride;
     pose.frontShin = 12 * stride - 45 * Math.max(0, -stride);
@@ -680,7 +717,8 @@ function renderYoga(time) {
     const breath = (Math.sin(time * Math.PI * 2 / 4.2) + 1) / 2;
     const pose = defaultPose();
 
-    pose.hip = { x: 198, y: 184 - breath * 3 };
+    pose.hip = { x: 210, y: 184 - breath * 3 };
+    pose.shadowY = 224;
     pose.bodyLean = 2;
     pose.frontUpperArm = mix(78, 150, breath);
     pose.frontLowerArm = mix(105, 165, breath);
@@ -704,8 +742,8 @@ function renderBodyweight(time) {
     pose.shadowScale = 1.08;
 
     const points = renderSkeleton(pose);
-    const frontHand = { x: 304, y: 238 };
-    const backHand = { x: 278, y: 238 };
+    const frontHand = { x: 274, y: 238 };
+    const backHand = { x: 270, y: 238 };
     const frontFoot = { x: 72, y: 238 };
     const backFoot = { x: 91, y: 238 };
 
@@ -715,7 +753,7 @@ function renderBodyweight(time) {
         frontHand,
         rigLengths.upperArm,
         rigLengths.lowerArm,
-        1
+        lower
     );
     setLimbByTarget(
         "backArm",
@@ -723,7 +761,7 @@ function renderBodyweight(time) {
         backHand,
         rigLengths.upperArm,
         rigLengths.lowerArm,
-        -1
+        lower
     );
     setLimbByTarget(
         "frontLeg",
@@ -731,7 +769,7 @@ function renderBodyweight(time) {
         frontFoot,
         rigLengths.thigh,
         rigLengths.shin,
-        -1
+        0
     );
     setLimbByTarget(
         "backLeg",
@@ -739,7 +777,7 @@ function renderBodyweight(time) {
         backFoot,
         rigLengths.thigh,
         rigLengths.shin,
-        1
+        0
     );
 }
 
@@ -761,13 +799,18 @@ function renderJumpRope(time) {
     pose.shadowScale = 1 - jump * 0.3;
 
     const points = renderSkeleton(pose);
-    const ropeDepth = Math.cos(phase);
-    const ropeBottom = 224 + ropeDepth * 50;
+    const ropePhase = Math.sin(phase);
+    const arcHeight = ropePhase >= 0
+        ? ropePhase * 142
+        : ropePhase * 120;
+    const controlOffset = arcHeight * 4 / 3;
 
     rigElements.rope.setAttribute(
         "d",
         `M ${points.backHand.x} ${points.backHand.y} ` +
-        `Q 210 ${ropeBottom} ${points.frontHand.x} ${points.frontHand.y}`
+        `C ${points.backHand.x} ${points.backHand.y + controlOffset} ` +
+        `${points.frontHand.x} ${points.frontHand.y + controlOffset} ` +
+        `${points.frontHand.x} ${points.frontHand.y}`
     );
 }
 
@@ -791,6 +834,14 @@ function renderCycling(time) {
     };
     const frontHandle = { x: 282, y: 145 };
     const backHandle = { x: 273, y: 151 };
+    const wheelAngle = (time * 360 / 0.56).toFixed(2);
+
+    rigElements.bikeRearWheel.setAttribute(
+        "transform", `rotate(${wheelAngle} 112 226)`
+    );
+    rigElements.bikeFrontWheel.setAttribute(
+        "transform", `rotate(${wheelAngle} 306 226)`
+    );
 
     setLimbByTarget(
         "frontLeg",
@@ -806,7 +857,7 @@ function renderCycling(time) {
         backPedal,
         rigLengths.thigh,
         rigLengths.shin,
-        1
+        -1
     );
     setLimbByTarget(
         "frontArm",
@@ -822,78 +873,90 @@ function renderCycling(time) {
         backHandle,
         rigLengths.upperArm,
         rigLengths.lowerArm,
-        -1
+        1
     );
+}
+
+function rallyHit(phase, hitPoint) {
+    const distance = Math.abs(phase - hitPoint);
+    return 1 - smoothStep(clamp(distance / 0.13, 0, 1));
+}
+
+function makeRallyPose(reach, badminton = false) {
+    const pose = defaultPose();
+    pose.hip = { x: 50, y: 168 + (1 - reach) * 2 };
+    pose.bodyLean = badminton ? 5 : 18;
+    pose.frontUpperArm = badminton
+        ? mix(52, 76, reach)
+        : mix(26, 54, reach);
+    pose.frontLowerArm = badminton
+        ? mix(60, 76, reach)
+        : mix(34, 54, reach);
+    pose.backUpperArm = badminton ? -38 : -34;
+    pose.backLowerArm = badminton ? -25 : -22;
+    pose.frontThigh = 30;
+    pose.frontShin = 8;
+    pose.backThigh = -28;
+    pose.backShin = -5;
+    pose.shadowScale = 0.9;
+    return pose;
 }
 
 function renderBadminton(time) {
-    const phase = time % 1.5 / 1.5;
-    const swing = Math.sin(phase * Math.PI * 2);
-    const strike = smoothStep(clamp((phase - 0.32) / 0.25, 0, 1));
-    const pose = defaultPose();
-
-    pose.hip = { x: 188, y: 165 - Math.max(0, swing) * 5 };
-    pose.bodyLean = 7;
-    pose.frontUpperArm = mix(-72, 98, strike);
-    pose.frontLowerArm = mix(-104, 120, strike);
-    pose.backUpperArm = mix(48, -32, strike);
-    pose.backLowerArm = mix(30, -18, strike);
-    pose.frontThigh = 48;
-    pose.frontShin = 20;
-    pose.backThigh = -39;
-    pose.backShin = -15;
-
+    const phase = time % 2.4 / 2.4;
+    const travel = (1 - Math.cos(phase * Math.PI * 2)) / 2;
+    const arc = 4 * travel * (1 - travel);
+    const leftHit = Math.max(rallyHit(phase, 0), rallyHit(phase, 1));
+    const rightHit = rallyHit(phase, 0.5);
+    const pose = makeRallyPose(leftHit, true);
+    const opponentPose = makeRallyPose(rightHit, true);
     const points = renderSkeleton(pose);
-    const racketAngle = mix(-68, 34, strike);
-    const shuttleX = phase < 0.55
-        ? 315
-        : 315 + (phase - 0.55) * 135;
-    const shuttleY = phase < 0.55
-        ? 77
-        : 77 - Math.sin((phase - 0.55) * Math.PI / 0.45) * 42;
+    const opponentPoints = renderSkeleton(opponentPose, opponentRigElements);
+    const racketAngle = mix(0, 34, leftHit);
+    const opponentRacketAngle = -mix(0, 34, rightHit);
+    const shuttleX = mix(184, 236, travel);
+    const shuttleY = 132 - arc * 50;
 
-    setTransform(
-        rigElements.racket,
-        points.frontHand.x,
-        points.frontHand.y,
-        racketAngle
+    setTransform(rigElements.racket, points.frontHand.x, points.frontHand.y, racketAngle);
+    setMirroredTransform(
+        rigElements.opponentRacket,
+        420 - opponentPoints.frontHand.x,
+        opponentPoints.frontHand.y,
+        opponentRacketAngle
     );
-    setTransform(rigElements.shuttle, shuttleX, shuttleY, 25);
+    setTransform(rigElements.shuttle, shuttleX, shuttleY, phase * 720);
 }
 
 function renderTableTennis(time) {
-    const phase = time * Math.PI * 2 / 1.0;
-    const swing = Math.sin(phase);
-    const pose = defaultPose();
-
-    pose.hip = { x: 194, y: 174 };
-    pose.bodyLean = 18;
-    pose.frontUpperArm = 70 + swing * 18;
-    pose.frontLowerArm = 82 + swing * 32;
-    pose.backUpperArm = -36 - swing * 8;
-    pose.backLowerArm = -18 - swing * 8;
-    pose.frontThigh = 24;
-    pose.frontShin = 5;
-    pose.backThigh = -20;
-    pose.backShin = -3;
-
+    const phase = time % 2 / 2;
+    const travel = (1 - Math.cos(phase * Math.PI * 2)) / 2;
+    const arc = 4 * travel * (1 - travel);
+    const leftHit = Math.max(rallyHit(phase, 0), rallyHit(phase, 1));
+    const rightHit = rallyHit(phase, 0.5);
+    const pose = makeRallyPose(leftHit);
+    const opponentPose = makeRallyPose(rightHit);
     const points = renderSkeleton(pose);
-    const ballX = 315 + Math.cos(phase) * 55;
-    const ballY = 135 - Math.abs(Math.sin(phase)) * 18;
+    const opponentPoints = renderSkeleton(opponentPose, opponentRigElements);
+    const paddleAngle = 12 + leftHit * 44;
+    const opponentPaddleAngle = -paddleAngle;
+    const ballX = mix(154, 266, travel);
+    const ballY = 158 - arc * 28;
 
-    setTransform(
-        rigElements.paddle,
-        points.frontHand.x,
-        points.frontHand.y,
-        -20 + swing * 28
+    setTransform(rigElements.paddle, points.frontHand.x, points.frontHand.y, paddleAngle);
+    setMirroredTransform(
+        rigElements.opponentPaddle,
+        420 - opponentPoints.frontHand.x,
+        opponentPoints.frontHand.y,
+        opponentPaddleAngle
     );
-    setTransform(rigElements.ball, ballX, ballY, phase * 40, 0.28);
+    setTransform(rigElements.ball, ballX, ballY, phase * 720, 0.36);
 }
 
 function renderBasketball(time) {
     const cycle = time % 1.8 / 1.8;
     const jump = Math.sin(cycle * Math.PI);
     const release = smoothStep(clamp((cycle - 0.42) / 0.34, 0, 1));
+    const throughHoop = smoothStep(clamp((cycle - 0.74) / 0.1, 0, 1));
     const pose = defaultPose();
 
     pose.hip = { x: 196, y: 176 - jump * 36 };
@@ -909,21 +972,21 @@ function renderBasketball(time) {
     pose.shadowScale = 1 - jump * 0.34;
 
     const points = renderSkeleton(pose);
-    let ballX = (points.frontHand.x + points.backHand.x) / 2;
-    let ballY = (points.frontHand.y + points.backHand.y) / 2 - 10;
+    const handX = (points.frontHand.x + points.backHand.x) / 2;
+    const handY = (points.frontHand.y + points.backHand.y) / 2 - 10;
+    const hoop = { x: 359, y: 94 };
+    const ballX = mix(handX, hoop.x, release);
+    const ballY = mix(handY, hoop.y, release) - Math.sin(release * Math.PI) * 78 + throughHoop * 24;
 
-    if (release > 0) {
-        ballX += release * 105;
-        ballY -= Math.sin(release * Math.PI) * 72 + release * 24;
-    }
-
-    setTransform(rigElements.ball, ballX, ballY, release * 180);
+    setTransform(rigElements.ball, ballX, ballY, release * 360);
 }
 
 function renderFootball(time) {
     const cycle = time % 1.65 / 1.65;
-    const kick = Math.sin(clamp((cycle - 0.12) / 0.7, 0, 1) * Math.PI);
-    const release = smoothStep(clamp((cycle - 0.46) / 0.42, 0, 1));
+    const kickForward = smoothStep(clamp((cycle - 0.1) / 0.24, 0, 1));
+    const kickReturn = smoothStep(clamp((cycle - 0.62) / 0.24, 0, 1));
+    const kick = kickForward * (1 - kickReturn);
+    const release = smoothStep(clamp((cycle - 0.3) / 0.44, 0, 1));
     const pose = defaultPose();
 
     pose.hip = { x: 184, y: 166 - kick * 4 };
@@ -932,16 +995,16 @@ function renderFootball(time) {
     pose.frontLowerArm = -26 + kick * 44;
     pose.backUpperArm = 45 - kick * 78;
     pose.backLowerArm = 24 - kick * 42;
-    pose.frontThigh = mix(-34, 75, kick);
-    pose.frontShin = mix(-62, 84, kick);
+    pose.frontThigh = mix(4, 52, kick);
+    pose.frontShin = mix(4, 52, kick);
     pose.backThigh = -5;
     pose.backShin = 3;
     pose.shadowScale = 0.96;
 
     renderSkeleton(pose);
 
-    const ballX = 275 + release * 120;
-    const ballY = 244 - Math.sin(release * Math.PI) * 28;
+    const ballX = mix(270, 368, release);
+    const ballY = 244 - Math.sin(release * Math.PI) * 52 - release * 39;
     setTransform(rigElements.ball, ballX, ballY, release * 320);
 }
 
@@ -951,7 +1014,7 @@ function renderVolleyball(time) {
     const release = smoothStep(clamp((cycle - 0.38) / 0.38, 0, 1));
     const pose = defaultPose();
 
-    pose.hip = { x: 199, y: 177 - jump * 34 };
+    pose.hip = { x: 188, y: 188 - jump * 22 };
     pose.frontUpperArm = mix(72, 164, jump);
     pose.frontLowerArm = mix(88, 174, jump);
     pose.backUpperArm = mix(-58, -153, jump);
@@ -964,11 +1027,11 @@ function renderVolleyball(time) {
 
     const points = renderSkeleton(pose);
     let ballX = (points.frontHand.x + points.backHand.x) / 2;
-    let ballY = Math.min(points.frontHand.y, points.backHand.y) - 19;
+    let ballY = Math.max(24, Math.min(points.frontHand.y, points.backHand.y) - 19);
 
     if (release > 0) {
-        ballY -= release * 92;
-        ballX += release * 18;
+        ballX = mix(194, 292, release);
+        ballY = mix(38, 94, release) - Math.sin(release * Math.PI) * 18;
     }
 
     setTransform(rigElements.ball, ballX, ballY, release * 140);
@@ -985,10 +1048,11 @@ function renderSwimming(time) {
         y: 166 + Math.sin(phase * 2) * 2
     };
     pose.bodyLean = 88;
-    pose.frontUpperArm = 90 + stroke * 82;
-    pose.frontLowerArm = 90 + stroke * 62;
-    pose.backUpperArm = 90 + oppositeStroke * 82;
-    pose.backLowerArm = 90 + oppositeStroke * 62;
+    const armRotation = -time * 360 / 1.25;
+    pose.frontUpperArm = 90 + armRotation;
+    pose.frontLowerArm = 120 + armRotation;
+    pose.backUpperArm = 270 + armRotation;
+    pose.backLowerArm = 300 + armRotation;
     pose.frontThigh = -90 + stroke * 13;
     pose.frontShin = -90 + stroke * 18;
     pose.backThigh = -90 + oppositeStroke * 13;
@@ -1269,11 +1333,13 @@ function setStageMotion(sport) {
     const selectedVenue = getFormValue("venue");
     movementStage.dataset.scene = sport.motion === "swimming"
         ? "pool"
-        : selectedVenue === "indoor" || selectedVenue === "outdoor"
-            ? selectedVenue
-            : sport.venues.includes("outdoor")
-                ? "outdoor"
-                : "indoor";
+        : sport.motion === "yoga" && selectedVenue === "any"
+            ? "indoor"
+            : selectedVenue === "indoor" || selectedVenue === "outdoor"
+                ? selectedVenue
+                : sport.venues.includes("outdoor")
+                    ? "outdoor"
+                    : "indoor";
 
     movementStage.setAttribute(
         "aria-label",
@@ -1473,9 +1539,26 @@ function replayAnimation() {
     restartMotionAnimation();
 }
 
+function scrollToActivityResult() {
+    const target = currentResults.length > 0
+        ? movementStage
+        : noResults;
+
+    window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+            target.scrollIntoView({
+                behavior: reducedMotionQuery.matches ? "auto" : "smooth",
+                block: "center",
+                inline: "nearest"
+            });
+        });
+    });
+}
+
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     renderRecommendations();
+    scrollToActivityResult();
 });
 
 form.addEventListener("reset", () => {
