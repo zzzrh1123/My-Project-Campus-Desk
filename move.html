@@ -1,315 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-          content="Find a suitable activity for an active university study break.">
-
+          content="Find a practical campus activity that fits your time, space, equipment and preferences.">
     <title>Active Breaks | Campus Desk</title>
-
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="move.css">
 </head>
-
-<body class="move-page">
-    <a class="skip-link" href="#main-content">
-        Skip to main content
-    </a>
+<body class="active-breaks-page">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header class="site-header">
-        <a class="site-name" href="index.html">
-            Campus Desk
-        </a>
+        <a class="site-name" href="index.html">Campus Desk</a>
 
         <nav aria-label="Primary navigation">
             <ul>
-                <li>
-                    <a href="index.html">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a href="study.html">
-                        Study Shelf
-                    </a>
-                </li>
-
-                <li>
-                    <a href="loadout.html">
-                        Loadout
-                    </a>
-                </li>
-
-                <li>
-                    <a href="move.html"
-                       aria-current="page">
-                        Active Breaks
-                    </a>
-                </li>
-
-                <li>
-                    <a class="contact-nav-link"
-                       href="contact.html">
-                        Contact
-                    </a>
-                </li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="study.html">Study Shelf</a></li>
+                <li><a href="loadout.html">Loadout</a></li>
+                <li><a href="move.html" aria-current="page">Active Breaks</a></li>
+                <li><a class="contact-nav-link" href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="main-content">
-        <section class="page-intro">
-            <p class="eyebrow">
-                Recharge between classes
-            </p>
-
-            <h1>Active Breaks</h1>
-
-            <p>
-                Choose your available time, location and energy
-                level to find a suitable activity.
+    <main id="main-content" class="break-main">
+        <section class="break-intro">
+            <p class="eyebrow">MOVE. RESET. RETURN.</p>
+            <h1>Find your active break</h1>
+            <p class="break-intro__text">
+                Tell us what works for your day.
+                We will filter activities by your practical limits,
+                then rank the remaining options by how well they
+                match your preferences.
             </p>
         </section>
 
-        <div class="move-layout">
-            <section class="activity-controls"
-                     aria-labelledby="activity-form-heading">
-
-                <h2 id="activity-form-heading">
-                    Plan your activity
-                </h2>
+        <section class="break-workspace" aria-label="Personalised activity finder">
+            <section class="break-panel break-controls" aria-labelledby="planner-heading">
+                <div class="panel-heading">
+                    <p class="panel-step">STEP 1 · YOUR PREFERENCES</p>
+                    <h2 id="planner-heading">Plan your activity</h2>
+                    <p>Choose one answer in each group. You can change them at any time.</p>
+                </div>
 
                 <form id="activity-form">
-                    <div class="form-group">
-                        <label for="available-time">
-                            Available time
-                        </label>
-
-                        <select id="available-time"
-                                name="available-time">
-
-                            <option value="5">
-                                5 minutes
-                            </option>
-
-                            <option value="15">
-                                15 minutes
-                            </option>
-
-                            <option value="30">
-                                30 minutes
-                            </option>
-
-                            <option value="60">
-                                60 minutes
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="available-space">
-                            Available space
-                        </label>
-
-                        <select id="available-space"
-                                name="available-space">
-
-                            <option value="dorm">
-                                Dorm room
-                            </option>
-
-                            <option value="campus">
-                                Campus
-                            </option>
-
-                            <option value="gym">
-                                Gym
-                            </option>
-
-                            <option value="outdoor">
-                                Outdoor space
-                            </option>
-                        </select>
-                    </div>
-
-                    <fieldset>
-                        <legend>
-                            Energy level
-                        </legend>
-
-                        <label>
-                            <input type="radio"
-                                   name="energy"
-                                   value="light"
-                                   checked>
-
-                            Light
-                        </label>
-
-                        <label>
-                            <input type="radio"
-                                   name="energy"
-                                   value="medium">
-
-                            Medium
-                        </label>
-
-                        <label>
-                            <input type="radio"
-                                   name="energy"
-                                   value="high">
-
-                            High
-                        </label>
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">01</span>What is your main goal?</legend>
+                        <div class="choice-grid choice-grid--two">
+                            <label class="choice-card"><input type="radio" name="goal" value="fitness" checked><span>General fitness</span></label>
+                            <label class="choice-card"><input type="radio" name="goal" value="endurance"><span>Build endurance</span></label>
+                            <label class="choice-card"><input type="radio" name="goal" value="strength"><span>Build strength</span></label>
+                            <label class="choice-card"><input type="radio" name="goal" value="relaxation"><span>Relax and reset</span></label>
+                            <label class="choice-card"><input type="radio" name="goal" value="flexibility"><span>Improve flexibility</span></label>
+                            <label class="choice-card"><input type="radio" name="goal" value="social"><span>Meet and move with others</span></label>
+                        </div>
                     </fieldset>
 
-                    <div class="form-group">
-                        <label for="equipment">
-                            Available equipment
-                        </label>
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">02</span>How much time do you have?</legend>
+                        <div class="choice-grid choice-grid--two">
+                            <label class="choice-card"><input type="radio" name="time" value="short" checked><span>10–20 min</span></label>
+                            <label class="choice-card"><input type="radio" name="time" value="medium"><span>20–40 min</span></label>
+                            <label class="choice-card"><input type="radio" name="time" value="long"><span>40–60 min</span></label>
+                            <label class="choice-card"><input type="radio" name="time" value="extended"><span>60+ min</span></label>
+                        </div>
+                    </fieldset>
 
-                        <select id="equipment"
-                                name="equipment">
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">03</span>Where can you exercise?</legend>
+                        <div class="choice-grid choice-grid--three">
+                            <label class="choice-card"><input type="radio" name="venue" value="any" checked><span>Anywhere</span></label>
+                            <label class="choice-card"><input type="radio" name="venue" value="indoor"><span>Indoor</span></label>
+                            <label class="choice-card"><input type="radio" name="venue" value="outdoor"><span>Outdoor</span></label>
+                        </div>
+                    </fieldset>
 
-                            <option value="none">
-                                No equipment
-                            </option>
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">04</span>What intensity do you prefer?</legend>
+                        <div class="choice-grid choice-grid--two">
+                            <label class="choice-card"><input type="radio" name="intensity" value="any" checked><span>No preference</span></label>
+                            <label class="choice-card"><input type="radio" name="intensity" value="light"><span>Light</span></label>
+                            <label class="choice-card"><input type="radio" name="intensity" value="moderate"><span>Moderate</span></label>
+                            <label class="choice-card"><input type="radio" name="intensity" value="vigorous"><span>Vigorous</span></label>
+                        </div>
+                    </fieldset>
 
-                            <option value="ball">
-                                A ball
-                            </option>
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">05</span>What equipment can you access?</legend>
+                        <div class="choice-grid choice-grid--three">
+                            <label class="choice-card"><input type="radio" name="equipment" value="none" checked><span>None</span></label>
+                            <label class="choice-card"><input type="radio" name="equipment" value="basic"><span>Basic</span></label>
+                            <label class="choice-card"><input type="radio" name="equipment" value="facility"><span>Sports facilities</span></label>
+                        </div>
+                        <p class="field-hint">“Sports facilities” means you can access the activity's required equipment and venue.</p>
+                    </fieldset>
 
-                            <option value="racket">
-                                A racket
-                            </option>
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">06</span>What is your experience level?</legend>
+                        <div class="choice-grid choice-grid--three">
+                            <label class="choice-card"><input type="radio" name="experience" value="beginner" checked><span>Beginner</span></label>
+                            <label class="choice-card"><input type="radio" name="experience" value="intermediate"><span>Intermediate</span></label>
+                            <label class="choice-card"><input type="radio" name="experience" value="advanced"><span>Advanced</span></label>
+                        </div>
+                    </fieldset>
 
-                            <option value="rope">
-                                A skipping rope
-                            </option>
-                        </select>
+                    <fieldset class="break-question">
+                        <legend><span class="question-number">07</span>How would you like to exercise?</legend>
+                        <div class="choice-grid choice-grid--two">
+                            <label class="choice-card"><input type="radio" name="social" value="any" checked><span>No preference</span></label>
+                            <label class="choice-card"><input type="radio" name="social" value="solo"><span>On my own</span></label>
+                            <label class="choice-card"><input type="radio" name="social" value="partner"><span>With a partner</span></label>
+                            <label class="choice-card"><input type="radio" name="social" value="group"><span>In a group</span></label>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button class="recommend-button" type="submit">Find my activity</button>
+                        <button class="reset-button" id="reset-button" type="reset">Reset choices</button>
                     </div>
 
-                    <div class="button-row">
-                        <button id="recommend-activity"
-                                type="button">
-
-                            Recommend an activity
-                        </button>
-
-                        <button type="reset">
-                            Reset choices
-                        </button>
-                    </div>
+                    <p class="safety-note">
+                        <strong>A quick safety note:</strong>
+                        This student project offers general activity ideas,
+                        not medical advice. If you have an injury, pain
+                        or an exercise restriction, ask a qualified
+                        health professional before choosing an activity.
+                    </p>
                 </form>
             </section>
 
-            <section class="activity-result"
-                     aria-labelledby="result-heading">
-
-                <h2 id="result-heading">
-                    Your activity
-                </h2>
-
-                <div id="activity-figure"
-                     class="activity-figure"
-                     aria-hidden="true">
-
-                    Ready for an active break
+            <section class="break-panel break-result" aria-labelledby="result-heading">
+                <div class="panel-heading panel-heading--result">
+                    <div>
+                        <p class="panel-step">STEP 2 · YOUR RESULT</p>
+                        <h2 id="result-heading">Your active break</h2>
+                    </div>
+                    <button class="replay-button" id="replay-button" type="button">Replay animation</button>
                 </div>
 
-                <p id="activity-message"
-                   aria-live="polite">
+                <div class="movement-stage"
+                     id="movement-stage"
+                     data-motion="walking"
+                     data-scene="outdoor"
+                     data-prop="none"
+                     role="img"
+                     aria-label="Animated illustration of a person walking">
 
-                    Choose your preferences to receive a suggestion.
+                    <div class="stage-sun" aria-hidden="true"></div>
+                    <div class="stage-cloud stage-cloud--one" aria-hidden="true"></div>
+                    <div class="stage-cloud stage-cloud--two" aria-hidden="true"></div>
+                    <div class="stage-hill" aria-hidden="true"></div>
+                    <div class="stage-ground" aria-hidden="true"></div>
+
+                    <svg class="athlete-svg" id="athlete-svg" viewBox="0 0 420 300" aria-hidden="true" focusable="false">
+                        <ellipse class="athlete-shadow" cx="210" cy="270" rx="78" ry="10"></ellipse>
+
+                        <!-- WALKING -->
+                        <g transform="translate(420 24) scale(-1 1)">
+                            <g class="sport-pictogram sport-pictogram--walking">
+                                <circle class="p-head" cx="206" cy="54" r="18"></circle>
+                                <path class="p-main" d="M214 68 L214 148"></path>
+
+                                <g class="part walk-arm-front">
+                                    <path class="p-limb" d="M214 92 L214 141"></path>
+                                </g>
+                                <g class="part walk-arm-back">
+                                    <path class="p-limb" d="M214 92 L214 141"></path>
+                                </g>
+                                <g class="part walk-leg-front">
+                                    <path class="p-limb" d="M214 148 L217 231"></path>
+                                </g>
+                                <g class="part walk-leg-back">
+                                    <path class="p-limb" d="M214 148 L211 231"></path>
+                                </g>
+                            </g>
+                        </g>
+
+                        <!-- RUNNING -->
+                        <g class="sport-pictogram sport-pictogram--running">
+                            <circle class="p-head" cx="195" cy="48" r="14"></circle>
+                            <path class="p-main" d="M204 62 L228 138"></path>
+
+                            <g class="part run-arm-front">
+                                <path class="p-limb" d="M210 92 L247 109 L268 92"></path>
+                            </g>
+                            <g class="part run-arm-back">
+                                <path class="p-limb" d="M208 92 L176 78 L157 58"></path>
+                            </g>
+                            <g class="part run-leg-front">
+                                <path class="p-limb" d="M228 138 L191 180 L147 203"></path>
+                            </g>
+                            <g class="part run-leg-back">
+                                <path class="p-limb" d="M228 138 L261 173 L301 165"></path>
+                            </g>
+                        </g>
+
+                        <!-- YOGA -->
+                        <g class="sport-pictogram sport-pictogram--yoga">
+                            <circle class="p-head" cx="210" cy="60" r="14"></circle>
+                            <path class="p-main" d="M210 74 L210 122"></path>
+
+                            <g class="part yoga-arms-rest">
+                                <path class="p-limb" d="M210 96 L183 111 L165 129"></path>
+                                <path class="p-limb" d="M210 96 L237 111 L255 129"></path>
+                            </g>
+
+                            <g class="part yoga-arms-open">
+                                <path class="p-limb" d="M210 94 L184 63 L165 34"></path>
+                                <path class="p-limb" d="M210 94 L236 63 L255 34"></path>
+                            </g>
+
+                            <path class="p-limb" d="M210 122 L176 162 L149 146"></path>
+                            <path class="p-limb" d="M210 122 L244 162 L271 146"></path>
+                            <path class="p-limb" d="M149 146 L210 180 L271 146"></path>
+                        </g>
+
+                        <!-- BODYWEIGHT / PUSH-UP -->
+                        <g class="sport-pictogram sport-pictogram--bodyweight" transform="translate(420 0) scale(-1 1)">
+                            <g class="part pushup-body">
+                                <circle class="p-head" cx="320" cy="122" r="13"></circle>
+                                <path class="p-main" d="M115 149 L307 138"></path>
+                                <g class="part pushup-arm-left">
+                                    <path class="p-limb" d="M250 141 L239 190 L225 224"></path>
+                                </g>
+                                <g class="part pushup-arm-right">
+                                    <path class="p-limb" d="M270 140 L281 189 L296 223"></path>
+                                </g>
+                                <path class="p-limb" d="M115 149 L72 178 L42 179"></path>
+                                <path class="p-limb" d="M122 151 L84 194 L55 196"></path>
+                            </g>
+                        </g>
+
+                        <!-- JUMP ROPE -->
+                        <g class="sport-pictogram sport-pictogram--jump-rope">
+                            <g class="part rope-loop-group">
+                                <ellipse class="rope-loop" cx="210" cy="145" rx="55" ry="123"></ellipse>
+                            </g>
+
+                            <circle class="p-head" cx="210" cy="57" r="14"></circle>
+                            <path class="p-main" d="M210 71 L210 150"></path>
+
+                            <g class="part rope-arm-left">
+                                <path class="p-limb" d="M210 95 L177 123 L155 145"></path>
+                            </g>
+                            <g class="part rope-arm-right">
+                                <path class="p-limb" d="M210 95 L243 123 L265 145"></path>
+                            </g>
+                            <path class="p-limb" d="M210 150 L193 202 L193 241"></path>
+                            <path class="p-limb" d="M210 150 L227 202 L227 241"></path>
+                            <circle class="p-dot" cx="155" cy="145" r="5"></circle>
+                            <circle class="p-dot" cx="265" cy="145" r="5"></circle>
+                        </g>
+
+                        <!-- CYCLING -->
+                        <g class="sport-pictogram sport-pictogram--cycling">
+                            <g class="part bike-graphic">
+                                <circle class="p-equip" cx="114" cy="223" r="40"></circle>
+                                <circle class="p-equip" cx="304" cy="223" r="40"></circle>
+                                <path class="p-equip" d="M114 223 L169 161 L221 223 L114 223 L193 223 L249 154 L304 223 L221 223"></path>
+                                <path class="p-equip" d="M169 161 L155 145 L187 145"></path>
+                                <path class="p-equip" d="M249 154 L272 146 L287 138"></path>
+                            </g>
+
+                            <circle class="p-head" cx="208" cy="52" r="14"></circle>
+                            <path class="p-main" d="M214 67 L230 128"></path>
+                            <path class="p-limb" d="M214 92 L250 108 L280 138"></path>
+                            <path class="p-limb" d="M220 92 L258 123 L286 138"></path>
+
+                            <g class="part bike-leg-left">
+                                <path class="p-limb" d="M230 128 L195 173 L198 223"></path>
+                            </g>
+                            <g class="part bike-leg-right">
+                                <path class="p-limb" d="M230 128 L262 176 L221 223"></path>
+                            </g>
+                        </g>
+
+                        <!-- BADMINTON -->
+                        <g class="sport-pictogram sport-pictogram--badminton">
+                            <circle class="p-head" cx="208" cy="54" r="14"></circle>
+                            <path class="p-main" d="M208 70 L208 145"></path>
+
+                            <path class="p-limb" d="M208 145 L182 184 L154 207"></path>
+                            <path class="p-limb" d="M208 145 L236 184 L266 207"></path>
+                            <path class="p-limb" d="M208 96 L172 104 L153 126"></path>
+
+                            <g class="part badminton-racket-arm">
+                                <path class="p-limb" d="M208 96 L239 68 L261 40"></path>
+                                <path class="p-equip" d="M258 48 L273 29"></path>
+                                <ellipse class="p-equip" cx="286" cy="20" rx="13" ry="20" transform="rotate(28 286 20)"></ellipse>
+                                <path class="p-equip" d="M274 9 L296 31 M273 19 L293 39"></path>
+                            </g>
+
+                            <g class="part shuttle-group">
+                                <path class="p-equip shuttle-shape" d="M315 43 L322 56 L311 64 Z"></path>
+                            </g>
+                        </g>
+
+                        <!-- TABLE TENNIS -->
+                        <g class="sport-pictogram sport-pictogram--table-tennis">
+                            <circle class="p-head" cx="182" cy="56" r="14"></circle>
+                            <path class="p-main" d="M188 70 L205 146"></path>
+                            <path class="p-limb" d="M190 98 L154 123 L134 113"></path>
+
+                            <g class="part pingpong-arm">
+                                <path class="p-limb" d="M196 102 L240 118 L279 108"></path>
+                                <path class="p-equip" d="M277 108 L294 90"></path>
+                                <ellipse class="p-equip" cx="304" cy="81" rx="12" ry="18" transform="rotate(35 304 81)"></ellipse>
+                            </g>
+
+                            <path class="p-limb" d="M205 146 L173 194 L150 239"></path>
+                            <path class="p-limb" d="M205 146 L239 190 L266 235"></path>
+                            <circle class="p-dot" cx="324" cy="102" r="5"></circle>
+                        </g>
+
+                        <!-- BASKETBALL -->
+                        <g class="sport-pictogram sport-pictogram--basketball">
+                            <circle class="p-head" cx="205" cy="52" r="14"></circle>
+                            <path class="p-main" d="M205 68 L205 137"></path>
+
+                            <g class="part basketball-arms">
+                                <path class="p-limb" d="M205 92 L187 57 L180 31"></path>
+                                <path class="p-limb" d="M205 92 L223 56 L230 30"></path>
+                            </g>
+
+                            <path class="p-limb" d="M205 137 L181 180 L164 208"></path>
+                            <path class="p-limb" d="M205 137 L229 180 L246 208"></path>
+
+                            <g class="part basketball-ball-group">
+                                <circle class="p-equip basketball-ball" cx="205" cy="17" r="17"></circle>
+                                <path class="p-equip" d="M205 0 C193 7 193 27 205 34 M205 0 C217 7 217 27 205 34 M188 17 C195 10 215 10 222 17 M188 17 C195 24 215 24 222 17"></path>
+                            </g>
+                        </g>
+
+                        <!-- FOOTBALL -->
+                        <g class="sport-pictogram sport-pictogram--football">
+                            <circle class="p-head" cx="183" cy="56" r="14"></circle>
+                            <path class="p-main" d="M188 72 L194 147"></path>
+
+                            <path class="p-limb" d="M188 98 L156 122 L136 108"></path>
+                            <path class="p-limb" d="M194 98 L228 118 L249 103"></path>
+                            <path class="p-limb" d="M194 147 L168 191 L148 238"></path>
+
+                            <g class="part football-kick-leg">
+                                <path class="p-limb" d="M194 147 L240 177 L286 169"></path>
+                            </g>
+
+                            <g class="part football-ball-group">
+                                <circle class="football-ball" cx="132" cy="232" r="17"></circle>
+                                <path class="football-panel" d="M126 221 L136 221 L142 229 L138 239 L127 239 L121 230 Z"></path>
+                                <path class="football-seam" d="M126 221 L121 230 L127 239 M136 221 L142 229 L138 239"></path>
+                            </g>
+                        </g>
+
+                        <!-- VOLLEYBALL -->
+                        <g class="sport-pictogram sport-pictogram--volleyball">
+                            <circle class="p-head" cx="209" cy="56" r="14"></circle>
+                            <path class="p-main" d="M209 72 L209 140"></path>
+
+                            <g class="part volleyball-arms">
+                                <path class="p-limb" d="M209 98 L190 119 L209 137"></path>
+                                <path class="p-limb" d="M209 98 L228 119 L209 137"></path>
+                            </g>
+
+                            <path class="p-limb" d="M209 140 L181 190 L162 238"></path>
+                            <path class="p-limb" d="M209 140 L237 190 L256 238"></path>
+
+                            <g class="part volleyball-ball-group">
+                                <circle class="p-equip" cx="258" cy="126" r="17"></circle>
+                                <path class="p-equip" d="M246 115 Q258 126 270 137 M258 109 Q250 126 258 143"></path>
+                            </g>
+                        </g>
+
+                        <!-- SWIMMING -->
+                        <g class="sport-pictogram sport-pictogram--swimming">
+                            <circle class="p-head" cx="100" cy="143" r="13"></circle>
+                            <path class="p-main" d="M130 146 L312 138"></path>
+
+                            <g class="part swim-arm-front">
+                                <path class="p-limb" d="M268 140 L309 110 L353 94"></path>
+                            </g>
+                            <g class="part swim-arm-back">
+                                <path class="p-limb" d="M174 145 L146 108 L112 94"></path>
+                            </g>
+
+                            <g class="part swim-leg-top">
+                                <path class="p-limb" d="M130 146 L87 171 L48 165"></path>
+                            </g>
+                            <g class="part swim-leg-bottom">
+                                <path class="p-limb" d="M130 146 L92 193 L51 198"></path>
+                            </g>
+
+                            <path class="p-water" d="M56 220 Q86 206 116 220 T176 220 T236 220 T296 220 T356 220"></path>
+                            <path class="p-water" d="M76 241 Q106 227 136 241 T196 241 T256 241 T316 241"></path>
+                        </g>
+
+                        <!-- STRENGTH -->
+                        <g class="sport-pictogram sport-pictogram--strength">
+                            <circle class="p-head" cx="210" cy="60" r="14"></circle>
+                            <path class="p-main" d="M210 75 L210 160"></path>
+
+                            <g class="part strength-arm-left">
+                                <path class="p-limb" d="M210 106 L180 72 L165 42"></path>
+                            </g>
+                            <g class="part strength-arm-right">
+                                <path class="p-limb" d="M210 106 L240 72 L255 42"></path>
+                            </g>
+
+                            <path class="p-limb" d="M210 160 L190 205 L186 246"></path>
+                            <path class="p-limb" d="M210 160 L230 205 L234 246"></path>
+
+                            <g class="part barbell-group">
+                                <path class="p-equip" d="M148 40 H272"></path>
+                                <path class="p-equip" d="M158 22 V58 M170 17 V63 M250 17 V63 M262 22 V58"></path>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <span class="stage-caption" id="stage-caption">
+                        A little movement goes a long way.
+                    </span>
+                </div>
+
+                <article class="recommendation-card" id="recommendation-card">
+                    <div class="recommendation-topline">
+                        <p class="recommendation-label" id="result-label">BEST MATCH FOR YOU</p>
+                        <span class="match-score" id="match-score">—</span>
+                    </div>
+
+                    <h3 id="sport-name">Walking</h3>
+
+                    <p class="sport-description" id="sport-description">
+                        A comfortable walk is a simple way
+                        to reset between study sessions.
+                    </p>
+
+                    <dl class="sport-details">
+                        <div>
+                            <dt>Suggested time</dt>
+                            <dd id="sport-time">15 minutes</dd>
+                        </div>
+                        <div>
+                            <dt>Typical intensity</dt>
+                            <dd id="sport-intensity">Light to moderate</dd>
+                        </div>
+                        <div>
+                            <dt>Setting</dt>
+                            <dd id="sport-venue">Indoor or outdoor</dd>
+                        </div>
+                        <div>
+                            <dt>Equipment</dt>
+                            <dd id="sport-equipment">None</dd>
+                        </div>
+                    </dl>
+
+                    <section class="match-reasons" aria-labelledby="match-reasons-heading">
+                        <h4 id="match-reasons-heading">Why this is a good match</h4>
+                        <ul id="match-reasons-list"></ul>
+                    </section>
+
+                    <section class="movement-instructions" aria-labelledby="steps-heading">
+                        <h4 id="steps-heading">How to begin</h4>
+                        <ol id="sport-steps"></ol>
+                    </section>
+
+                    <p class="encouragement" id="encouragement">
+                        Start gently, choose a comfortable pace
+                        and stop if anything feels wrong.
+                    </p>
+                </article>
+
+                <section class="alternatives-panel" id="alternatives-panel" aria-labelledby="alternatives-heading">
+                    <div class="alternatives-heading">
+                        <h3 id="alternatives-heading">Other good matches</h3>
+                        <p>These options also fit your practical requirements.</p>
+                    </div>
+                    <div class="alternative-list" id="alternative-list"></div>
+                </section>
+
+                <section class="no-results" id="no-results" hidden aria-live="polite">
+                    <div class="no-results-icon" aria-hidden="true">↗</div>
+                    <h3>No exact match found</h3>
+                    <p>
+                        Your current time, venue and equipment choices
+                        leave no activity in our list.
+                        Try allowing a longer time window,
+                        another setting or access to basic equipment.
+                    </p>
+                    <button class="reset-button" id="adjust-button" type="button">
+                        Adjust my preferences
+                    </button>
+                </section>
+
+                <p class="preview-note" id="preview-note" hidden>
+                    You are previewing an activity from the library,
+                    not viewing a personalised recommendation.
+                    Select “Find my activity” to return to your matches.
                 </p>
+
+                <p class="sr-only" id="result-status" aria-live="polite" aria-atomic="true"></p>
             </section>
-        </div>
+        </section>
 
-        <section aria-labelledby="categories-heading">
-            <h2 id="categories-heading">
-                Explore activities
-            </h2>
-
-            <div class="activity-grid">
-                <article class="activity-card">
-                    <h3>Team Sports</h3>
-
-                    <ul>
-                        <li>Football</li>
-                        <li>Basketball</li>
-                    </ul>
-
-                    <p>
-                        Team sports combine movement, communication
-                        and cooperation.
-                    </p>
-                </article>
-
-                <article class="activity-card">
-                    <h3>Racket Sports</h3>
-
-                    <ul>
-                        <li>Badminton</li>
-                        <li>Table tennis</li>
-                        <li>Tennis</li>
-                        <li>Pickleball</li>
-                    </ul>
-
-                    <p>
-                        Racket sports develop coordination,
-                        reactions and concentration.
-                    </p>
-                </article>
-
-                <article class="activity-card">
-                    <h3>Running and Cardio</h3>
-
-                    <ul>
-                        <li>Running</li>
-                        <li>Skipping</li>
-                        <li>Fast walking</li>
-                    </ul>
-
-                    <p>
-                        Cardio activities can be adapted to different
-                        spaces and time limits.
-                    </p>
-                </article>
-
-                <article class="activity-card">
-                    <h3>Quick Study Breaks</h3>
-
-                    <ul>
-                        <li>Stretching</li>
-                        <li>Short walking</li>
-                        <li>Simple mobility exercises</li>
-                    </ul>
-
-                    <p>
-                        A short movement break can help students leave
-                        their desks and change their focus.
-                    </p>
-                </article>
+        <section class="sport-library" aria-labelledby="library-heading">
+            <div class="sport-library__heading">
+                <div>
+                    <p class="eyebrow">EXPLORE MORE</p>
+                    <h2 id="library-heading">Activity library</h2>
+                </div>
+                <p>
+                    Preview any activity below.
+                    Your personalised results will remain
+                    based on your selected preferences.
+                </p>
             </div>
+            <div class="sport-card-grid" id="sport-card-grid"></div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <p>
-            Built by X20250020 · Web Technologies 2026
-        </p>
-
+        <p>Built by X20250020 · Web Technologies 2026</p>
         <address>
             <a href="mailto:X20250020@stu.hibiuh.edu.cn">
                 X20250020@stu.hibiuh.edu.cn
             </a>
         </address>
     </footer>
-</body>
 
+    <script src="move.js"></script>
+</body>
 </html>
