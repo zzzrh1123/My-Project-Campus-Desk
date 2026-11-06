@@ -291,7 +291,10 @@ function getPage(side) {
 }
 
 function countWords(value) {
-    return value.trim() ? value.trim().split(/\s+/).length : 0;
+    const chineseCharacters = value.match(/[\u3400-\u9fff]/g) || [];
+    const otherWords = value.replace(/[\u3400-\u9fff]/g, " ")
+        .match(/[A-Za-z0-9]+(?:['’][A-Za-z0-9]+)*/g) || [];
+    return chineseCharacters.length + otherWords.length;
 }
 
 function updateWordCount(side) {
@@ -390,6 +393,10 @@ function openNotebook(notebookId, button) {
     calculateBookStart(button);
     ensureNotebookPages(notebookId, 2);
 
+    openNotebookTitle.toggleAttribute(
+        "data-i18n-ignore",
+        !defaultNotebooks.some((item) => item.id === notebookId)
+    );
     openNotebookTitle.textContent = notebook.name;
     deleteNotebookButton.hidden = defaultNotebooks.some((item) => item.id === notebookId);
     deleteConfirmation.hidden = true;
@@ -512,7 +519,12 @@ addNotebookForm.addEventListener("submit", (event) => {
     const duplicate = getAllNotebooks().some((notebook) => notebook.name.toLowerCase() === name.toLowerCase());
 
     if (duplicate) {
-        newNotebookName.setCustomValidity("A notebook with this name already exists.");
+        const message = "A notebook with this name already exists.";
+        newNotebookName.setCustomValidity(
+            window.CampusDeskLanguage?.current === "zh"
+                ? window.CampusDeskLanguage.translate(message)
+                : message
+        );
         newNotebookName.reportValidity();
         return;
     }

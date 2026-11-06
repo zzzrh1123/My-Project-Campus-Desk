@@ -13,7 +13,7 @@
     const students = new Set();
     const random = (min, max) => min + Math.random() * (max - min);
     let world, nextId = 0, frame = 0, lastFrame = 0, spawnTimer = 0, sequence = 0;
-    let running = false, spawnDue = 0, remaining = intervals[0], active = null, greetingTimer = 0;
+    let running = false, spawnDue = 0, remaining = intervals[0], active = null, greetingTimer = 0, idleTimer = 0, idleSince = 0;
 
     const bubble = document.createElement("div");
     bubble.className = "campus-life-greeting";
@@ -239,6 +239,24 @@
     const release = student => {
         if (active === student && !student.hovered && !student.focused && performance.now() >= student.pinnedUntil) hideGreeting();
     };
+    const checkIdleGreeting = () => {
+        idleTimer = 0;
+        if (!running || document.hidden) return;
+        const remainingIdle = 15000 - (performance.now() - idleSince);
+        if (remainingIdle > 0) {
+            idleTimer = setTimeout(checkIdleGreeting, remainingIdle);
+            return;
+        }
+        const available = [...students].filter(student => !student.exiting && !student.retiring && !student.drag
+            && !student.hovered && !student.focused && student !== active);
+        if (available.length) greet(available[Math.floor(Math.random() * available.length)], true);
+        idleSince = performance.now();
+        idleTimer = setTimeout(checkIdleGreeting, 15000);
+    };
+    const resetIdleGreeting = () => {
+        idleSince = performance.now();
+        if (running && !document.hidden && !idleTimer) idleTimer = setTimeout(checkIdleGreeting, 15000);
+    };
 
     const create = (initial = false, index = 0) => {
         let student = { id: nextId++, route: [], x: 0, y: 0, restUntil: 0, blockedAt: 0, pinnedUntil: 0 };
@@ -271,9 +289,15 @@
         element.style.height = `${student.height}px`;
         element.style.setProperty("--walker-color", colors[Math.floor(Math.random() * colors.length)]);
         student.speed = student.height * random(.65, .88);
-        element.style.setProperty("--stride-duration", `${(student.height * .72 / student.speed).toFixed(2)}s`);
+        student.strideDuration = student.height * .72 / student.speed;
+        student.walkPhase = random(0, Math.PI * 2);
+        student.walkBlend = 0;
         element.innerHTML = figure;
         student.element = element;
+        student.body = element.querySelector(".walker-body");
+        student.shadow = element.querySelector(".walker-shadow");
+        student.arms = [element.querySelector(".walker-arm--left"), element.querySelector(".walker-arm--right")];
+        student.legs = [element.querySelector(".walker-leg--left"), element.querySelector(".walker-leg--right")];
         element.addEventListener("pointerdown", event => {
             if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
             const bounds = hero.getBoundingClientRect();
@@ -350,12 +374,32 @@
         return true;
     };
 
+    // Follow the same continuous, opposite-arm-and-leg rhythm as Active Breaks.
+    const drawWalk = (student, delta, walking) => {
+        student.walkBlend += (Number(walking) - student.walkBlend) * Math.min(1, delta * 9);
+        if (walking) student.walkPhase += delta * Math.PI * 2 / student.strideDuration;
+        const stride = Math.sin(student.walkPhase) * student.walkBlend;
+        const opposite = -stride;
+        [stride, opposite].forEach((step, side) => {
+            const direction = side ? 1 : -1;
+            const arm = -step;
+            student.arms[side].setAttribute("d", `M40 35L${40 + direction * 8 + arm * 7} 48L${40 + direction * 14 + arm * 12} 61`);
+            const lift = Math.max(0, -step);
+            student.legs[side].setAttribute("d", `M40 72L${40 + direction * 8 + step * 10} ${103 - lift * 4}L${40 + direction * 15 + step * 21} ${134 - lift * 11}`);
+        });
+        const bounce = Math.abs(Math.cos(student.walkPhase)) * 2 * student.walkBlend;
+        student.body.setAttribute("transform", `translate(0 ${-bounce.toFixed(2)})`);
+        student.shadow.setAttribute("rx", (16 - bounce).toFixed(2));
+    };
+
     const tick = now => {
         const delta = Math.min((now - (lastFrame || now)) / 1000, .05);
         lastFrame = now;
         students.forEach(student => {
             const paused = student.drag?.moved || student.hovered || student.focused || student.pinnedUntil > now || now < student.restUntil;
-            student.element.classList.toggle("is-walking", !paused && student.route.length > 0);
+            const walking = !paused && student.route.length > 0;
+            student.element.classList.toggle("is-walking", walking);
+            drawWalk(student, delta, walking);
             if (paused) return;
             if (!student.route.length) {
                 if (student.exiting) { remove(student); return; }
@@ -409,6 +453,8 @@
         remaining = Math.max(0, spawnDue - performance.now());
         cancelAnimationFrame(frame);
         clearTimeout(spawnTimer);
+        clearTimeout(idleTimer);
+        idleTimer = 0;
         clearTimeout(resizeTimer);
         layer.classList.add("is-suspended");
         hideGreeting();
@@ -419,6 +465,8 @@
         layer.classList.remove("is-suspended");
         frame = requestAnimationFrame(tick);
         scheduleSpawn(remaining || intervals[sequence]);
+        idleSince = performance.now();
+        idleTimer = setTimeout(checkIdleGreeting, 15000);
     };
 
     refresh();
@@ -434,6 +482,9 @@
     window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refresh, 180); });
     hero.addEventListener("animationend", event => { if (event.animationName === "content-arrive") refresh(); });
     document.addEventListener("visibilitychange", () => document.hidden ? pause() : resume());
+    ["pointermove", "pointerdown", "click", "keydown", "wheel", "scroll", "touchstart"].forEach(type => {
+        document.addEventListener(type, resetIdleGreeting, { passive: true });
+    });
     reduced.addEventListener("change", () => reduced.matches ? pause() : resume());
     window.addEventListener("pagehide", pause);
     window.addEventListener("pageshow", event => { if (event.persisted) { refresh(); resume(); } });

@@ -57,6 +57,14 @@
         hero.style.setProperty("--scene-y", `${(-currentY * 4).toFixed(2)}px`);
         hero.style.setProperty("--foreground-x", `${(currentX * 8).toFixed(2)}px`);
         hero.style.setProperty("--foreground-y", `${(currentY * 6).toFixed(2)}px`);
+        hero.style.setProperty("--copy-x", `${(currentX * 3).toFixed(2)}px`);
+        hero.style.setProperty("--copy-y", `${(currentY * 2).toFixed(2)}px`);
+        hero.style.setProperty("--copy-tilt-x", `${(-currentY * .45).toFixed(2)}deg`);
+        hero.style.setProperty("--copy-tilt-y", `${(currentX * .55).toFixed(2)}deg`);
+        hero.style.setProperty("--hint-x", `${(currentX * 5).toFixed(2)}px`);
+        hero.style.setProperty("--hint-y", `${(currentY * 4).toFixed(2)}px`);
+        hero.style.setProperty("--hint-tilt-x", `${(-currentY * 1.1).toFixed(2)}deg`);
+        hero.style.setProperty("--hint-tilt-y", `${(currentX * 1.3).toFixed(2)}deg`);
         cards.forEach(card => {
             card.style.setProperty("--tilt-x", card === activeCard ? `${tiltX.toFixed(2)}deg` : "0deg");
             card.style.setProperty("--tilt-y", card === activeCard ? `${tiltY.toFixed(2)}deg` : "0deg");
@@ -74,6 +82,14 @@
             currentX = currentY = 0;
             if (frame) cancelAnimationFrame(frame);
             frame = 0;
+            hero.style.setProperty("--copy-x", "0px");
+            hero.style.setProperty("--copy-y", "0px");
+            hero.style.setProperty("--copy-tilt-x", "0deg");
+            hero.style.setProperty("--copy-tilt-y", "0deg");
+            hero.style.setProperty("--hint-x", "0px");
+            hero.style.setProperty("--hint-y", "0px");
+            hero.style.setProperty("--hint-tilt-x", "0deg");
+            hero.style.setProperty("--hint-tilt-y", "0deg");
             paint();
         } else queue();
     };

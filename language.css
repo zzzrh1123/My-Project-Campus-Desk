@@ -1,0 +1,73 @@
+/* Shared language control for all Campus Desk pages. */
+.site-header { position: relative; }
+.site-header nav { min-width: 0; margin-left: auto; }
+.hero-header { position: absolute; }
+.hero-header .header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+.language-switch {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-height: 38px;
+    padding: 3px;
+    border: 1px solid #b8c7cc;
+    border-radius: 8px;
+    background: #fff;
+    color: #334555;
+    white-space: nowrap;
+    font: 600 13px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.language-switch button {
+    min-width: 30px;
+    min-height: 30px;
+    padding: 4px 6px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+.language-switch button[aria-pressed="true"] { background: #354d5a; color: #fff; }
+.language-switch button:focus-visible { outline: 2px solid #257d9b; outline-offset: 2px; }
+.language-switch__divider { color: #71818b; }
+.hero-header .language-switch {
+    margin-left: -7px;
+    border-color: rgb(255 255 255 / 50%);
+    background: rgb(14 45 43 / 35%);
+    color: #fff;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.hero-header .language-switch button[aria-pressed="true"] { background: #fff; color: #163f42; }
+.hero-header .language-switch__divider { color: #fff; }
+.site-header .language-switch { margin-left: 0; }
+@media (max-width: 760px) {
+    .site-header nav { margin-left: 0; }
+    .site-header .language-switch {
+        position: absolute;
+        top: 15px;
+        right: 5%;
+        z-index: 20;
+    }
+    .site-header .site-name { padding-right: 105px; }
+    .hero-header { gap: 10px; }
+    .hero-header .language-switch { margin-left: 0; }
+}
+@media (max-width: 420px) {
+    .hero-header .header-actions { gap: 5px; }
+    .hero-header .contact-link { gap: 4px; }
+    .hero-header .language-switch { min-height: 33px; padding: 2px; }
+    .hero-header .language-switch button { min-width: 26px; min-height: 27px; padding: 3px; font-size: 11px; }
+}
+@media (max-width: 370px) {
+    .hero-header .home-brand { gap: 5px; font-size: 14px; }
+    .hero-header .brand-mark { width: 25px; height: 25px; }
+    .hero-header .contact-link { gap: 3px; padding: 7px; font-size: 9px; }
+}

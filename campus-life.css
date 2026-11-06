@@ -23,12 +23,8 @@
 .campus-life-person.is-dragging { cursor: grabbing; z-index: 2; }
 .campus-life-person svg { display: block; width: 100%; height: 100%; overflow: visible; transform: scaleX(var(--walker-facing)); }
 .walker-shadow { fill: rgb(17 48 41 / 24%); }
-.campus-life-person .walker-head { fill: var(--walker-color); stroke: #fff; stroke-width: 2.4; }
+.campus-life-person .walker-head { fill: var(--walker-color); stroke: none; }
 .campus-life-person .walker-limb { fill: none; stroke: var(--walker-color); stroke-width: 4.8; stroke-linecap: round; stroke-linejoin: round; transform-box: view-box; }
-.walker-arm--left, .walker-arm--right { transform-origin: 40px 35px; }
-.walker-leg--left, .walker-leg--right { transform-origin: 40px 72px; }
-.is-walking .walker-arm--left, .is-walking .walker-leg--right { animation: campus-walk-forward var(--stride-duration, .9s) ease-in-out infinite; }
-.is-walking .walker-arm--right, .is-walking .walker-leg--left { animation: campus-walk-back var(--stride-duration, .9s) ease-in-out infinite; }
 .walker-wave { display: none; }
 .is-greeting .walker-arm--right { visibility: hidden; }
 .is-greeting .walker-wave { display: block; }
@@ -76,17 +72,17 @@
     -webkit-backdrop-filter: blur(16px) saturate(120%);
     text-align: left;
     cursor: pointer;
-    transform: rotate(6deg);
-    transition: transform .25s ease, box-shadow .25s ease;
+    transform: perspective(700px) translate3d(var(--hint-x, 0px), var(--hint-y, 0px), 0) rotateX(var(--hint-tilt-x, 0deg)) rotateY(var(--hint-tilt-y, 0deg)) rotate(6deg);
+    transform-origin: center;
+    transition: transform .3s ease-out, box-shadow .25s ease;
+    will-change: transform;
 }
 .campus-life-hint > svg { width: 27px; height: 30px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .campus-life-hint > span { display: grid; gap: 3px; }
 .campus-life-hint strong { font-size: 15px; font-weight: 650; letter-spacing: -.2px; }
 .campus-life-hint small { font-size: 10px; color: #42645d; }
-.campus-life-hint:hover { background: linear-gradient(120deg, rgb(255 255 255 / 72%), rgb(235 248 241 / 50%)); transform: translateY(-3px) rotate(3deg); box-shadow: 0 16px 35px rgb(10 35 32 / 20%), inset 0 1px 0 #fff; }
+.campus-life-hint:hover { background: linear-gradient(120deg, rgb(255 255 255 / 72%), rgb(235 248 241 / 50%)); transform: perspective(700px) translate3d(var(--hint-x, 0px), calc(var(--hint-y, 0px) - 3px), 0) rotateX(var(--hint-tilt-x, 0deg)) rotateY(var(--hint-tilt-y, 0deg)) rotate(3deg); box-shadow: 0 16px 35px rgb(10 35 32 / 20%), inset 0 1px 0 #fff; }
 .campus-life-hint:focus-visible { outline: 3px solid #e5f6d5; outline-offset: 5px; }
-@keyframes campus-walk-forward { 0%, 100% { transform: rotate(-21deg); } 25%, 75% { transform: rotate(0); } 50% { transform: rotate(21deg); } }
-@keyframes campus-walk-back { 0%, 100% { transform: rotate(21deg); } 25%, 75% { transform: rotate(0); } 50% { transform: rotate(-21deg); } }
 @keyframes campus-student-wave { from { transform: rotate(-16deg); } to { transform: rotate(17deg); } }
 @keyframes campus-student-appear { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 760px) {

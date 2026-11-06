@@ -90,6 +90,10 @@
     z-index: 2;
     max-width: min(630px, 58vw);
     color: #fff;
+    transform: perspective(1000px) translate3d(var(--copy-x, 0px), var(--copy-y, 0px), 0) rotateX(var(--copy-tilt-x, 0deg)) rotateY(var(--copy-tilt-y, 0deg));
+    transform-origin: left center;
+    transition: transform .35s ease-out;
+    will-change: transform;
 }
 .hero-eyebrow {
     display: flex;
@@ -134,9 +138,9 @@
     pointer-events: auto;
     transform: translate3d(var(--foreground-x), var(--foreground-y), 0);
 }
-.portal-anchor--study { left: 5.8%; bottom: calc(14% + clamp(16px, 1.4vw, 24px)); }
-.portal-anchor--loadout { top: calc(46% - clamp(110px, 8vw, 128px)); right: clamp(108px, 12vw, 190px); }
-.portal-anchor--move { right: calc(15% + clamp(32px, 3vw, 48px)); bottom: calc(9% + clamp(22px, 1.8vw, 30px)); }
+.portal-anchor--study { left: 5.8%; bottom: calc(10% + clamp(16px, 1.4vw, 24px)); }
+.portal-anchor--loadout { top: calc(46% - clamp(110px, 8vw, 128px)); right: clamp(150px, 16vw, 240px); }
+.portal-anchor--move { right: calc(10% + clamp(28px, 2.5vw, 40px)); bottom: calc(5% + clamp(18px, 1.5vw, 26px)); }
 .portal-nav a.portal-card {
     --tilt-x: 0deg;
     --tilt-y: 0deg;
@@ -228,9 +232,9 @@
     .hero-copy { top: clamp(108px, calc(18% - 46px), 138px); max-width: 70vw; }
     .hero-copy h1 { font-size: clamp(53px, 6.2vw, 68px); }
     .portal-anchor { width: 290px; }
-    .portal-anchor--study { bottom: calc(22% + 18px); left: 5%; }
-    .portal-anchor--loadout { top: clamp(220px, 29vh, 290px); right: clamp(38px, 7vw, 76px); }
-    .portal-anchor--move { right: calc(19% + 32px); bottom: calc(4% + 22px); }
+    .portal-anchor--study { bottom: calc(18% + 18px); left: 5%; }
+    .portal-anchor--loadout { top: clamp(220px, 29vh, 290px); right: clamp(75px, 12vw, 130px); }
+    .portal-anchor--move { right: calc(13% + 24px); bottom: calc(2% + 18px); }
     .portal-nav a.portal-card { min-height: 112px; padding: 19px; gap: 12px; }
     .hero-caption, .hero-scroll { bottom: 30px; }
 }

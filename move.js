@@ -1295,6 +1295,12 @@ function findMatchingSports(choices) {
                 return b.score - a.score;
             }
 
+            // Prefer cycling on a tie and keep walking as a fallback.
+            if (a.sport.id === "cycling" && b.sport.id !== "cycling") return -1;
+            if (b.sport.id === "cycling" && a.sport.id !== "cycling") return 1;
+            if (a.sport.id === "walking" && b.sport.id !== "walking") return 1;
+            if (b.sport.id === "walking" && a.sport.id !== "walking") return -1;
+
             return a.sport.recommendedMinutes - b.sport.recommendedMinutes;
         });
 }
