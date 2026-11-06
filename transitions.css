@@ -1,0 +1,495 @@
+/* Shared, temporary scene transitions. The application pages remain unchanged beneath this layer. */
+html.transition-pending::before {
+    position: fixed;
+    z-index: 2147483647;
+    inset: 0;
+    background: #123d40;
+    content: "";
+}
+html.transition-pending[data-transition-page="move"]::before {
+    width: var(--move-viewport-width, 100vw);
+    background: #8aa9a7 url("assets/active-breaks-track.svg") center / cover no-repeat;
+}
+body.transition-lock { overflow: hidden; }
+body.move-transition-lock { padding-right: var(--move-scrollbar-gap, 0px); }
+.campus-transition[data-type="move"] { width: 100vw; }
+.campus-transition {
+    position: fixed;
+    z-index: 2147483647;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    color: #fff;
+    opacity: 0;
+    pointer-events: none;
+    isolation: isolate;
+    transition: opacity .16s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+.campus-transition.is-active, .campus-transition--arrival { opacity: 1; }
+.campus-transition.is-opening { opacity: 1; }
+.campus-transition.is-closing { opacity: 0; visibility: hidden; }
+.campus-transition__scene { position: absolute; inset: 0; overflow: hidden; }
+.campus-transition__label {
+    position: absolute;
+    z-index: 8;
+    top: max(28px, 5vh);
+    left: 50%;
+    margin: 0;
+    color: rgb(255 255 255 / 82%);
+    font-size: clamp(10px, 1vw, 13px);
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+}
+.campus-transition__light {
+    position: absolute;
+    inset: -15%;
+    background: radial-gradient(circle at 50% 48%, rgb(255 231 173 / 82%), rgb(114 73 43 / 37%) 28%, #112d2d 68%);
+    transform: scale(1.07);
+}
+
+/* Shared white-line student. The paths meet at the shoulder and hip joints. */
+.transition-student {
+    position: absolute;
+    z-index: 5;
+    width: min(20vw, 170px);
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 8px 10px rgb(0 0 0 / 18%));
+}
+.transition-student circle, .transition-student path, .transition-student line, .transition-student polyline {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.transition-student .student-head { stroke-width: 7; }
+
+/* Study Shelf: a stone university portal, bookcase-coloured doors and a staged push-in. */
+.campus-transition--study { background: #14272c; perspective: 1500px; }
+.study-facade {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 53%, rgb(245 220 174 / 17%), transparent 38%),
+        linear-gradient(90deg, rgb(10 30 34 / 34%), transparent 20% 80%, rgb(10 30 34 / 34%)),
+        repeating-linear-gradient(0deg, transparent 0 82px, rgb(202 221 211 / 9%) 83px 84px),
+        repeating-linear-gradient(90deg, transparent 0 174px, rgb(215 228 221 / 8%) 175px 176px),
+        linear-gradient(145deg, #486267, #29464c 48%, #526b69);
+}
+.study-facade::before,
+.study-facade::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(110px, 13vw, 205px);
+    border-inline: 1px solid rgb(230 238 226 / 18%);
+    background:
+        repeating-linear-gradient(90deg, transparent 0 31px, rgb(232 236 221 / 11%) 32px 34px, transparent 35px 66px),
+        linear-gradient(90deg, rgb(18 43 47 / 40%), rgb(190 205 187 / 13%) 50%, rgb(18 43 47 / 40%));
+    box-shadow: 0 0 52px rgb(0 0 0 / 23%), inset 0 0 26px rgb(222 232 218 / 5%);
+    content: "";
+}
+.study-facade::before { left: 7%; }
+.study-facade::after { right: 7%; }
+.campus-transition--study .campus-transition__light {
+    z-index: 1;
+    background: radial-gradient(ellipse at 50% 61%, rgb(255 221 160 / 26%), transparent 31%), linear-gradient(180deg, rgb(6 10 11 / 20%), transparent 48%, rgb(8 10 10 / 45%));
+}
+.study-arch {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: min(65vw, 860px);
+    height: min(74vh, 700px);
+    border: clamp(28px, 3.3vw, 52px) solid #aaa18f;
+    border-radius: 0;
+    background: transparent;
+    box-shadow:
+        0 0 0 9px #4a4843,
+        0 0 0 13px rgb(221 213 196 / 28%),
+        inset 0 12px 20px rgb(255 255 255 / 14%),
+        0 28px 75px rgb(0 0 0 / 42%);
+    transform: translate(-50%, -30%);
+}
+.study-doorway {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    width: min(54vw, 720px);
+    height: min(64vh, 610px);
+    overflow: hidden;
+    border: 8px solid #30261f;
+    border-radius: 0;
+    background: #211813;
+    box-shadow:
+        0 0 0 7px #755135,
+        0 0 0 12px #9b8d77,
+        inset 0 0 0 3px rgb(255 255 255 / 9%),
+        0 24px 58px rgb(0 0 0 / 48%);
+    perspective: 1250px;
+    transform: translate(-50%, -29%);
+}
+.study-interior {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    background: #fff;
+}
+.study-page-preview {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+    pointer-events: none;
+}
+/* Only the document inside the doorway: reuse the real bookcases, without page furniture. */
+html.study-transition-preview,
+html.study-transition-preview body { width: 100%; height: 100%; min-height: 0; margin: 0; overflow: hidden; background: #f3efe7; }
+html.study-transition-preview .skip-link,
+html.study-transition-preview .site-header,
+html.study-transition-preview .study-intro,
+html.study-transition-preview .shelf-heading,
+html.study-transition-preview .site-footer,
+html.study-transition-preview #main-content > :not(.study-room) { display: none !important; }
+html.study-transition-preview #main-content { position: relative; width: 100%; height: 100%; max-width: none; margin: 0; padding: 0; }
+html.study-transition-preview .study-room {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    width: var(--study-preview-width, 480px);
+    height: 590px;
+    transform: translate(-50%, -50%) scale(var(--study-preview-scale, .5));
+    transform-origin: center;
+}
+html.study-transition-preview .library-case { display: block; width: 100%; height: 590px; max-width: none; margin: 0; padding: 0; border: 0; background: none; box-shadow: none; }
+html.study-transition-preview .bookcase { width: 100%; height: 590px; min-height: 590px; margin: 0; }
+html.study-transition-preview .notes-case { display: none; }
+html.study-transition-preview .notes-case .add-notebook-book,
+html.study-transition-preview .notes-case .decorative-book,
+html.study-transition-preview .notes-case .shelf-sign { display: none; }
+html.study-transition-preview[data-study-preview-layout="two"] .study-room { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+html.study-transition-preview[data-study-preview-layout="two"] .notes-case { display: block; }
+.study-door {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    width: 50.15%;
+    height: 100%;
+    overflow: hidden;
+    border: 2px solid #3d281a;
+    background:
+        linear-gradient(90deg, rgb(255 255 255 / 10%), transparent 16% 82%, rgb(32 17 10 / 28%)),
+        repeating-linear-gradient(180deg, transparent 0 27%, rgb(58 35 22 / 60%) 27.5% 29%, transparent 29.5% 48%),
+        linear-gradient(90deg, #6f4d32, #9a704d 16%, #805a3b 52%, #9a704d 83%, #624229);
+    box-shadow:
+        inset 0 0 0 10px #755135,
+        inset 0 0 0 14px rgb(224 189 142 / 19%),
+        inset 0 -34px 42px rgb(47 28 15 / 34%);
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+    will-change: transform;
+}
+.study-door::before,
+.study-door::after { position: absolute; content: ""; }
+.study-door::before {
+    inset: 7% 10%;
+    border: 3px double rgb(197 156 103 / 48%);
+    background: repeating-linear-gradient(180deg, transparent 0 29%, rgb(51 30 18 / 52%) 29.5% 31.5%, transparent 32% 49%);
+    box-shadow: inset 0 0 0 5px rgb(40 23 14 / 22%), inset 0 0 26px rgb(26 14 9 / 25%);
+}
+.study-door::after {
+    top: 47%;
+    width: 8px;
+    height: 36px;
+    border: 2px solid #e1b866;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #76502b, #d7aa54 52%, #73502e);
+    box-shadow: 0 0 0 2px #3f2818, 0 4px 10px rgb(0 0 0 / 30%);
+}
+.study-door--left { left: 0; transform-origin: left center; }
+.study-door--left::after { right: 8%; }
+.study-door--right { right: 0; transform-origin: right center; }
+.study-door--right::after { left: 8%; }
+.campus-transition--study .library-student {
+    z-index: 6;
+    bottom: 6%;
+    left: 3%;
+    width: min(19vw, 170px);
+    will-change: transform, opacity;
+}
+.library-student .library-arm,
+.library-student .library-leg { transform-box: view-box; }
+.library-student .library-arm { transform-origin: 71px 57px; }
+.library-student .library-leg { transform-origin: 66px 105px; }
+.campus-transition--study.is-active .library-student { animation: library-student-journey 1.84s cubic-bezier(.32,.02,.2,1) forwards; }
+.campus-transition--study.is-active .library-arm--back { animation: library-arm-back-walk .24s ease-in-out 0s 3 alternate, library-arm-settle .2s ease .72s forwards; }
+.campus-transition--study.is-active .library-arm--push { animation: library-arm-front-walk .24s ease-in-out -.12s 3 alternate, library-arm-push .3s cubic-bezier(.3,.8,.3,1) .72s forwards; }
+.campus-transition--study.is-active .library-leg--back { animation: library-leg-back-walk .24s ease-in-out 0s 3 alternate, library-leg-settle .18s ease .72s forwards; }
+.campus-transition--study.is-active .library-leg--front { animation: library-leg-front-walk .24s ease-in-out -.12s 3 alternate, library-leg-settle .18s ease .72s forwards; }
+.campus-transition--study.is-active .student-head { animation: library-head-bob .24s ease-in-out 0s 3 alternate; }
+.campus-transition--study.is-active .study-door--left { animation: open-left-door .64s cubic-bezier(.18,.78,.23,1) .93s forwards; }
+.campus-transition--study.is-active .study-door--right { animation: open-right-door .64s cubic-bezier(.18,.78,.23,1) .93s forwards; }
+.campus-transition--study.is-active .study-arch,
+.campus-transition--study.is-active .study-doorway { animation: enter-library .43s cubic-bezier(.35,.02,.28,1) 1.47s forwards; }
+
+/* Campus Loadout: two fixed outer panes and two center panes that slide on a top rail. */
+.campus-transition--loadout { background: #113b42; }
+.loadout-lobby {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 57%, rgb(226 194 142 / 18%), transparent 34%),
+        linear-gradient(180deg, #506b69 0%, #304f53 72%, #725c48 72.5%, #55483f 100%);
+}
+.loadout-lobby::before {
+    position: absolute;
+    inset: 0 0 28%;
+    background:
+        linear-gradient(90deg, transparent 0 45%, rgb(198 225 215 / 15%) 45.2% 45.8%, transparent 46% 100%),
+        repeating-linear-gradient(90deg, transparent 0 11.5%, rgb(224 230 210 / 7%) 11.7% 11.9%, transparent 12.1% 23%),
+        linear-gradient(180deg, rgb(234 247 235 / 12%), transparent 46%);
+    content: "";
+}
+.loadout-lobby::after {
+    position: absolute;
+    inset: 73% 0 0;
+    background:
+        linear-gradient(180deg, rgb(34 42 39 / 8%), transparent 22%),
+        repeating-linear-gradient(90deg, rgb(233 213 177 / 5%) 0 1px, transparent 1px 12%);
+    content: "";
+}
+.automatic-door {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    width: min(76vw, 980px);
+    height: min(70vh, 640px);
+    overflow: hidden;
+    border: 11px solid #b8d2d0;
+    border-top-width: 22px;
+    background: rgb(14 48 54 / 65%);
+    box-shadow: 0 18px 65px rgb(0 16 20 / 42%), inset 0 0 0 2px rgb(255 255 255 / 32%);
+    transform: translate(-50%, -39%);
+}
+.automatic-door::before { position: absolute; top: -17px; left: 50%; width: 20px; height: 7px; border-radius: 99px; background: #e6f5be; box-shadow: 0 0 0 5px rgb(195 246 193 / 10%); content: ""; transform: translateX(-50%); }
+.door-rail { position: absolute; z-index: 6; top: 0; right: 0; left: 0; height: 13px; background: linear-gradient(#e6f0ee, #829b9d); }
+.loadout-page-preview {
+    position: absolute;
+    z-index: 0;
+    inset: 13px 0 0;
+    width: 100%;
+    height: calc(100% - 13px);
+    border: 0;
+    background: #edf5f8;
+    pointer-events: none;
+}
+.glass-pane { position: absolute; top: 13px; bottom: 0; width: 25%; border-right: 4px solid rgb(218 244 241 / 70%); background: linear-gradient(180deg, rgb(218 248 248 / 18%), rgb(41 106 122 / 12%)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 35%); }
+.glass-pane--fixed-left,
+.glass-pane--fixed-right { background: linear-gradient(180deg, rgb(210 234 229 / 78%), rgb(67 120 135 / 66%)); }
+.glass-pane--fixed-left { left: 0; }
+.glass-pane--slide-left { left: 25%; will-change: transform; }
+.glass-pane--slide-right { right: 25%; will-change: transform; }
+.glass-pane--fixed-right { right: 0; border-right: 0; }
+html.loadout-transition-preview,
+html.loadout-transition-preview body { width: 100%; height: 100%; min-height: 100%; overflow: hidden; }
+html.loadout-transition-preview body { margin: 0; }
+html.loadout-transition-preview .skip-link,
+html.loadout-transition-preview .site-header,
+html.loadout-transition-preview #main-content > .page-intro,
+html.loadout-transition-preview .loadout-controls,
+html.loadout-transition-preview footer { display: none !important; }
+html.loadout-transition-preview #main-content {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    max-width: none;
+    margin: 0;
+    padding: 8px;
+}
+html.loadout-transition-preview .loadout-layout {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+html.loadout-transition-preview .loadout-preview {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 12px;
+    overflow: hidden;
+}
+html.loadout-transition-preview .preview-heading { padding-bottom: 6px; }
+html.loadout-transition-preview .preview-heading .loadout-step { margin-bottom: 2px; }
+html.loadout-transition-preview .preview-heading h2 { margin: 0; font-size: 1.25rem; }
+html.loadout-transition-preview .preview-heading > p:last-child { display: none; }
+html.loadout-transition-preview .packing-stage {
+    height: calc(100% - 60px);
+    min-height: 0 !important;
+    padding-top: 6px;
+}
+html.loadout-transition-preview .item-tray { margin-inline: 8px; padding: 5px 8px; }
+html.loadout-transition-preview .item-tray-heading { margin-bottom: 0; }
+html.loadout-transition-preview .item-tray-heading small { font-size: .58rem; }
+html.loadout-transition-preview .staged-items { min-height: 82px; }
+html.loadout-transition-preview .staged-item { height: 72px; }
+html.loadout-transition-preview .pack-object { max-height: 42px; }
+html.loadout-transition-preview .staged-label { font-size: .52rem; }
+html.loadout-transition-preview .backpack-stage {
+    height: calc(100% - 120px);
+    min-height: 0;
+    padding: 4px 8px 12px;
+}
+html.loadout-transition-preview .campus-backpack { width: clamp(190px, 24vw, 260px); max-height: 100%; }
+.campus-transition--loadout .transition-student { bottom: 9%; left: -18%; }
+.campus-transition--loadout.is-active .automatic-door::before { animation: sensor-light .45s ease .5s both; }
+.campus-transition--loadout.is-active .transition-student { animation: student-walk-to-door 1.4s cubic-bezier(.38,.03,.22,.99) forwards; }
+.campus-transition--loadout.is-active .glass-pane--slide-left { animation: slide-glass-left .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
+.campus-transition--loadout.is-active .glass-pane--slide-right { animation: slide-glass-right .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
+.campus-transition--loadout.is-active .automatic-door { animation: enter-lobby .62s ease 1.18s forwards; }
+
+/* One shared stadium image keeps the horizon, track and navigation curtain aligned. */
+.campus-transition--move {
+    background: #87a7a5;
+    transform-origin: 50% 35%;
+    will-change: transform, opacity;
+}
+.track-world {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    transform-origin: 50% 35%;
+}
+.track-atmosphere {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(24 53 61 / 12%), transparent 30% 65%, rgb(13 44 48 / 13%));
+}
+.campus-transition--move .campus-transition__label { text-shadow: 0 1px 12px rgb(28 57 63 / 45%); }
+.campus-transition--move.is-active .track-world { animation: track-camera-advance 1.45s ease-out forwards; }
+.campus-transition--move.is-settled .track-world,
+.campus-transition--arrival[data-type="move"] .track-world { animation: none; transform: scale(1.032); }
+.campus-transition--move .runner-student {
+    z-index: 5;
+    bottom: 2.5%;
+    left: 50%;
+    width: min(15vw, 150px);
+    transform: translateX(-50%);
+    transform-origin: center bottom;
+    will-change: transform, opacity;
+}
+.campus-transition--move.is-active .runner-student { animation: runner-recedes-into-distance 1.45s linear forwards; }
+.runner-student .runner-ground-shadow { fill: rgb(9 37 47 / 26%); stroke: none; }
+.runner-student .runner-torso { stroke-width: 9; }
+.runner-student .runner-arm-left,
+.runner-student .runner-arm-right,
+.runner-student .runner-leg-left,
+.runner-student .runner-leg-right { transform-box: view-box; }
+.runner-student .runner-arm-left, .runner-student .runner-arm-right { transform-origin: 60px 54px; }
+.runner-student .runner-leg-left, .runner-student .runner-leg-right { transform-origin: 60px 103px; }
+.campus-transition--move.is-active .runner-arm-left { animation: run-arm-one .28s ease-in-out infinite alternate; }
+.campus-transition--move.is-active .runner-arm-right { animation: run-arm-two .28s ease-in-out infinite alternate; }
+.campus-transition--move.is-active .runner-leg-left { animation: run-leg-one .28s ease-in-out infinite alternate; }
+.campus-transition--move.is-active .runner-leg-right { animation: run-leg-two .28s ease-in-out infinite alternate; }
+.runner-arm-front, .runner-leg-front { transform-box: fill-box; transform-origin: 0 0; animation: runner-forward .34s ease-in-out infinite alternate; }
+.runner-arm-back, .runner-leg-back { transform-box: fill-box; transform-origin: 0 0; animation: runner-back .34s ease-in-out infinite alternate; }
+
+/* Matching reveal on the page that was selected. */
+.campus-transition--arrival { background: #123d40; transition: opacity .48s ease, visibility .48s ease; }
+.campus-transition--arrival::before { position: absolute; inset: 0; background: radial-gradient(circle at 50% 52%, rgb(231 255 235 / 52%), transparent 45%), linear-gradient(130deg, rgb(51 115 108 / 75%), rgb(16 53 57 / 92%)); content: ""; }
+.campus-transition--arrival[data-type="study"]::before { background: radial-gradient(circle at 50% 65%, rgb(255 220 163 / 74%), transparent 42%), #432e24; }
+.campus-transition--arrival[data-type="loadout"]::before { background: linear-gradient(120deg, #12454f, #6bb7bd, #163e46); }
+.campus-transition--arrival[data-type="move"] {
+    background: transparent;
+    transition: none;
+}
+.campus-transition--arrival[data-type="move"]::before { display: none; }
+.campus-transition--move.is-settled .runner-student,
+.campus-transition--arrival[data-type="move"] .runner-student {
+    animation: none;
+    bottom: 2.5%;
+    opacity: .82;
+    transform: translate3d(-50%, -58vh, 0) scale(.15);
+}
+.campus-transition--arrival.is-arriving { opacity: 0; visibility: hidden; }
+
+@keyframes student-walk-to-door { 0% { transform: translateX(0) scale(1); } 45% { transform: translateX(145%) translateY(2px) scale(.92); } 100% { transform: translateX(318%) translateY(10px) scale(.38); opacity: .65; } }
+@keyframes library-student-journey {
+    0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    38% { opacity: 1; transform: translate3d(145%, 1px, 0) scale(.94); }
+    78% { opacity: 1; transform: translate3d(145%, 1px, 0) scale(.94); }
+    100% { opacity: .12; transform: translate3d(318%, 8px, 0) scale(.38); }
+}
+@keyframes library-arm-front-walk { from { transform: rotate(-14deg); } to { transform: rotate(18deg); } }
+@keyframes library-arm-back-walk { from { transform: rotate(18deg); } to { transform: rotate(-14deg); } }
+@keyframes library-leg-front-walk { from { transform: rotate(-11deg); } to { transform: rotate(14deg); } }
+@keyframes library-leg-back-walk { from { transform: rotate(14deg); } to { transform: rotate(-11deg); } }
+@keyframes library-arm-settle { to { transform: rotate(7deg); } }
+@keyframes library-arm-push { to { transform: rotate(-46deg); } }
+@keyframes library-leg-settle { to { transform: rotate(0deg); } }
+@keyframes library-head-bob { to { transform: translateY(2px); } }
+@keyframes open-left-door { to { transform: rotateY(-104deg); } }
+@keyframes open-right-door { to { transform: rotateY(104deg); } }
+@keyframes enter-library { to { opacity: 0; transform: translate(-50%, -30%) scale(1.26); } }
+@keyframes sensor-light { 50% { background: #fff; box-shadow: 0 0 26px 12px rgb(229 255 184 / 72%); } to { background: #c7f39c; box-shadow: 0 0 18px 8px rgb(199 243 156 / 48%); } }
+@keyframes slide-glass-left { to { transform: translateX(-94%); } }
+@keyframes slide-glass-right { to { transform: translateX(94%); } }
+@keyframes enter-lobby { to { opacity: 0; transform: translate(-50%, -34%) scale(1.23); } }
+@keyframes runner-recedes-into-distance {
+    0% { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); }
+    18% { transform: translate3d(-50%, -5vh, 0) scale(.91); }
+    42% { transform: translate3d(-50%, -17vh, 0) scale(.7); }
+    67% { transform: translate3d(-50%, -34vh, 0) scale(.46); }
+    86% { transform: translate3d(-50%, -49vh, 0) scale(.27); }
+    100% { opacity: .82; transform: translate3d(-50%, -58vh, 0) scale(.15); }
+}
+@keyframes track-camera-advance { from { transform: scale(1); } to { transform: scale(1.032); } }
+@keyframes run-arm-one { from { transform: rotate(-11deg) scaleY(.86); } to { transform: rotate(11deg) scaleY(1.04); } }
+@keyframes run-arm-two { from { transform: rotate(11deg) scaleY(1.04); } to { transform: rotate(-11deg) scaleY(.86); } }
+@keyframes run-leg-one { from { transform: rotate(-7deg) scaleY(1.02); } to { transform: rotate(7deg) scaleY(.66); } }
+@keyframes run-leg-two { from { transform: rotate(7deg) scaleY(.66); } to { transform: rotate(-7deg) scaleY(1.02); } }
+@keyframes runner-forward { to { transform: rotate(13deg); } }
+@keyframes runner-back { to { transform: rotate(-13deg); } }
+@keyframes study-bookcase-arrive {
+    0% { opacity: 0; transform: perspective(1000px) rotateX(.35deg) translateY(22px) scale(.988); }
+    72% { opacity: 1; transform: perspective(1000px) rotateX(.35deg) translateY(-4px) scale(1); }
+    100% { opacity: 1; transform: perspective(1000px) rotateX(.35deg) translateY(0) scale(1); }
+}
+html.study-transition-preview .bookcase:not(.notebook-bookcase),
+html.study-transition-preview .notebook-bookcase {
+    animation: study-bookcase-arrive .82s cubic-bezier(.2,.72,.28,1) .93s both;
+}
+
+@media (max-width: 760px) {
+    .study-arch { width: 96vw; height: min(64vh, 580px); transform: translate(-50%, -29%); }
+    .study-doorway { width: 84vw; height: min(55vh, 500px); border-radius: 0; transform: translate(-50%, -27%); }
+    .campus-transition--study .library-student { left: 1%; bottom: 5%; width: 30vw; }
+    .automatic-door { width: 94vw; height: min(62vh, 540px); transform: translate(-50%, -38%); }
+    .transition-student { width: 34vw; }
+    .campus-transition--move .runner-student { width: min(27vw, 130px); }
+    .campus-transition__label { top: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html.transition-pending::before, .campus-transition { display: none !important; }
+    html.study-transition-preview .bookcase,
+    html.study-transition-preview .notebook-bookcase { animation: none; }
+}

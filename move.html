@@ -6,8 +6,19 @@
     <meta name="description"
           content="Find a practical campus activity that fits your time, space, equipment and preferences.">
     <title>Active Breaks | Campus Desk</title>
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="move.css">
+    <link rel="preload" as="image" href="assets/active-breaks-track.svg">
+    <link rel="stylesheet" href="transitions.css?v=16">
+    <script>
+        try {
+            document.documentElement.dataset.transitionPage = "move";
+            document.documentElement.style.setProperty("--move-viewport-width", `${window.innerWidth}px`);
+            document.documentElement.classList.add("transition-pending");
+            window.setTimeout(() => document.documentElement.classList.remove("transition-pending"), 2200);
+        } catch (error) {}
+    </script>
 </head>
 <body class="active-breaks-page">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -472,5 +483,6 @@
     </footer>
 
     <script src="move.js"></script>
+    <script src="transitions.js?v=16"></script>
 </body>
 </html>

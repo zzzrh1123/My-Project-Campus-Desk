@@ -10,7 +10,6 @@ const bagOpening = document.querySelector("#bag-opening");
 const stagedItems = [...document.querySelectorAll(".staged-item[data-item]")];
 
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-const compactLayoutQuery = window.matchMedia("(max-width: 900px)");
 
 const weatherItems = {
     rainy: {
@@ -163,6 +162,7 @@ function restorePackButton() {
 }
 
 function resetPackingScene() {
+    document.dispatchEvent(new Event("campus:packing-reset"));
     activeRun += 1;
     isPacking = false;
     clearFlyingItems();
@@ -187,11 +187,37 @@ function wait(milliseconds, runId) {
     });
 }
 
-function waitForStableLayout(runId) {
+function scrollPreviewIntoView(runId) {
+    loadoutPreview.scrollIntoView({
+        behavior: reducedMotionQuery.matches ? "auto" : "smooth",
+        block: "start"
+    });
+
     return new Promise((resolve) => {
-        window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => resolve(runId === activeRun));
-        });
+        let lastScrollY = window.scrollY;
+        let stillFrames = 0;
+        let frames = 0;
+
+        const checkScroll = () => {
+            if (runId !== activeRun) {
+                resolve(false);
+                return;
+            }
+
+            const currentScrollY = window.scrollY;
+            stillFrames = Math.abs(currentScrollY - lastScrollY) < 1 ? stillFrames + 1 : 0;
+            lastScrollY = currentScrollY;
+            frames += 1;
+
+            if (stillFrames >= 3 || frames >= 90) {
+                resolve(true);
+                return;
+            }
+
+            window.requestAnimationFrame(checkScroll);
+        };
+
+        window.requestAnimationFrame(checkScroll);
     });
 }
 
@@ -289,6 +315,7 @@ function renderPackingList(plan) {
 }
 
 async function packBag(plan) {
+    document.dispatchEvent(new Event("campus:packing-reset"));
     const runId = ++activeRun;
     const motionDelay = reducedMotionQuery.matches ? 0 : 1;
     const remainingByType = new Map();
@@ -307,15 +334,8 @@ async function packBag(plan) {
     buildButton.innerHTML = "<span aria-hidden='true'>•••</span> Packing…";
     loadoutMessage.textContent = "Opening the backpack zipper…";
 
-    if (compactLayoutQuery.matches) {
-        loadoutPreview.scrollIntoView({
-            behavior: "auto",
-            block: "start"
-        });
-
-        if (!await waitForStableLayout(runId)) {
-            return;
-        }
+    if (!await scrollPreviewIntoView(runId)) {
+        return;
     }
 
     void backpack.offsetWidth;
@@ -365,6 +385,7 @@ async function packBag(plan) {
     buildButton.innerHTML = "<span aria-hidden='true'>↻</span> Pack again";
     isPacking = false;
     buildButton.focus({ preventScroll: true });
+    document.dispatchEvent(new CustomEvent("campus:bag-packed", { detail: { runId, itemCount: plan.items.length } }));
 }
 
 loadoutForm.addEventListener("change", () => {

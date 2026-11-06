@@ -1,129 +1,99 @@
-const svgNamespace = "http://www.w3.org/2000/svg";
-const dynamicStudentLayer = document.querySelector("#dynamic-students-v2");
-const walkerTemplate = document.querySelector("#student-template");
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+(() => {
+    "use strict";
+    const hero = document.querySelector(".home-hero");
+    const photo = document.querySelector(".hero-image");
+    if (!hero || !photo) return;
 
-const visitorRoutes = [
-    {
-        path: "M172 725 C276 650 440 590 566 567 C632 550 674 516 704 482",
-        color: "#8a625d",
-        duration: 13
-    },
-    {
-        path: "M249 456 C354 496 470 548 566 567 C632 550 674 516 704 482",
-        color: "#4f7185",
-        duration: 11
-    },
-    {
-        path: "M1149 478 C1050 510 858 533 704 482",
-        color: "#687d59",
-        duration: 12
-    },
-    {
-        path: "M707 423 C707 446 706 466 704 482 C778 537 886 613 1012 679",
-        color: "#87694f",
-        duration: 13
-    },
-    {
-        path: "M704 482 C790 540 886 614 1012 679",
-        color: "#705f82",
-        duration: 12
-    },
-    {
-        path: "M1265 683 C1248 607 1200 527 1149 478",
-        color: "#52747a",
-        duration: 10
-    },
-    {
-        path: "M431 586 C363 556 304 508 249 456",
-        color: "#a06d63",
-        duration: 10
-    },
-    {
-        path: "M172 725 C284 650 440 590 566 567 C674 548 830 541 1012 679",
-        color: "#567a68",
-        duration: 15
-    }
-];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 761px)");
+    const cards = [...hero.querySelectorAll(".portal-card")];
+    const exploreLink = hero.querySelector(".explore-link");
+    const storageKey = "campus-desk-photo-intro-v1";
 
-const activeVisitors = [];
-const maximumVisitors = 8;
-const visitorLifetime = 180000;
-let nextRoute = 0;
+    let introSeen = false;
+    try { introSeen = sessionStorage.getItem(storageKey) === "seen"; } catch {}
+    if (!introSeen && !reducedMotion.matches) hero.classList.add("is-intro");
 
-function removeVisitor(visitor) {
-    if (!visitor?.isConnected) {
-        return;
-    }
+    let revealed = false;
+    const reveal = () => {
+        if (revealed) return;
+        revealed = true;
+        hero.classList.add("is-ready");
+        try { sessionStorage.setItem(storageKey, "seen"); } catch {}
+    };
+    photo.addEventListener("error", reveal, { once: true });
+    if (photo.complete) reveal();
+    else if (photo.decode) photo.decode().then(reveal, reveal);
+    else photo.addEventListener("load", reveal, { once: true });
+    // Keep links usable even if an image request stalls.
+    window.setTimeout(reveal, 2500);
 
-    visitor.classList.add("is-leaving");
-
-    window.setTimeout(() => {
-        visitor.remove();
-        const index = activeVisitors.indexOf(visitor);
-        if (index >= 0) {
-            activeVisitors.splice(index, 1);
+    exploreLink?.addEventListener("click", event => {
+        event.preventDefault();
+        const firstCard = cards[0];
+        if (!firstCard) return;
+        if (matchMedia("(max-width: 760px)").matches) {
+            firstCard.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth", block: "center" });
         }
-    }, 950);
-}
-
-function addCampusVisitor() {
-    if (
-        !dynamicStudentLayer ||
-        !walkerTemplate ||
-        reducedMotion.matches ||
-        document.hidden
-    ) {
-        return;
-    }
-
-    if (activeVisitors.length >= maximumVisitors) {
-        removeVisitor(activeVisitors[0]);
-    }
-
-    const route = visitorRoutes[nextRoute % visitorRoutes.length];
-    const visitor = walkerTemplate.cloneNode(true);
-    const motion = document.createElementNS(svgNamespace, "animateMotion");
-
-    visitor.classList.remove(
-        "walker-one",
-        "walker-two",
-        "walker-three",
-        "walker-four"
-    );
-    visitor.classList.add("campus-walker--visitor");
-    visitor.removeAttribute("id");
-    visitor.removeAttribute("transform");
-    visitor.setAttribute("aria-hidden", "true");
-    visitor.style.stroke = route.color;
-
-    motion.setAttribute("path", route.path);
-    motion.setAttribute("dur", `${route.duration}s`);
-    motion.setAttribute("begin", "indefinite");
-    motion.setAttribute("fill", "freeze");
-    motion.setAttribute("calcMode", "spline");
-    motion.setAttribute("keyTimes", "0;1");
-    motion.setAttribute("keySplines", ".25 .1 .2 1");
-
-    visitor.prepend(motion);
-    dynamicStudentLayer.append(visitor);
-    activeVisitors.push(visitor);
-    nextRoute += 1;
-
-    window.requestAnimationFrame(() => {
-        visitor.classList.add("is-visible");
-        motion.beginElement();
+        firstCard.focus({ preventScroll: true });
     });
 
-    window.setTimeout(() => {
-        if (visitor.isConnected) {
-            visitor.classList.add("is-settled");
+    let frame = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let activeCard = null;
+    let tiltX = 0;
+    let tiltY = 0;
+    const enabled = () => finePointer.matches && !reducedMotion.matches;
+    const clamp = value => Math.max(-1, Math.min(1, value));
+
+    const paint = () => {
+        frame = 0;
+        currentX += (targetX - currentX) * .12;
+        currentY += (targetY - currentY) * .12;
+        hero.style.setProperty("--scene-x", `${(-currentX * 5).toFixed(2)}px`);
+        hero.style.setProperty("--scene-y", `${(-currentY * 4).toFixed(2)}px`);
+        hero.style.setProperty("--foreground-x", `${(currentX * 8).toFixed(2)}px`);
+        hero.style.setProperty("--foreground-y", `${(currentY * 6).toFixed(2)}px`);
+        cards.forEach(card => {
+            card.style.setProperty("--tilt-x", card === activeCard ? `${tiltX.toFixed(2)}deg` : "0deg");
+            card.style.setProperty("--tilt-y", card === activeCard ? `${tiltY.toFixed(2)}deg` : "0deg");
+        });
+        if (Math.abs(targetX - currentX) + Math.abs(targetY - currentY) > .002) {
+            frame = requestAnimationFrame(paint);
         }
-    }, route.duration * 1000 + 150);
+    };
+    const queue = () => { if (!frame) frame = requestAnimationFrame(paint); };
+    const reset = () => {
+        targetX = targetY = 0;
+        activeCard = null;
+        tiltX = tiltY = 0;
+        if (!enabled()) {
+            currentX = currentY = 0;
+            if (frame) cancelAnimationFrame(frame);
+            frame = 0;
+            paint();
+        } else queue();
+    };
 
-    window.setTimeout(() => removeVisitor(visitor), visitorLifetime);
-}
-
-if (dynamicStudentLayer && walkerTemplate && !reducedMotion.matches) {
-    window.setInterval(addCampusVisitor, 30000);
-}
+    hero.addEventListener("pointermove", event => {
+        if (!enabled() || event.pointerType === "touch") return;
+        const bounds = hero.getBoundingClientRect();
+        targetX = clamp((event.clientX - bounds.left) / bounds.width * 2 - 1);
+        targetY = clamp((event.clientY - bounds.top) / bounds.height * 2 - 1);
+        activeCard = event.target.closest(".portal-card");
+        if (activeCard) {
+            const cardBounds = activeCard.getBoundingClientRect();
+            tiltX = -clamp((event.clientY - cardBounds.top) / cardBounds.height * 2 - 1) * 2.4;
+            tiltY = clamp((event.clientX - cardBounds.left) / cardBounds.width * 2 - 1) * 2.4;
+        }
+        queue();
+    }, { passive: true });
+    hero.addEventListener("pointerleave", reset);
+    finePointer.addEventListener("change", reset);
+    reducedMotion.addEventListener("change", reset);
+    window.addEventListener("blur", reset);
+    window.addEventListener("pagehide", () => { if (frame) cancelAnimationFrame(frame); });
+})();

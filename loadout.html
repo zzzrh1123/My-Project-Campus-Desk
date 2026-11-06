@@ -12,7 +12,21 @@
 
     <title>Loadout | Campus Desk</title>
 
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="transitions.css?v=16">
+    <link rel="stylesheet" href="loadout-celebration.css?v=2">
+    <script>
+        try {
+            const transitionPreview = new URLSearchParams(window.location.search).has("transition-preview");
+            if (transitionPreview) {
+                document.documentElement.classList.add("loadout-transition-preview");
+            } else {
+                document.documentElement.classList.add("transition-pending");
+                window.setTimeout(() => document.documentElement.classList.remove("transition-pending"), 2200);
+            }
+        } catch (error) {}
+    </script>
 </head>
 
 <body class="loadout-page">
@@ -759,7 +773,9 @@
         SOFTWARE.
     -->
 
-    <script src="loadout.js"></script>
+    <script src="loadout-celebration.js?v=2"></script>
+    <script src="loadout.js?v=finish-1"></script>
+    <script src="transitions.js?v=16"></script>
 </body>
 
 </html>

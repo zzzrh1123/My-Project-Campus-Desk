@@ -12,7 +12,19 @@
 
     <title>Study Shelf | Campus Desk</title>
 
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="transitions.css?v=16">
+    <script>
+        try {
+            if (new URLSearchParams(window.location.search).has("transition-preview")) {
+                document.documentElement.classList.add("study-transition-preview");
+            } else {
+                document.documentElement.classList.add("transition-pending");
+                window.setTimeout(() => document.documentElement.classList.remove("transition-pending"), 2200);
+            }
+        } catch (error) {}
+    </script>
 </head>
 
 <body class="study-page">
@@ -525,6 +537,7 @@
     </address>
 </footer>
     <script src="study.js"></script>
+    <script src="transitions.js?v=16"></script>
 </body>
 
 </html>

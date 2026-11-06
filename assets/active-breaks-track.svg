@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#83aebb"/><stop offset=".76" stop-color="#c6d9d9"/><stop offset="1" stop-color="#e6e8d9"/></linearGradient>
+    <radialGradient id="morning"><stop stop-color="#fff5d3" stop-opacity=".65"/><stop offset="1" stop-color="#fff5d3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="grass" x2="0" y2="1"><stop stop-color="#91a984"/><stop offset=".48" stop-color="#6b8e68"/><stop offset="1" stop-color="#466d54"/></linearGradient>
+    <linearGradient id="track" x2=".15" y2="1"><stop stop-color="#729ba9"/><stop offset=".25" stop-color="#4b8ca7"/><stop offset="1" stop-color="#286d91"/></linearGradient>
+    <linearGradient id="lines" x2="0" y2="1"><stop stop-color="#eef4e9" stop-opacity=".35"/><stop offset=".2" stop-color="#eef5ef" stop-opacity=".8"/><stop offset="1" stop-color="#f3f6ed"/></linearGradient>
+    <linearGradient id="seats" x2="0" y2="1"><stop stop-color="#8b9d96"/><stop offset="1" stop-color="#526c6a"/></linearGradient>
+    <linearGradient id="haze" x2="0" y2="1"><stop stop-color="#e2e6da" stop-opacity=".5"/><stop offset="1" stop-color="#e2e6da" stop-opacity="0"/></linearGradient>
+    <pattern id="rubber" width="9" height="8" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#eff7f5" opacity=".17"/><circle cx="6" cy="5" r=".8" fill="#174961" opacity=".18"/></pattern>
+    <pattern id="lawn" width="110" height="110" patternUnits="userSpaceOnUse"><path d="M0 0H55V110H0Z" fill="#d2dbba" opacity=".04"/></pattern>
+    <clipPath id="trackClip"><path d="M740 350H860L1750 1000H-150Z"/></clipPath>
+  </defs>
+  <path fill="url(#sky)" d="M0 0H1600V360H0Z"/>
+  <ellipse cx="1170" cy="100" rx="450" ry="280" fill="url(#morning)"/>
+  <path d="M0 321Q50 307 105 319Q165 304 220 319Q285 307 350 321Q410 303 480 319Q555 309 620 320Q680 305 750 320Q820 308 890 320Q960 304 1030 319Q1090 306 1160 320Q1230 309 1300 320Q1370 305 1440 320Q1520 306 1600 319V370H0Z" fill="#7c958a"/>
+  <!-- A low campus pavilion behind the straight, in atmospheric perspective. -->
+  <g stroke="#8c9f97" stroke-width="2" transform="translate(0 -16)">
+    <path d="M576 279H1024V347H576Z" fill="#ced5c9"/>
+    <path d="M562 275H1038V284H562Z" fill="#f0eee1"/>
+    <path d="M591 295H1009V322H591Z" fill="#8da9a8"/>
+    <path d="M626 295V323M669 295V323M712 295V323M755 295V323M800 295V323M845 295V323M888 295V323M931 295V323M974 295V323" stroke="#cbd6cd"/>
+    <path d="M774 328H826V350H774Z" fill="#728b87"/>
+  </g>
+  <!-- Open grandstands with shaded seating, slim columns and cantilever roofs. -->
+  <g>
+    <path d="M0 291L475 321V351L0 385Z" fill="url(#seats)"/>
+    <path d="M0 318L475 329M0 337L475 337M0 356L475 344" stroke="#c3d2c8" stroke-width="3" opacity=".55"/>
+    <path d="M0 269L490 308L477 324L0 295Z" fill="#dfe1d5"/>
+    <path d="M0 295L477 324V331L0 304Z" fill="#536f71"/>
+    <path d="M44 304V378M173 312V368M287 319V360M385 324V354M468 329V349" stroke="#acbcb3" stroke-width="5"/>
+    <path d="M1600 291L1125 321V351L1600 385Z" fill="url(#seats)"/>
+    <path d="M1600 318L1125 329M1600 337L1125 337M1600 356L1125 344" stroke="#c3d2c8" stroke-width="3" opacity=".55"/>
+    <path d="M1600 269L1110 308L1123 324L1600 295Z" fill="#dfe1d5"/>
+    <path d="M1600 295L1123 324V331L1600 304Z" fill="#536f71"/>
+    <path d="M1556 304V378M1427 312V368M1313 319V360M1215 324V354M1132 329V349" stroke="#acbcb3" stroke-width="5"/>
+  </g>
+  <g fill="none" stroke="#6f8786" stroke-width="4">
+    <path d="M155 108V342M1445 108V342M468 214V343M1132 214V343"/>
+    <path d="M118 108H192M1408 108H1482M445 214H491M1109 214H1155" stroke-width="7"/>
+  </g>
+  <g fill="#edf0dd" stroke="#819595" stroke-width="2">
+    <path d="M119 98H134V112H119ZM141 98H156V112H141ZM163 98H178V112H163ZM185 98H200V112H185Z"/>
+    <path d="M1400 98H1415V112H1400ZM1422 98H1437V112H1422ZM1444 98H1459V112H1444ZM1466 98H1481V112H1466Z"/>
+    <path d="M445 207H462V217H445ZM474 207H491V217H474ZM1109 207H1126V217H1109ZM1138 207H1155V217H1138Z"/>
+  </g>
+  <!-- Ground and track share one horizon, so their perspective cannot drift apart. -->
+  <path d="M0 350H1600V1000H0Z" fill="url(#grass)"/>
+  <path d="M0 350H1600V1000H0Z" fill="url(#lawn)"/>
+  <path d="M0 467L700 350H729L0 601ZM1600 467L900 350H871L1600 601Z" fill="#d8dfbf" opacity=".055"/>
+  <path d="M0 703L715 350H731L0 1000ZM1600 703L885 350H869L1600 1000Z" fill="#d8dfbf" opacity=".055"/>
+  <g fill="none" stroke="#c8d4c2" opacity=".65">
+    <path d="M0 405L725 350M1600 405L875 350" stroke-width="4"/>
+    <path d="M0 424L725 352M1600 424L875 352" stroke-width="2"/>
+    <path d="M95 399V420M270 386V403M419 375V389M548 365V377M651 357V366M1505 399V420M1330 386V403M1181 375V389M1052 365V377M949 357V366" stroke-width="3"/>
+  </g>
+  <path d="M733 350H867L1770 1000H-170Z" fill="#c9d3c8"/>
+  <path d="M740 350H860L1750 1000H-150Z" fill="url(#track)"/>
+  <g clip-path="url(#trackClip)"><path fill="url(#rubber)" d="M0 350H1600V1000H0Z"/></g>
+  <g fill="none" stroke="url(#lines)" stroke-linejoin="round">
+    <path d="M740 350L-150 1000M860 350L1750 1000" stroke-width="6"/>
+    <path d="M755 350L87.5 1000M770 350L325 1000M785 350L562.5 1000M800 350V1000M815 350L1037.5 1000M830 350L1275 1000M845 350L1512.5 1000" stroke-width="4"/>
+    <path d="M97 820H1503" stroke-width="5" opacity=".65"/>
+  </g>
+  <g fill="#edf5ee" opacity=".35" font-family="Arial, sans-serif" font-size="65" font-weight="700" text-anchor="middle">
+    <text transform="translate(206 920) scale(1 .7)">2</text><text transform="translate(444 920) scale(1 .7)">3</text><text transform="translate(681 920) scale(1 .7)">4</text><text transform="translate(919 920) scale(1 .7)">5</text><text transform="translate(1156 920) scale(1 .7)">6</text><text transform="translate(1394 920) scale(1 .7)">7</text>
+  </g>
+  <path d="M0 330H1600V438H0Z" fill="url(#haze)"/>
+</svg>
