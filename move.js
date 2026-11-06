@@ -1146,7 +1146,7 @@ function restartMotionAnimation() {
     motionFrame = window.requestAnimationFrame(animationLoop);
 }
 
-let currentSport = sports.find((sport) => sport.id === "walking");
+let currentSport = sports.find((sport) => sport.id === "running");
 let currentResults = [];
 
 function getFormValue(name) {
@@ -1589,4 +1589,6 @@ adjustButton.addEventListener("click", () => {
 });
 
 renderSportLibrary();
-renderRecommendations();
+// Start each page load with a clear running preview; personalised matching
+// begins when the visitor submits their choices.
+renderSport(currentSport, null, "preview");
