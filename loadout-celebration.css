@@ -13,8 +13,8 @@ body.loadout-celebrating { overflow: hidden; padding-right: var(--loadout-celebr
     border: 2px solid rgb(228 249 245 / 75%);
     background: linear-gradient(180deg, rgb(205 231 227 / 62%), rgb(70 124 137 / 61%));
     box-shadow: inset 2px 0 0 rgb(248 255 250 / 32%), inset -3px 0 0 rgb(20 61 69 / 15%);
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 .loadout-finish__pane--fixed-left { left: 0; }
 .loadout-finish__pane--fixed-right { right: 0; }
@@ -44,7 +44,7 @@ body.loadout-celebrating { overflow: hidden; padding-right: var(--loadout-celebr
 @keyframes loadout-ready-arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 760px) {
     .loadout-finish__frame { border-width: 6px; border-top-width: 23px; }
-    .loadout-finish__pane { bottom: 5px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+    .loadout-finish__pane { bottom: 5px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
     .loadout-finish__pane--left::after, .loadout-finish__pane--right::after { width: 24px; height: 4px; }
     .loadout-finish__message { gap: 21px; padding: 22px; }
     .loadout-finish__check { width: 53px; height: 53px; }

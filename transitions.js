@@ -1,9 +1,8 @@
 (() => {
     "use strict";
 
-    const storageKey = "campus-desk-transition-v1";
-    const duration = 1580;
     const moveRunDuration = 1450;
+    const moveFadeDuration = 760;
     const routeTypes = new Map([
         ["study.html", "study"],
         ["loadout.html", "loadout"],
@@ -13,18 +12,6 @@
     const transitionPreview = window.self !== window.top
         && new URLSearchParams(window.location.search).has("transition-preview");
 
-    const safeRead = () => {
-        try {
-            const value = sessionStorage.getItem(storageKey);
-            return value ? JSON.parse(value) : null;
-        } catch (error) { return null; }
-    };
-    const safeWrite = value => {
-        try { sessionStorage.setItem(storageKey, JSON.stringify(value)); } catch (error) {}
-    };
-    const safeRemove = () => {
-        try { sessionStorage.removeItem(storageKey); } catch (error) {}
-    };
     const pageName = href => new URL(href, window.location.href).pathname.split("/").pop();
     const stickStudent = className => `
         <svg class="transition-student ${className}" viewBox="0 0 130 180" aria-hidden="true">
@@ -65,7 +52,8 @@
                 <div class="study-arch" aria-hidden="true"></div>
                 <div class="study-doorway">
                     <div class="study-interior" aria-hidden="true">
-                        <iframe class="study-page-preview" src="study.html?transition-preview=1&v=16" title="" tabindex="-1"></iframe>
+                        <iframe class="study-destination-preview" src="study.html?transition-preview=1&full-page=1&v=26" title="" tabindex="-1"></iframe>
+                        <iframe class="study-page-preview" src="study.html?transition-preview=1&v=26" title="" tabindex="-1"></iframe>
                     </div>
                     <div class="study-door study-door--left"></div><div class="study-door study-door--right"></div>
                 </div>
@@ -73,9 +61,8 @@
             </div>`;
         if (type === "loadout") return `
             <div class="campus-transition__scene campus-transition--loadout" data-type="loadout">
-                <div class="loadout-lobby"></div><p class="campus-transition__label">Enter Campus Loadout</p>
                 <div class="automatic-door">
-                    <iframe class="loadout-page-preview" src="loadout.html?transition-preview=1#loadout-preview" title="" tabindex="-1"></iframe>
+                    <iframe class="loadout-page-preview" src="loadout.html?transition-preview=1&full-page=1" title="" tabindex="-1"></iframe>
                     <div class="door-rail"></div>
                     <div class="glass-pane glass-pane--fixed-left"></div>
                     <div class="glass-pane glass-pane--slide-left"></div>
@@ -88,173 +75,175 @@
             <div class="campus-transition__scene campus-transition--move" data-type="move">
                 <img class="track-world" src="assets/active-breaks-track.svg" alt="" width="1600" height="1000" decoding="sync">
                 <div class="track-atmosphere"></div>
+                <div class="move-transition-blackout"></div>
                 <p class="campus-transition__label">Enter Active Breaks</p>
                 ${runningStudent()}
             </div>`;
     };
 
-    const buildOverlay = (type, arrival = false) => {
+    const buildOverlay = type => {
         const overlay = document.createElement("div");
-        overlay.className = `campus-transition campus-transition--${arrival ? "arrival" : "departure"}`;
+        overlay.className = "campus-transition campus-transition--opening is-opening";
         overlay.dataset.type = type;
         overlay.setAttribute("aria-hidden", "true");
-        if (type === "move") {
-            overlay.style.width = `${window.innerWidth}px`;
-            overlay.style.height = `${window.innerHeight}px`;
-        }
-        overlay.innerHTML = arrival && type !== "move" ? "" : sceneMarkup(type);
+        overlay.style.setProperty("--transition-page-width", `${window.innerWidth}px`);
+        overlay.style.setProperty("--transition-page-height", `${window.innerHeight}px`);
+        overlay.innerHTML = sceneMarkup(type);
         document.body.append(overlay);
         return overlay;
     };
 
-    const lockMovePage = () => {
-        if (document.body.classList.contains("move-transition-lock")) return;
+    const lockPage = () => {
         const gap = window.innerWidth - document.documentElement.clientWidth;
-        document.body.style.setProperty("--move-scrollbar-gap", `${gap}px`);
-        document.body.classList.add("move-transition-lock", "transition-lock");
+        document.body.style.setProperty("--transition-scrollbar-gap", `${gap}px`);
+        document.body.classList.add("transition-lock");
     };
-    const unlockMovePage = () => {
-        document.body.classList.remove("move-transition-lock", "transition-lock");
+    const unlockPage = () => {
+        document.body.classList.remove("transition-lock", "move-transition-lock");
+        document.body.style.removeProperty("--transition-scrollbar-gap");
         document.body.style.removeProperty("--move-scrollbar-gap");
     };
+    const wait = milliseconds => new Promise(resolve => window.setTimeout(resolve, milliseconds));
+    const animate = (element, keyframes, options) => {
+        if (!element || typeof element.animate !== "function") return Promise.resolve();
+        return element.animate(keyframes, { fill: "forwards", ...options }).finished.catch(() => {});
+    };
+    const waitForPreview = overlay => {
+        return Promise.all([...overlay.querySelectorAll("iframe")].map(preview => new Promise(resolve => {
+            let timeout;
+            const finish = () => {
+                window.clearTimeout(timeout);
+                preview.removeEventListener("load", finish);
+                resolve();
+            };
+            preview.addEventListener("load", finish, { once: true });
+            timeout = window.setTimeout(finish, 1800);
+            try {
+                if (preview.contentDocument?.readyState === "complete"
+                    && preview.contentDocument.URL !== "about:blank") finish();
+            } catch (error) {}
+        })));
+    };
 
-    // Continue toward the far end of the track while dissolving into the loaded page.
-    const revealMovePage = overlay => {
-        const scene = overlay.querySelector(".campus-transition--move");
-        if (!scene) { overlay.remove(); return; }
-        scene.classList.add("is-settled");
-        lockMovePage();
-        const smallScreen = window.innerWidth <= 760;
-        const revealDuration = smallScreen ? 880 : 1000;
+    const fitLibraryDestination = overlay => {
+        const doorway = overlay.querySelector(".study-doorway");
+        const preview = overlay.querySelector(".study-destination-preview");
+        if (!doorway || !preview) return;
+        const viewport = overlay.getBoundingClientRect();
+        const scale = Math.min(doorway.clientWidth / viewport.width, doorway.clientHeight / viewport.height);
+        preview.style.transform = `translate(${(doorway.clientWidth - viewport.width * scale) / 2}px, ${(doorway.clientHeight - viewport.height * scale) / 2}px) scale(${scale})`;
+    };
+
+    // Expand the open doorway, then dissolve into the actual page beneath it.
+    const revealLibraryPage = async overlay => {
+        const doorway = overlay.querySelector(".study-doorway");
+        if (!doorway) return Promise.resolve();
+        const preview = overlay.querySelector(".study-destination-preview");
+        const bounds = doorway.getBoundingClientRect();
+        const viewport = overlay.getBoundingClientRect();
+        const scale = Math.max(viewport.width / bounds.width, viewport.height / bounds.height) * 1.08;
+        const revealDuration = 1200;
+        const options = { duration: revealDuration, easing: "cubic-bezier(.22,.6,.25,1)" };
+        const frameStyle = getComputedStyle(doorway);
+        const destinationX = (bounds.width - viewport.width / scale) / 2 - parseFloat(frameStyle.borderLeftWidth);
+        const destinationY = (bounds.height - viewport.height / scale) / 2 - parseFloat(frameStyle.borderTopWidth);
+        const animations = [
+            animate(doorway, [
+                { transform: getComputedStyle(doorway).transform },
+                { transform: `translate(-50%, -50%) scale(${scale.toFixed(4)})` }
+            ], options),
+            animate(preview, [
+                { transform: getComputedStyle(preview).transform },
+                { transform: `translate(${destinationX}px, ${destinationY}px) scale(${1 / scale})` }
+            ], options),
+            // The complete page appears through the expanding doorway. At the
+            // end its pixels align with the real page, so the overlay can vanish.
+            animate(overlay.querySelector(".study-page-preview"), [
+                { opacity: 1 }, { opacity: 0 }
+            ], { duration: 500, easing: "ease-in-out" })
+        ];
+        overlay.querySelectorAll(".study-arch, .study-door, .library-student, .campus-transition__label").forEach(element => {
+            animations.push(animate(element, [{ opacity: getComputedStyle(element).opacity }, { opacity: 0 }], {
+                duration: 340, easing: "ease-out"
+            }));
+        });
+        await Promise.all(animations);
+        await animate(overlay, [{ opacity: 1 }, { opacity: 0 }], {
+            duration: 280, easing: "ease-in-out"
+        });
+    };
+
+    // Preserve the existing glass panes, then blend the open room into the page.
+    const revealLoadoutPage = overlay => {
+        const animations = [
+            animate(overlay.querySelector(".automatic-door"), [
+                { transform: "scale(1)" }, { transform: "scale(1.025)" }
+            ], { duration: 850, easing: "cubic-bezier(.22,.6,.25,1)" }),
+            animate(overlay, [
+                { opacity: 1 }, { opacity: 1, offset: .12 }, { opacity: 0 }
+            ], { duration: 850, easing: "ease-in-out" })
+        ];
+        overlay.querySelectorAll(".transition-student, .door-rail, .glass-pane").forEach(element => {
+            animations.push(animate(element, [{ opacity: getComputedStyle(element).opacity }, { opacity: 0 }], {
+                duration: 300, easing: "ease-out"
+            }));
+        });
+        return Promise.all(animations);
+    };
+
+    const revealMovePage = async overlay => {
+        overlay.querySelector(".campus-transition--move")?.classList.add("is-settled");
+        await animate(overlay.querySelector(".move-transition-blackout"), [
+            { opacity: 0 }, { opacity: 1 }
+        ], { duration: moveFadeDuration, easing: "ease-in-out" });
+        await wait(140);
+        // Fade the whole black scene away so the track cannot reappear.
+        await animate(overlay, [{ opacity: 1 }, { opacity: 0 }], {
+            duration: 920, easing: "ease-in-out"
+        });
+    };
+
+    let openingOverlay = null;
+    const showOpeningScene = async type => {
+        if (openingOverlay) return;
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        lockPage();
+        const overlay = buildOverlay(type);
+        openingOverlay = overlay;
         let finished = false;
+        let fallback;
         const finish = () => {
             if (finished) return;
             finished = true;
+            window.clearTimeout(fallback);
             overlay.remove();
-            unlockMovePage();
+            if (openingOverlay === overlay) openingOverlay = null;
+            document.documentElement.classList.remove("transition-pending");
+            unlockPage();
         };
-        if (typeof scene.animate !== "function") { finish(); return; }
-
-        document.querySelectorAll(".active-breaks-page > .site-header, .break-main, .active-breaks-page > .site-footer").forEach(element => {
-            element.animate([{ opacity: 0 }, { opacity: 0, offset: .12 }, { opacity: 1 }], {
-                duration: revealDuration, easing: "ease-in-out"
-            });
-        });
-
-        const zoom = smallScreen ? 1.09 : 1.15;
-        const animation = scene.animate([
-            { transform: "scale(1)", opacity: 1 },
-            { transform: `scale(${1 + (zoom - 1) * .35})`, opacity: .76, offset: .35 },
-            { transform: `scale(${zoom})`, opacity: 0 }
-        ], { duration: revealDuration, easing: "cubic-bezier(.32,0,.2,1)", fill: "forwards" });
-        animation.finished.then(finish, finish);
-        window.setTimeout(finish, revealDuration + 180);
-    };
-
-    const showOpeningScene = type => {
-        const overlay = buildOverlay(type);
-        overlay.classList.add("is-opening");
-
-        window.requestAnimationFrame(() => {
+        fallback = window.setTimeout(finish, 8000);
+        requestAnimationFrame(() => document.documentElement.classList.remove("transition-pending"));
+        try {
+            await waitForPreview(overlay);
+            if (type === "study") fitLibraryDestination(overlay);
+            await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+            if (!overlay.isConnected) return;
             overlay.querySelector(".campus-transition__scene")?.classList.add("is-active");
-            document.documentElement.classList.remove("transition-pending");
-        });
-
-        if (type === "move") {
-            lockMovePage();
-            let revealing = false;
-            const reveal = () => {
-                if (revealing) return;
-                revealing = true;
-                revealMovePage(overlay);
-            };
-            overlay.querySelector(".runner-student")?.addEventListener("animationend", event => {
-                if (event.animationName === "runner-recedes-into-distance") reveal();
-            });
-            window.setTimeout(reveal, moveRunDuration + 120);
-            return;
+            await wait(type === "study" ? 1800 : type === "loadout" ? 1480 : moveRunDuration);
+            if (!overlay.isConnected) return;
+            if (type === "study") await revealLibraryPage(overlay);
+            else if (type === "loadout") await revealLoadoutPage(overlay);
+            else await revealMovePage(overlay);
+        } finally {
+            finish();
         }
-        const closingAt = type === "study" ? 1650 : 1380;
-        window.setTimeout(() => overlay.classList.add("is-closing"), closingAt);
-        window.setTimeout(() => overlay.remove(), closingAt + 380);
-    };
-
-    const showArrival = () => {
-        const state = safeRead();
-        const expected = pageName(window.location.href);
-        const expectedType = routeTypes.get(expected);
-        const isFresh = state && expectedType === state.type && Date.now() - state.startedAt < 15000;
-        safeRemove();
-        if (!expectedType || reducedMotion.matches) {
-            document.documentElement.classList.remove("transition-pending");
-            return;
-        }
-
-        if (isFresh) {
-            const overlay = buildOverlay(state.type, true);
-            document.documentElement.classList.remove("transition-pending");
-            if (state.type === "move") {
-                requestAnimationFrame(() => revealMovePage(overlay));
-                return;
-            }
-            requestAnimationFrame(() => overlay.classList.add("is-arriving"));
-            window.setTimeout(() => overlay.remove(), 620);
-            return;
-        }
-
-        showOpeningScene(expectedType);
-    };
-
-    const canIntercept = event => event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
-    const startDeparture = (event, link) => {
-        if (!canIntercept(event) || event.defaultPrevented || reducedMotion.matches || link.target === "_blank") return;
-        const file = pageName(link.href);
-        const type = routeTypes.get(file);
-        if (!type || file === pageName(window.location.href)) return;
-        event.preventDefault();
-        safeWrite({ type, startedAt: Date.now() });
-        document.body.classList.add("transition-lock");
-        const overlay = buildOverlay(type);
-        requestAnimationFrame(() => {
-            overlay.classList.add("is-active");
-            overlay.querySelector(".campus-transition__scene")?.classList.add("is-active");
-        });
-        const destination = link.href;
-        const departureDuration = type === "study" ? 1900 : type === "move" ? moveRunDuration : duration;
-        window.setTimeout(() => window.location.assign(destination), departureDuration);
-        // Keep normal navigation available if a visual animation ever fails mid-way.
-        window.setTimeout(() => { if (window.location.href !== destination) window.location.assign(destination); }, departureDuration + 700);
-    };
-
-    const fillStudyPreviewBooks = () => {
-        const titles = ["Mathematics", "Physics", "Design", "Literature", "Biology", "Economics", "History", "Research", "Campus Life", "Projects", "Languages", "Ideas", "Writing", "Planning", "Reading", "Science", "Culture", "Journal"];
-        const covers = ["german", "custom-1", "custom-0", "git", "personal", "custom-2", "web", "custom-3"];
-        let index = 0;
-        document.querySelectorAll(".notes-case .notebook-row").forEach(row => {
-            const existing = row.querySelectorAll(".notebook-book:not(.add-notebook-book)").length;
-            for (let count = existing; count < 6; count++) {
-                const book = document.createElement("span");
-                book.className = `notebook-book notebook-${covers[index % covers.length]}`;
-                book.dataset.previewBook = "";
-                book.setAttribute("aria-hidden", "true");
-                book.style.height = `${110 + index % 3 * 7}px`;
-                const title = document.createElement("span");
-                title.textContent = titles[index % titles.length];
-                const subtitle = document.createElement("small");
-                subtitle.textContent = "Notebook";
-                book.append(title, subtitle);
-                row.append(book);
-                index++;
-            }
-        });
     };
 
     const fitStudyPreview = () => {
         const root = document.documentElement;
-        const twoShelves = window.innerWidth >= 560;
-        const width = twoShelves ? 1160 : 480;
+        const width = 1160;
         const scale = Math.max(.1, Math.min((window.innerWidth - 28) / width, (window.innerHeight - 28) / 590));
-        root.dataset.studyPreviewLayout = twoShelves ? "two" : "one";
+        root.dataset.studyPreviewLayout = "two";
         root.style.setProperty("--study-preview-width", `${width}px`);
         root.style.setProperty("--study-preview-scale", scale.toFixed(4));
     };
@@ -264,26 +253,30 @@
             document.documentElement.classList.remove("transition-pending");
             if (document.documentElement.classList.contains("study-transition-preview")) {
                 fitStudyPreview();
-                fillStudyPreviewBooks();
-                const caseElement = document.querySelector(".notes-case .bookcase");
-                if (caseElement) new MutationObserver(fillStudyPreviewBooks).observe(caseElement, { childList: true, subtree: true });
                 window.addEventListener("resize", fitStudyPreview);
             }
             return;
         }
-        showArrival();
-        document.querySelectorAll("a[href]").forEach(link => {
-            if (!routeTypes.has(pageName(link.href))) return;
-            link.addEventListener("click", event => startDeparture(event, link));
+        const type = routeTypes.get(pageName(window.location.href));
+        if (!type || reducedMotion.matches) {
+            document.documentElement.classList.remove("transition-pending");
+            return;
+        }
+        // Home and all top navigation links play the same complete destination opening.
+        showOpeningScene(type).catch(() => {
+            openingOverlay?.remove();
+            openingOverlay = null;
+            document.documentElement.classList.remove("transition-pending");
+            unlockPage();
         });
     });
 
-    // A history return can restore the homepage from the back-forward cache.
-    // Remove only the departed scene so the restored page is immediately usable.
     window.addEventListener("pageshow", event => {
         if (!event.persisted) return;
-        unlockMovePage();
+        openingOverlay?.remove();
+        openingOverlay = null;
+        unlockPage();
         document.documentElement.classList.remove("transition-pending");
-        document.querySelectorAll(".campus-transition--departure").forEach(overlay => overlay.remove());
+        document.querySelectorAll(".campus-transition").forEach(overlay => overlay.remove());
     });
 })();

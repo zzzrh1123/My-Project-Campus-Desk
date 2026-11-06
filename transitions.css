@@ -8,10 +8,9 @@ html.transition-pending::before {
 }
 html.transition-pending[data-transition-page="move"]::before {
     width: var(--move-viewport-width, 100vw);
-    background: #8aa9a7 url("assets/active-breaks-track.svg") center / cover no-repeat;
+    background: #050709;
 }
-body.transition-lock { overflow: hidden; }
-body.move-transition-lock { padding-right: var(--move-scrollbar-gap, 0px); }
+body.transition-lock { overflow: hidden; padding-right: var(--transition-scrollbar-gap, 0px); }
 .campus-transition[data-type="move"] { width: 100vw; }
 .campus-transition {
     position: fixed;
@@ -22,12 +21,12 @@ body.move-transition-lock { padding-right: var(--move-scrollbar-gap, 0px); }
     overflow: hidden;
     color: #fff;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: auto;
     isolation: isolate;
     transition: opacity .16s ease;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
-.campus-transition.is-active, .campus-transition--arrival { opacity: 1; }
+.campus-transition.is-active { opacity: 1; }
 .campus-transition.is-opening { opacity: 1; }
 .campus-transition.is-closing { opacity: 0; visibility: hidden; }
 .campus-transition__scene { position: absolute; inset: 0; overflow: hidden; }
@@ -154,6 +153,19 @@ body.move-transition-lock { padding-right: var(--move-scrollbar-gap, 0px); }
     background: #fff;
     pointer-events: none;
 }
+.study-page-preview { z-index: 1; }
+.study-destination-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--transition-page-width, 100vw);
+    height: var(--transition-page-height, 100vh);
+    border: 0;
+    background: #f4f4f4;
+    pointer-events: none;
+    transform-origin: 0 0;
+    will-change: transform;
+}
 /* Only the document inside the doorway: reuse the real bookcases, without page furniture. */
 html.study-transition-preview,
 html.study-transition-preview body { width: 100%; height: 100%; min-height: 0; margin: 0; overflow: hidden; background: #f3efe7; }
@@ -244,8 +256,6 @@ html.study-transition-preview[data-study-preview-layout="two"] .notes-case { dis
 .campus-transition--study.is-active .student-head { animation: library-head-bob .24s ease-in-out 0s 3 alternate; }
 .campus-transition--study.is-active .study-door--left { animation: open-left-door .64s cubic-bezier(.18,.78,.23,1) .93s forwards; }
 .campus-transition--study.is-active .study-door--right { animation: open-right-door .64s cubic-bezier(.18,.78,.23,1) .93s forwards; }
-.campus-transition--study.is-active .study-arch,
-.campus-transition--study.is-active .study-doorway { animation: enter-library .43s cubic-bezier(.35,.02,.28,1) 1.47s forwards; }
 
 /* Campus Loadout: two fixed outer panes and two center panes that slide on a top rail. */
 .campus-transition--loadout { background: #113b42; }
@@ -276,16 +286,12 @@ html.study-transition-preview[data-study-preview-layout="two"] .notes-case { dis
 .automatic-door {
     position: absolute;
     z-index: 3;
-    top: 50%;
-    left: 50%;
-    width: min(76vw, 980px);
-    height: min(70vh, 640px);
+    inset: 0;
     overflow: hidden;
     border: 11px solid #b8d2d0;
     border-top-width: 22px;
     background: rgb(14 48 54 / 65%);
     box-shadow: 0 18px 65px rgb(0 16 20 / 42%), inset 0 0 0 2px rgb(255 255 255 / 32%);
-    transform: translate(-50%, -39%);
 }
 .automatic-door::before { position: absolute; top: -17px; left: 50%; width: 20px; height: 7px; border-radius: 99px; background: #e6f5be; box-shadow: 0 0 0 5px rgb(195 246 193 / 10%); content: ""; transform: translateX(-50%); }
 .door-rail { position: absolute; z-index: 6; top: 0; right: 0; left: 0; height: 13px; background: linear-gradient(#e6f0ee, #829b9d); }
@@ -299,13 +305,37 @@ html.study-transition-preview[data-study-preview-layout="two"] .notes-case { dis
     background: #edf5f8;
     pointer-events: none;
 }
-.glass-pane { position: absolute; top: 13px; bottom: 0; width: 25%; border-right: 4px solid rgb(218 244 241 / 70%); background: linear-gradient(180deg, rgb(218 248 248 / 18%), rgb(41 106 122 / 12%)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 35%); }
+.glass-pane {
+    position: absolute;
+    top: 13px;
+    bottom: 0;
+    width: 25%;
+    border-right: 4px solid rgb(218 244 241 / 70%);
+    background: linear-gradient(180deg, rgb(218 248 248 / 48%), rgb(41 106 122 / 34%));
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 35%);
+    backdrop-filter: blur(12px) brightness(.72);
+    -webkit-backdrop-filter: blur(12px) brightness(.72);
+}
 .glass-pane--fixed-left,
-.glass-pane--fixed-right { background: linear-gradient(180deg, rgb(210 234 229 / 78%), rgb(67 120 135 / 66%)); }
+.glass-pane--fixed-right { background: linear-gradient(180deg, rgb(210 234 229 / 82%), rgb(67 120 135 / 74%)); }
 .glass-pane--fixed-left { left: 0; }
 .glass-pane--slide-left { left: 25%; will-change: transform; }
 .glass-pane--slide-right { right: 25%; will-change: transform; }
 .glass-pane--fixed-right { right: 0; border-right: 0; }
+.glass-pane--slide-left::after,
+.glass-pane--slide-right::after {
+    position: absolute;
+    top: 57%;
+    width: clamp(24px, 3vw, 42px);
+    height: 5px;
+    border: 1px solid rgb(245 255 250 / 65%);
+    border-radius: 4px;
+    background: linear-gradient(#f6fffb, #a9c4c4);
+    box-shadow: 0 2px 6px rgb(27 63 70 / 34%);
+    content: "";
+}
+.glass-pane--slide-left::after { right: 8%; }
+.glass-pane--slide-right::after { left: 8%; }
 html.loadout-transition-preview,
 html.loadout-transition-preview body { width: 100%; height: 100%; min-height: 100%; overflow: hidden; }
 html.loadout-transition-preview body { margin: 0; }
@@ -360,9 +390,10 @@ html.loadout-transition-preview .campus-backpack { width: clamp(190px, 24vw, 260
 .campus-transition--loadout .transition-student { bottom: 9%; left: -18%; }
 .campus-transition--loadout.is-active .automatic-door::before { animation: sensor-light .45s ease .5s both; }
 .campus-transition--loadout.is-active .transition-student { animation: student-walk-to-door 1.4s cubic-bezier(.38,.03,.22,.99) forwards; }
-.campus-transition--loadout.is-active .glass-pane--slide-left { animation: slide-glass-left .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
-.campus-transition--loadout.is-active .glass-pane--slide-right { animation: slide-glass-right .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
-.campus-transition--loadout.is-active .automatic-door { animation: enter-lobby .62s ease 1.18s forwards; }
+.campus-transition--loadout.is-active .glass-pane--fixed-left,
+.campus-transition--loadout.is-active .glass-pane--fixed-right { animation: clear-loadout-glass .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
+.campus-transition--loadout.is-active .glass-pane--slide-left { animation: slide-glass-left .62s cubic-bezier(.35,.8,.25,1) .72s forwards, clear-loadout-glass .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
+.campus-transition--loadout.is-active .glass-pane--slide-right { animation: slide-glass-right .62s cubic-bezier(.35,.8,.25,1) .72s forwards, clear-loadout-glass .62s cubic-bezier(.35,.8,.25,1) .72s forwards; }
 
 /* One shared stadium image keeps the horizon, track and navigation curtain aligned. */
 .campus-transition--move {
@@ -384,10 +415,17 @@ html.loadout-transition-preview .campus-backpack { width: clamp(190px, 24vw, 260
     inset: 0;
     background: linear-gradient(180deg, rgb(24 53 61 / 12%), transparent 30% 65%, rgb(13 44 48 / 13%));
 }
+.move-transition-blackout {
+    position: absolute;
+    z-index: 10;
+    inset: 0;
+    background: #050709;
+    opacity: 0;
+    pointer-events: none;
+}
 .campus-transition--move .campus-transition__label { text-shadow: 0 1px 12px rgb(28 57 63 / 45%); }
 .campus-transition--move.is-active .track-world { animation: track-camera-advance 1.45s ease-out forwards; }
-.campus-transition--move.is-settled .track-world,
-.campus-transition--arrival[data-type="move"] .track-world { animation: none; transform: scale(1.032); }
+.campus-transition--move.is-settled .track-world { animation: none; transform: scale(1.032); }
 .campus-transition--move .runner-student {
     z-index: 5;
     bottom: 2.5%;
@@ -413,24 +451,12 @@ html.loadout-transition-preview .campus-backpack { width: clamp(190px, 24vw, 260
 .runner-arm-front, .runner-leg-front { transform-box: fill-box; transform-origin: 0 0; animation: runner-forward .34s ease-in-out infinite alternate; }
 .runner-arm-back, .runner-leg-back { transform-box: fill-box; transform-origin: 0 0; animation: runner-back .34s ease-in-out infinite alternate; }
 
-/* Matching reveal on the page that was selected. */
-.campus-transition--arrival { background: #123d40; transition: opacity .48s ease, visibility .48s ease; }
-.campus-transition--arrival::before { position: absolute; inset: 0; background: radial-gradient(circle at 50% 52%, rgb(231 255 235 / 52%), transparent 45%), linear-gradient(130deg, rgb(51 115 108 / 75%), rgb(16 53 57 / 92%)); content: ""; }
-.campus-transition--arrival[data-type="study"]::before { background: radial-gradient(circle at 50% 65%, rgb(255 220 163 / 74%), transparent 42%), #432e24; }
-.campus-transition--arrival[data-type="loadout"]::before { background: linear-gradient(120deg, #12454f, #6bb7bd, #163e46); }
-.campus-transition--arrival[data-type="move"] {
-    background: transparent;
-    transition: none;
-}
-.campus-transition--arrival[data-type="move"]::before { display: none; }
-.campus-transition--move.is-settled .runner-student,
-.campus-transition--arrival[data-type="move"] .runner-student {
+.campus-transition--move.is-settled .runner-student {
     animation: none;
     bottom: 2.5%;
     opacity: .82;
     transform: translate3d(-50%, -58vh, 0) scale(.15);
 }
-.campus-transition--arrival.is-arriving { opacity: 0; visibility: hidden; }
 
 @keyframes student-walk-to-door { 0% { transform: translateX(0) scale(1); } 45% { transform: translateX(145%) translateY(2px) scale(.92); } 100% { transform: translateX(318%) translateY(10px) scale(.38); opacity: .65; } }
 @keyframes library-student-journey {
@@ -449,11 +475,17 @@ html.loadout-transition-preview .campus-backpack { width: clamp(190px, 24vw, 260
 @keyframes library-head-bob { to { transform: translateY(2px); } }
 @keyframes open-left-door { to { transform: rotateY(-104deg); } }
 @keyframes open-right-door { to { transform: rotateY(104deg); } }
-@keyframes enter-library { to { opacity: 0; transform: translate(-50%, -30%) scale(1.26); } }
 @keyframes sensor-light { 50% { background: #fff; box-shadow: 0 0 26px 12px rgb(229 255 184 / 72%); } to { background: #c7f39c; box-shadow: 0 0 18px 8px rgb(199 243 156 / 48%); } }
 @keyframes slide-glass-left { to { transform: translateX(-94%); } }
 @keyframes slide-glass-right { to { transform: translateX(94%); } }
-@keyframes enter-lobby { to { opacity: 0; transform: translate(-50%, -34%) scale(1.23); } }
+@keyframes clear-loadout-glass {
+    to {
+        background: linear-gradient(180deg, rgb(218 248 248 / 3%), rgb(41 106 122 / 2%));
+        backdrop-filter: blur(0) brightness(1);
+        -webkit-backdrop-filter: blur(0) brightness(1);
+        border-color: rgb(218 244 241 / 36%);
+    }
+}
 @keyframes runner-recedes-into-distance {
     0% { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); }
     18% { transform: translate3d(-50%, -5vh, 0) scale(.91); }
@@ -474,16 +506,17 @@ html.loadout-transition-preview .campus-backpack { width: clamp(190px, 24vw, 260
     72% { opacity: 1; transform: perspective(1000px) rotateX(.35deg) translateY(-4px) scale(1); }
     100% { opacity: 1; transform: perspective(1000px) rotateX(.35deg) translateY(0) scale(1); }
 }
-html.study-transition-preview .bookcase:not(.notebook-bookcase),
-html.study-transition-preview .notebook-bookcase {
+html.study-transition-preview:not(.study-transition-preview-arrival) .bookcase:not(.notebook-bookcase),
+html.study-transition-preview:not(.study-transition-preview-arrival) .notebook-bookcase {
     animation: study-bookcase-arrive .82s cubic-bezier(.2,.72,.28,1) .93s both;
 }
+html.study-transition-preview-arrival .bookcase { animation: none !important; opacity: 1; transform: none; }
 
 @media (max-width: 760px) {
     .study-arch { width: 96vw; height: min(64vh, 580px); transform: translate(-50%, -29%); }
     .study-doorway { width: 84vw; height: min(55vh, 500px); border-radius: 0; transform: translate(-50%, -27%); }
     .campus-transition--study .library-student { left: 1%; bottom: 5%; width: 30vw; }
-    .automatic-door { width: 94vw; height: min(62vh, 540px); transform: translate(-50%, -38%); }
+    .automatic-door { border-width: 6px; border-top-width: 23px; }
     .transition-student { width: 34vw; }
     .campus-transition--move .runner-student { width: min(27vw, 130px); }
     .campus-transition__label { top: 25px; }
