@@ -188,9 +188,10 @@ function wait(milliseconds, runId) {
 }
 
 function scrollPreviewIntoView(runId) {
-    loadoutPreview.scrollIntoView({
+    const compactScreen = window.matchMedia("(max-width: 620px)").matches;
+    (compactScreen ? backpack : loadoutPreview).scrollIntoView({
         behavior: reducedMotionQuery.matches ? "auto" : "smooth",
-        block: "start"
+        block: compactScreen ? "center" : "start"
     });
 
     return new Promise((resolve) => {

@@ -40,10 +40,11 @@
 
     const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
     const boxAt = (point, student) => ({ left: point.x - student.width / 2, right: point.x + student.width / 2, top: point.y - student.height, bottom: point.y });
-    const clear = (point, student, outside = false) => {
+    const clear = (point, student, outside = false, dragging = false) => {
         const box = boxAt(point, student);
         if (!outside && (box.left < 8 || box.right > world.width - 8 || box.top < 8 || box.bottom > world.height - 8)) return false;
-        return !world.obstacles.some(obstacle => intersects(box, obstacle));
+        return !world.obstacles.some(obstacle => !(obstacle.copy && (dragging || student.leavingTitle))
+            && intersects(box, obstacle));
     };
     const apart = (point, student) => ![...students].some(other => other !== student && !other.exiting
         && Math.hypot(point.x - other.x, (point.y - other.y) * .85) < (student.width + other.width) / 2 + 10);
@@ -80,10 +81,12 @@
                     left: copy ? 0 : rect.left - bounds.left - padding,
                     right: rect.right - bounds.left + padding,
                     top: copy ? 0 : rect.top - bounds.top - padding,
-                    bottom: rect.bottom - bounds.top + padding
+                    bottom: rect.bottom - bounds.top + padding,
+                    copy
                 }))
         };
         students.forEach(student => {
+            student.leavingTitle = false;
             student.grid = makeGrid(student);
             student.route = [];
             student.entering = student.exiting = false;
@@ -271,11 +274,68 @@
         element.style.setProperty("--stride-duration", `${(student.height * .72 / student.speed).toFixed(2)}s`);
         element.innerHTML = figure;
         student.element = element;
+        element.addEventListener("pointerdown", event => {
+            if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+            const bounds = hero.getBoundingClientRect();
+            student.drag = {
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startY: event.clientY,
+                offsetX: student.x - (event.clientX - bounds.left),
+                offsetY: student.y - (event.clientY - bounds.top),
+                moved: false
+            };
+            element.setPointerCapture(event.pointerId);
+        });
+        element.addEventListener("pointermove", event => {
+            const drag = student.drag;
+            if (!drag || drag.pointerId !== event.pointerId) return;
+            if (!drag.moved && Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) < 4) return;
+            if (!drag.moved) {
+                drag.moved = true;
+                student.route = [];
+                student.entering = student.exiting = student.retiring = false;
+                student.pinnedUntil = 0;
+                if (active === student) hideGreeting();
+                element.classList.add("is-dragging");
+            }
+            event.stopPropagation();
+            const bounds = hero.getBoundingClientRect();
+            const within = (value, min, max) => Math.max(min, Math.min(max, value));
+            const point = {
+                x: within(event.clientX - bounds.left + drag.offsetX, student.width / 2 + 8, world.width - student.width / 2 - 8),
+                y: within(event.clientY - bounds.top + drag.offsetY, student.height + 8, world.height - 8)
+            };
+            if (clear(point, student, false, true) && apart(point, student)) {
+                student.x = point.x;
+                student.y = point.y;
+                paint(student);
+            }
+        });
+        const endDrag = event => {
+            const drag = student.drag;
+            if (!drag || drag.pointerId !== event.pointerId) return;
+            student.drag = null;
+            element.classList.remove("is-dragging");
+            if (element.hasPointerCapture(event.pointerId)) element.releasePointerCapture(event.pointerId);
+            if (drag.moved) {
+                student.hovered = false;
+                student.suppressClickUntil = event.type === "pointerup" ? performance.now() + 500 : 0;
+                student.restUntil = performance.now() + 200;
+                student.route = [];
+                student.leavingTitle = world.obstacles.some(obstacle => obstacle.copy && intersects(boxAt(student, student), obstacle));
+            }
+        };
+        element.addEventListener("pointerup", endDrag);
+        element.addEventListener("pointercancel", endDrag);
         element.addEventListener("pointerenter", event => { if (event.pointerType !== "touch") { student.hovered = true; greet(student); } });
         element.addEventListener("pointerleave", () => { student.hovered = false; release(student); });
         element.addEventListener("focus", () => { student.focused = element.matches(":focus-visible"); if (student.focused) greet(student); });
         element.addEventListener("blur", () => { student.focused = false; release(student); });
-        element.addEventListener("click", () => greet(student, true));
+        element.addEventListener("click", event => {
+            if (performance.now() < student.suppressClickUntil) { student.suppressClickUntil = 0; event.preventDefault(); return; }
+            greet(student, true);
+        });
         element.addEventListener("keydown", event => { if (event.key === "Escape") { hideGreeting(); element.blur(); } });
         if (!initial && !reduced.matches) {
             const entry = [
@@ -294,7 +354,7 @@
         const delta = Math.min((now - (lastFrame || now)) / 1000, .05);
         lastFrame = now;
         students.forEach(student => {
-            const paused = student.hovered || student.focused || student.pinnedUntil > now || now < student.restUntil;
+            const paused = student.drag?.moved || student.hovered || student.focused || student.pinnedUntil > now || now < student.restUntil;
             student.element.classList.toggle("is-walking", !paused && student.route.length > 0);
             if (paused) return;
             if (!student.route.length) {
@@ -318,6 +378,9 @@
                 }
                 student.blockedAt = 0;
                 student.x = next.x; student.y = next.y;
+                if (student.leavingTitle && !world.obstacles.some(obstacle => obstacle.copy && intersects(boxAt(student, student), obstacle))) {
+                    student.leavingTitle = false;
+                }
                 distance -= length;
                 if (fraction === 1) student.route.shift();
                 if (Math.abs(dx) > .1) student.element.style.setProperty("--walker-facing", dx < 0 ? "-1" : "1");
@@ -333,7 +396,7 @@
         spawnTimer = setTimeout(() => {
             if (!running || document.hidden || reduced.matches) return;
             const limit = mobile.matches ? 6 : 10;
-            const available = [...students].filter(student => !student.retiring && student !== active).sort((a, b) => a.id - b.id);
+            const available = [...students].filter(student => !student.retiring && !student.drag && student !== active).sort((a, b) => a.id - b.id);
             if (students.size >= limit && available[0]) retire(available[0]);
             if (students.size < limit) create();
             sequence = (sequence + 1) % intervals.length;

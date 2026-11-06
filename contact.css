@@ -722,9 +722,9 @@
     .envelope-ribbon--feedback { display: none; }
 
     .contact-layout:not(.is-open) .envelope-button { max-width: 360px; }
-    .mini-envelope--one { top: 0; left: calc(50% - 1.9rem); }
-    .mini-envelope--two { top: auto; right: 4%; bottom: 0; }
-    .mini-envelope--three { left: 4%; bottom: 0; }
+    .mini-envelope--one { top: 1.5rem; left: calc(50% - 1.9rem); }
+    .mini-envelope--two { top: auto; right: 4%; bottom: 1.5rem; }
+    .mini-envelope--three { left: 4%; bottom: 1.5rem; }
 
     .envelope-hint { white-space: normal; }
 
